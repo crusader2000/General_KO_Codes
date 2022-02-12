@@ -32,10 +32,6 @@ import matplotlib
 # matplotlib.use('AGG')
 import matplotlib.pyplot as plt
 
-from opt_einsum import contract   # This is for faster torch.einsum
-
-
-############################
 
 def moving_average(a, n=3) :
 	ret = np.cumsum(a, dtype=float)
@@ -45,6 +41,12 @@ def moving_average(a, n=3) :
 
 bers = []
 losses = []
+
+def encoding():
+	return
+
+def decoding():
+	return
 
 if __name__ == "__main__":
 	if len(sys.argv) == 2:

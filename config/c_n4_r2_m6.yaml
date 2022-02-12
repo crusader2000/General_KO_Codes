@@ -12,9 +12,9 @@ para:
   # log_interval: 100
   # epoch_size : 200
   
-  n: 4
+  n: 41
   r: 2
-  m: 3
+  m: 6
 
 
   # Use in train validate data util
