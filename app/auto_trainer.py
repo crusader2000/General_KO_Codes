@@ -42,10 +42,74 @@ def moving_average(a, n=3) :
 bers = []
 losses = []
 
-def encoding():
+gnet_dict = {}
+fnet_dict = {}
+
+enc_params = []
+dec_params = []
+
+def encoding(n,r,m,msg_bits):
+ if r==0:
+		return msg_bits[0]*np.ones((1,np.power(n,m)))
+	if r==m:
+		return np.array(msg_bits)
+
+	lefts = []
+	lcd = get_dimen(n,r-1,m-1)
+	for i in range(n-1):
+		lefts.append(encoding(n,r-1,m-1,msg_bits[i*lcd:(i+1)*lcd]))
+	
+	right = encoding(n,r,m-1,msg_bits[(n-1)*lcd:])
+ 
+	code = np.array([])
+
+	for i in range(n-1):
+  np.append(code,gnet_dict["G_{}_{}".format(r,m)](torch.cat([lefts[i],right],dim=2)))
+	np.append(code,right)
+
+	return code
+
+def perform_ML(n,m,code):
 	return
 
-def decoding():
+def perform_ML_repeatition(n,m,code):
+	return
+
+def decoding(n,r,m,code):
+  	
+	if r==0:
+		return perform_ML_repeatition(n,m,code)
+	
+	if r==m:
+		return perform_ML(n,m,code)
+	
+	msg_bits = np.array([])
+	sub_code_len = np.power(n,m-1)
+ sub_codes = []
+	for i in range(n-1):
+  sub_codes.append(fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
+			[code[i*sub_code_len:(i+1)*sub_code_len],code[(n-1)*sub_code_len:]],dim=2)))
+		np.append(msg_bits,decoding(n,r-1,m-1,sub_codes[-1])
+ 
+	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](torch.hstack( \
+			[np.array(sub_codes),code[(n-1)*sub_code_len:]],dim=2))
+
+	np.append(msg_bits,decoding(n,r,m-1,last_bits))
+
+	return msg_bits
+
+def initialize(n,r,m,hidden_size):
+	if r==0 or r==m:
+		return
+	if not gnet_dict.__contains__("G_{}_{}".format(r,m)):
+		gnet_dict["G_{}_{}".format(r,m)] = g_Full(2, hidden_size, 1)
+		fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1)
+		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n, hidden_size, 1)
+		enc_params += list(gnet_dict["G_{}_{}".format(r,m)].parameters())
+		dec_params += list(fnet_dict["F_{}_{}_l".format(r,m)].parameters()) + \
+		              list(fnet_dict["F_{}_{}_r".format(r,m)].parameters()) 	
+		initialize(n,r-1,m-1,hidden_size)
+		initialize(n,r,m-1,hidden_size)
 	return
 
 if __name__ == "__main__":
@@ -73,35 +137,30 @@ if __name__ == "__main__":
 	torch.manual_seed(seed)
 
 	today = date.today().strftime("%b-%d-%Y")
+	data_type = para["data_type"]
 
 	logger = get_logger(para["logger_name"])
 	logger.info("train_conf_name : "+conf_name)
 	logger.info("Device : "+str(device))
 	logger.info("We are on!!!")
 
-	n = len(conf["data"]["G"])
-	m = len(conf["data"]["G"][0])
+	code_dimension = para["code_dimension"]
+	code_length = para["code_length"]
 
-	enc_model = MatrixNet(device, conf["data"]["G"][:,n:]).to(device)
-	dec_model = MatrixNet(device, np.transpose(conf["data"]["G"])).to(device)
-	start_epoch = 0
+	n = para["n"]
+	r = para["r"]
+	m = para["m"]
 
-	if para["retrain"]:
-		train_model_path_encoder = para["train_save_path_encoder"].format(para["retrain_day"],para["data_type"],para["retrain_epoch_num"])
-		train_model_path_decoder = para["train_save_path_decoder"].format(para["retrain_day"],para["data_type"],para["retrain_epoch_num"])
-		enc_model.load_state_dict(torch.load(train_model_path_encoder))
-		dec_model.load_state_dict(torch.load(train_model_path_decoder))
-		start_epoch = int(para["retrain_epoch_num"])
-		logger.info("Retraining Model " + conf_name + " : " +str(para["retrain_day"]) +" Epoch: "+str(para["retrain_epoch_num"]))
+	hidden_size = para["hidden_size"]
 
+	initialize(n,r,m,hidden_size)
 
 	criterion = BCEWithLogitsLoss()
-	enc_optimizer = optim.Adam(enc_model.parameters(), lr=para["lr"])
-	dec_optimizer = optim.Adam(dec_model.parameters(), lr=para["lr"])
+	enc_optimizer = optim.Adam(enc_params, lr=para["lr"])
+	dec_optimizer = optim.Adam(dec_params, lr=para["lr"])
 	enc_scheduler = ReduceLROnPlateau(enc_optimizer, 'min')
 	dec_scheduler = ReduceLROnPlateau(dec_optimizer, 'min')
 
-	data_type = para["data_type"]
 	
 	bers = []
 	losses = []
@@ -116,7 +175,7 @@ if __name__ == "__main__":
 	try:
 		for k in range(start_epoch, para["full_iterations"]):
 			start_time = time.time()
-			msg_bits_large_batch = 2*torch.randint(0,2,(para["train_batch_size"], para["k"])).to(torch.float) -1
+			msg_bits_large_batch = 2*torch.randint(0,2,(para["train_batch_size"], code_dimension)).to(torch.float) -1
 
 			num_small_batches = int(para["train_batch_size"]/para["train_small_batch_size"])
 
@@ -126,17 +185,17 @@ if __name__ == "__main__":
 				for i in range(num_small_batches):
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_bits = msg_bits_large_batch[start:end].to(device)
-					codewords = enc_model(msg_bits)      
+					codewords = encoding(n,r,m,msg_bits)      
 					# print("codewords")
 					# print(codewords)
-					transmit_codewords = F.normalize(torch.hstack((msg_bits,codewords)), p=2, dim=1)*np.sqrt(2**para["m"])
+					transmit_codewords = F.normalize(torch.hstack((msg_bits,codewords)), p=2, dim=1)*np.sqrt(code_length)
 					# print("transmit_codewords")
 					# print(transmit_codewords)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["dec_train_snr"])
 					# print("corrupted_codewords")
 					# print(corrupted_codewords)
 					
-					decoded_bits = dec_model(corrupted_codewords)
+					decoded_bits = decoding(n,r,m,corrupted_codewords)
 					# print("decoded_bits")
 					# decoded_bits = torch.nan_to_num(decoded_bits,0.0)
 					# print(decoded_bits)
@@ -155,10 +214,10 @@ if __name__ == "__main__":
 				for i in range(num_small_batches):
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_bits = msg_bits_large_batch[start:end].to(device)						
-					codewords = enc_model(msg_bits)      
-					transmit_codewords = F.normalize(torch.hstack((msg_bits,codewords)), p=2, dim=1)*np.sqrt(2**para["m"])
+					codewords = encoding(n,r,m,msg_bits)      
+					transmit_codewords = F.normalize(torch.hstack((msg_bits,codewords)), p=2, dim=1)*np.sqrt(code_length)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"])
-					decoded_bits = dec_model(corrupted_codewords)
+					decoded_bits = decoding(n,r,m,corrupted_codewords)
 
 					loss = criterion(decoded_bits, msg_bits )/num_small_batches
 					
@@ -176,10 +235,9 @@ if __name__ == "__main__":
 			logger.info("Time for one full iteration is {0:.4f} minutes".format((time.time() - start_time)/60))
 
 			losses.append(loss.item())
-			if k % 20 == 0:
-				# Save the model for safety
-				torch.save(enc_model.state_dict(), para["train_save_path_encoder"].format(today, data_type, k+1))
-				torch.save(dec_model.state_dict(), para["train_save_path_decoder"].format(today, data_type, k+1))
+			if k % 10 == 0:
+				torch.save(dict(zip(list(gnet_dict.keys()), [v.state_dict() for v in gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, k+1))
+				torch.save(dict(zip(list(fnet_dict.keys()), [v.state_dict() for v in fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, k+1))
 
 				plt.figure()
 				plt.plot(bers)
@@ -219,7 +277,6 @@ if __name__ == "__main__":
 	plt.xlabel("Iterations")
 	plt.savefig(train_save_dirpath +'/training_losses.png')
 	plt.close()
+	torch.save(dict(zip(list(gnet_dict.keys()), [v.state_dict() for v in gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, para["full_iterations"]))
 
-	torch.save(enc_model.state_dict(), para["train_save_path_encoder"].format(today, data_type, para["full_iterations"]))
-	torch.save(dec_model.state_dict(), para["train_save_path_decoder"].format(today, data_type, para["full_iterations"]))
-	
+	torch.save(dict(zip(list(fnet_dict.keys()), [v.state_dict() for v in fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, para["full_iterations"]))

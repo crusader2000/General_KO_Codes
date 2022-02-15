@@ -6,16 +6,20 @@ para:
   enc_train_iters: 5
   dec_train_iters: 25
 
+  hidden_size: 32
+
   lr: 0.0001
   seed: 1
 
   # log_interval: 100
   # epoch_size : 200
   
-  n: 41
+  n: 4
   r: 2
   m: 6
 
+  code_length: None
+  code_dimension: None
 
   # Use in train validate data util
   enc_train_snr: -2
