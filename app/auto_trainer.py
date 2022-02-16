@@ -49,7 +49,7 @@ enc_params = []
 dec_params = []
 
 def encoding(n,r,m,msg_bits):
- if r==0:
+	if r==0:
 		return msg_bits[0]*np.ones((1,np.power(n,m)))
 	if r==m:
 		return np.array(msg_bits)
@@ -64,7 +64,7 @@ def encoding(n,r,m,msg_bits):
 	code = np.array([])
 
 	for i in range(n-1):
-  np.append(code,gnet_dict["G_{}_{}".format(r,m)](torch.cat([lefts[i],right],dim=2)))
+		np.append(code,gnet_dict["G_{}_{}".format(r,m)](torch.cat([lefts[i],right],dim=2)))
 	np.append(code,right)
 
 	return code
@@ -85,14 +85,19 @@ def decoding(n,r,m,code):
 	
 	msg_bits = np.array([])
 	sub_code_len = np.power(n,m-1)
- sub_codes = []
+	sub_codes = []
+	sub_codes_est = []
 	for i in range(n-1):
-  sub_codes.append(fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
-			[code[i*sub_code_len:(i+1)*sub_code_len],code[(n-1)*sub_code_len:]],dim=2)))
-		np.append(msg_bits,decoding(n,r-1,m-1,sub_codes[-1])
- 
+  	sub_codes.append(code[i*sub_code_len:(i+1)*sub_code_len])
+		sub_codes_est.append(fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
+				[code[i*sub_code_len:(i+1)*sub_code_len],code[(n-1)*sub_code_len:]],dim=2)))
+		np.append(msg_bits,decoding(n,r-1,m-1,sub_codes_est[-1]))
+	
+	sub_codes.append(code[(n-1)*sub_code_len:])
+	sub_codes_est.append(np.zeros((1,n**m)))
+
 	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](torch.hstack( \
-			[np.array(sub_codes),code[(n-1)*sub_code_len:]],dim=2))
+			[np.array(sub_codes_est),np.array(sub_codes)],dim=2))
 
 	np.append(msg_bits,decoding(n,r,m-1,last_bits))
 
@@ -104,7 +109,7 @@ def initialize(n,r,m,hidden_size):
 	if not gnet_dict.__contains__("G_{}_{}".format(r,m)):
 		gnet_dict["G_{}_{}".format(r,m)] = g_Full(2, hidden_size, 1)
 		fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1)
-		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n, hidden_size, 1)
+		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(2*n, hidden_size, 1)
 		enc_params += list(gnet_dict["G_{}_{}".format(r,m)].parameters())
 		dec_params += list(fnet_dict["F_{}_{}_l".format(r,m)].parameters()) + \
 		              list(fnet_dict["F_{}_{}_r".format(r,m)].parameters()) 	
