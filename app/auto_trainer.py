@@ -38,6 +38,7 @@ def moving_average(a, n=3) :
 	ret[n:] = ret[n:] - ret[:-n]
 	return ret[n - 1:] / n
 
+data = {}
 
 bers = []
 losses = []
@@ -69,19 +70,14 @@ def encoding(n,r,m,msg_bits):
 
 	return code
 
-def perform_ML(n,m,code):
-	return
-
-def perform_ML_repeatition(n,m,code):
-	return
+def perform_ML(n,r,m,code):
+	all_codes = data["n{}_m{}_r{}".format(n,m,r)]
+	return np.argmax(code*all_codes)
 
 def decoding(n,r,m,code):
   	
-	if r==0:
-		return perform_ML_repeatition(n,m,code)
-	
-	if r==m:
-		return perform_ML(n,m,code)
+	if r==0 or r==m:
+		return perform_ML(n,r,m,code)
 	
 	msg_bits = np.array([])
 	sub_code_len = np.power(n,m-1)
@@ -157,6 +153,8 @@ if __name__ == "__main__":
 	m = para["m"]
 
 	hidden_size = para["hidden_size"]
+
+	data = torch.load(para["data_file"])
 
 	initialize(n,r,m,hidden_size)
 

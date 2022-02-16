@@ -4,6 +4,10 @@
 - numpy (1.14.1)
 - pytorch (1.4)
 
+## Before Training
+```
+    python data/generate_data.py
+```
 
 
 ## C4(2,3)
