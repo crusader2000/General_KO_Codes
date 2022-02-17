@@ -1,8 +1,8 @@
 import numpy as np
 import torch
 
-n = 4
-m = 3
+n = 3
+m = 2
 all_codes = {}
 
 def bitfield(n,length):

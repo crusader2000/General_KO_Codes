@@ -14,9 +14,9 @@ para:
   # log_interval: 100
   # epoch_size : 200
   
-  n: 4
+  n: 3
   r: 2
-  m: 6
+  m: 4
 
   code_length: None
   code_dimension: None
@@ -25,9 +25,9 @@ para:
   enc_train_snr: -2
   dec_train_snr: -4
 
-  data_file: "data/data_4_3.pth"
+  data_file: "data/data_3_2.pth"
 
-  data_type: "n4_r2_m3"
+  data_type: "n3_r2_m4"
   logger_name: C_{}_train
   CUDA_VISIBLE_DEVICES: "1"
   train_save_path_dir: "./save/{}/C_{}"
