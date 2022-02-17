@@ -51,55 +51,79 @@ dec_params = []
 
 def encoding(n,r,m,msg_bits):
 	if r==0:
-		return msg_bits[0]*np.ones((1,np.power(n,m)))
+		# print(msg_bits)
+		# print(msg_bits*np.ones((1,np.power(n,m))))
+		return msg_bits*np.ones((1,np.power(n,m)))
 	if r==m:
-		return np.array(msg_bits)
+		print(msg_bits.size())
+		return msg_bits
 
 	lefts = []
 	lcd = get_dimen(n,r-1,m-1)
 	for i in range(n-1):
-		lefts.append(encoding(n,r-1,m-1,msg_bits[i*lcd:(i+1)*lcd]))
-	
-	right = encoding(n,r,m-1,msg_bits[(n-1)*lcd:])
- 
+		print(i*lcd,(i+1)*lcd)
+		lefts.append(torch.unsqueeze(encoding(n,r-1,m-1,msg_bits[:,i*lcd:(i+1)*lcd]),2))
+		print("lefts",lefts[-1].size())
+
+
+	rights = torch.unsqueeze(encoding(n,r,m-1,msg_bits[:,(n-1)*lcd:]),2)
+
+	print("rights",rights.size())
 	code = np.array([])
 
 	for i in range(n-1):
-		np.append(code,gnet_dict["G_{}_{}".format(r,m)](torch.cat([lefts[i],right],dim=2)))
-	np.append(code,right)
+		# temp = torch.cat([lefts[i],rights],dim=2)
+		# print(np.shape(temp))
+		np.append(code,gnet_dict["G_{}_{}".format(r,m)](torch.cat([lefts[i],rights],dim=2)))
+	np.append(code,rights)
 
 	return code
 
 def perform_ML(n,r,m,code):
-	all_codes = 2*data["n{}_m{}_r{}".format(n,m,r)]-1
-	return np.argmax(code*all_codes)
+	all_codes = torch.tensor(2*data["n{}_m{}_r{}".format(n,m,r)]-1).float()
+	code = torch.squeeze(code)
+	print("Inside ML",n,r,m)
+	print(all_codes.size())
+	print(code.size())
+	print(code@all_codes)
+	return torch.argmax(code@all_codes,dim=1)
 
 def decoding(n,r,m,code):
   	
 	if r==0 or r==m:
 		return perform_ML(n,r,m,code)
-	
+	print("code", code.size())
 	msg_bits = np.array([])
 	sub_code_len = np.power(n,m-1)
-	sub_codes = []
-	sub_codes_est = []
+	sub_codes = np.array([])
+	sub_codes_est = np.array([])
 	for i in range(n-1):
-  	sub_codes.append(code[i*sub_code_len:(i+1)*sub_code_len])
-		sub_codes_est.append(fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
-				[code[i*sub_code_len:(i+1)*sub_code_len],code[(n-1)*sub_code_len:]],dim=2)))
+		np.append(sub_codes,code[:,i*sub_code_len:(i+1)*sub_code_len])
+		print(code[:,i*sub_code_len:(i+1)*sub_code_len].size())
+		print(code[:,(n-1)*sub_code_len:].size())
+		np.append(sub_codes_est,fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
+				[code[:,i*sub_code_len:(i+1)*sub_code_len],\
+				code[:,(n-1)*sub_code_len:]],dim=2)))
 		np.append(msg_bits,decoding(n,r-1,m-1,sub_codes_est[-1]))
 	
-	sub_codes.append(code[(n-1)*sub_code_len:])
-	sub_codes_est.append(np.zeros((1,n**m)))
+	np.append(sub_codes,code[:,(n-1)*sub_code_len:])
+	np.append(sub_codes_est,torch.zeros(np.shape(sub_codes[-1])))
+	
+	sub_codes = torch.tensor(sub_codes)
+	sub_codes_est = torch.tensor(sub_codes_est)
+	print(np.shape(sub_codes))
+	print(np.shape(sub_codes_est))
 
 	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](torch.hstack( \
-			[np.array(sub_codes_est),np.array(sub_codes)],dim=2))
+			[sub_codes_est,sub_codes],dim=2))
 
 	np.append(msg_bits,decoding(n,r,m-1,last_bits))
 
 	return msg_bits
 
 def initialize(n,r,m,hidden_size):
+	global enc_params
+	global dec_params
 	if r==0 or r==m:
 		return
 	if not gnet_dict.__contains__("G_{}_{}".format(r,m)):
@@ -130,6 +154,16 @@ if __name__ == "__main__":
 		device = torch.device("cpu")
 		print(device)
 	
+	data = {}
+
+	bers = []
+	losses = []
+
+	gnet_dict = {}
+	fnet_dict = {}
+
+	enc_params = []
+	dec_params = []
 
 	para = conf["para"]
 	seed = para["seed"]
@@ -145,8 +179,8 @@ if __name__ == "__main__":
 	logger.info("Device : "+str(device))
 	logger.info("We are on!!!")
 
-	code_dimension = para["code_dimension"]
-	code_length = para["code_length"]
+	code_dimension = np.int64(para["code_dimension"])
+	code_length = np.int64(para["code_length"])
 
 	n = para["n"]
 	r = para["r"]
@@ -168,17 +202,20 @@ if __name__ == "__main__":
 	bers = []
 	losses = []
 	
+	start_epoch = 0
+
 	train_save_dirpath = para["train_save_path_dir"].format(today, data_type)
 	if not os.path.exists(train_save_dirpath):
 		os.makedirs(train_save_dirpath)
 	
 	torch.autograd.set_detect_anomaly(True)
 
+
 	# Training Algorithm
 	try:
 		for k in range(start_epoch, para["full_iterations"]):
 			start_time = time.time()
-			msg_bits_large_batch = 2*torch.randint(0,2,(para["train_batch_size"], code_dimension)).to(torch.float) -1
+			msg_bits_large_batch = 2*torch.randint(0,2,(para["train_batch_size"], code_dimension)).to(torch.float32) -1
 
 			num_small_batches = int(para["train_batch_size"]/para["train_small_batch_size"])
 
@@ -188,12 +225,14 @@ if __name__ == "__main__":
 				for i in range(num_small_batches):
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_bits = msg_bits_large_batch[start:end].to(device)
-					codewords = encoding(n,r,m,msg_bits)      
+					# codewords = encoding(n,r,m,msg_bits)      
+					codewords = torch.tensor(np.zeros((num_small_batches,code_length)))  
 					# print("codewords")
 					# print(codewords)
-					transmit_codewords = F.normalize(torch.hstack((msg_bits,codewords)), p=2, dim=1)*np.sqrt(code_length)
+					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
 					# print("transmit_codewords")
 					# print(transmit_codewords)
+					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["dec_train_snr"])
 					# print("corrupted_codewords")
 					# print(corrupted_codewords)
@@ -218,7 +257,7 @@ if __name__ == "__main__":
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_bits = msg_bits_large_batch[start:end].to(device)						
 					codewords = encoding(n,r,m,msg_bits)      
-					transmit_codewords = F.normalize(torch.hstack((msg_bits,codewords)), p=2, dim=1)*np.sqrt(code_length)
+					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"])
 					decoded_bits = decoding(n,r,m,corrupted_codewords)
 

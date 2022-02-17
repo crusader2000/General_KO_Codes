@@ -16,7 +16,7 @@ para:
   
   n: 3
   r: 2
-  m: 6
+  m: 4
 
   code_length: None
   code_dimension: None
@@ -27,7 +27,7 @@ para:
 
   data_file: "data/data_3_2.pth"
 
-  data_type: "n3_r2_m6"
+  data_type: "n3_r2_m4"
   logger_name: C_{}_train
   CUDA_VISIBLE_DEVICES: "1"
   train_save_path_dir: "./save/{}/C_{}"

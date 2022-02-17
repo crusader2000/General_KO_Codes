@@ -14,10 +14,10 @@
 
 - To train :
 ```
-    python -m app.train c_n4_r2_m3
+    python -m app.train c_n4_r2_m4
 ```
 
 - To test KO:
 ```
-    python -m app.test c_n4_r2_m3
+    python -m app.test c_n4_r2_m4
 ```

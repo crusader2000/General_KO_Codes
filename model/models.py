@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import numpy as np
 
 class g_Full(nn.Module):
@@ -20,6 +21,7 @@ class g_Full(nn.Module):
         
 
     def forward(self, y):
+        y = y.float()
         x = F.selu(self.fc1(y))  
 
         x = F.selu(self.fc2(x))
@@ -41,6 +43,7 @@ class f_Full(nn.Module):
         self.fc4 = nn.Linear(self.hidden_size, self.output_size, bias=True)
 
     def forward(self, y):
+        y = y.float()
         x = F.selu(self.fc1(y))
         x = F.selu(self.fc2(x))
 
