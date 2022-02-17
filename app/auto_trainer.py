@@ -71,7 +71,7 @@ def encoding(n,r,m,msg_bits):
 	return code
 
 def perform_ML(n,r,m,code):
-	all_codes = data["n{}_m{}_r{}".format(n,m,r)]
+	all_codes = 2*data["n{}_m{}_r{}".format(n,m,r)]-1
 	return np.argmax(code*all_codes)
 
 def decoding(n,r,m,code):

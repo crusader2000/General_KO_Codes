@@ -25,7 +25,7 @@ para:
   enc_train_snr: -2
   dec_train_snr: -4
 
-  data_file: "data/data_6_6.pth"
+  data_file: "data/data_4_3.pth"
 
   data_type: "n4_r2_m3"
   logger_name: C_{}_train
