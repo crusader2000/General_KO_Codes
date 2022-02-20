@@ -5,7 +5,7 @@ from scipy.special import comb
 def get_dimen(n,r,m):
 	code_dimension = 0
 	for w in range(0,r+1):
-		code_dimension += comb(n,w)*np.power((n-1),w)
+		code_dimension += comb(m,w)*np.power((n-1),w)
 	return np.int64(code_dimension)
 
 def get_default_conf(conf_path=None):
