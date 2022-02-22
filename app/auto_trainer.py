@@ -50,17 +50,25 @@ fnet_dict = {}
 enc_params = []
 dec_params = []
 
+device = None
+
 def encoding(n,r,m,msg_bits):
+	device = torch.device("cuda")
 	if r==0:
 		# print("r=0")
 		# print(msg_bits.size())
 		# print((msg_bits*np.ones((1,np.power(n,m)))).size())
-		return msg_bits*np.ones((1,np.power(n,m)))
+		#print('msg_bits is a tensor:  ',torch.is_tensor(msg_bits))
+		temp=np.ones((1,np.power(n,m)))
+		temp_tensor=torch.from_numpy(temp)
+		
+		temp_tensor_gpu=temp_tensor.to(device)
+		return msg_bits*temp_tensor_gpu
 	if r==m:
 		# print("r=m")
 		# print(msg_bits.size())
 		return msg_bits
-
+	
 	lefts = []
 	lcd = get_dimen(n,r-1,m-1)
 	
@@ -76,11 +84,13 @@ def encoding(n,r,m,msg_bits):
 
 	# print("rights",rights.size())
 	code = []
-
+	#lefts=lefts.to(device)
+	rights=rights.to(device)
 	for i in range(n-1):
 		# temp = torch.cat([lefts[i],rights],dim=2)
 		# print(np.shape(temp))
-		code.append(torch.squeeze(gnet_dict["G_{}_{}".format(r,m)](torch.cat([lefts[i],rights],dim=2))))
+		temp_tensor=torch.cat([lefts[i],rights],dim=2).to(device)
+		code.append(torch.squeeze(gnet_dict["G_{}_{}".format(r,m)](temp_tensor)))
 		# print(code[-1].size())
 	code.append(torch.squeeze(rights))
 	code = torch.hstack(code)
@@ -90,7 +100,7 @@ def encoding(n,r,m,msg_bits):
 	return code
 
 def perform_ML(n,r,m,code):
-	all_codes = torch.tensor(2*data["n{}_m{}_r{}".format(n,m,r)]-1).float()
+	all_codes = torch.tensor(2*data["n{}_m{}_r{}".format(n,m,r)]-1).to(device).float()
 	code = torch.squeeze(code)
 	# print(code[:5,:])
 	# print(all_codes)
@@ -129,24 +139,40 @@ def decoding(n,r,m,code):
 		# print(code[:,i*sub_code_len:(i+1)*sub_code_len].size())
 		# print(code[:,(n-1)*sub_code_len:].size())
 		x = code[:,i*sub_code_len:(i+1)*sub_code_len]
-		# print(type(torch.cat([x,y],dim=2)))
-
+		# print(torch.stack([x,y],dim=2).size())
+		# print(torch.cat([x,y],dim=2).size())
 		sub_codes_est.append(fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
 				[x,y],dim=2)))
 		msg_bits = torch.hstack([msg_bits,decoding(n,r-1,m-1,sub_codes_est[-1])])
 		# print("msg_bits.size()",msg_bits.size())
 
+	
 	sub_codes.append(code[:,(n-1)*sub_code_len:])
 	sub_codes_est.append(torch.zeros(sub_codes[-1].size()))
 	# print(sub_codes[-1].size())
+	#print(device)
+	#print('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+	#for tens in sub_codes_est:
+	#	print(tens.is_cuda)
+	#rint('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+	for i in range(len(sub_codes)):
+		sub_codes[i]=sub_codes[i].to(device)
+	for i in range(len(sub_codes_est)):
+                sub_codes_est[i]=sub_codes_est[i].to(device)
+
+	#print('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+	#for tens in sub_codes_est:
+	#	print(tens.is_cuda)
+	#print('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 	sub_codes=torch.cat(sub_codes,dim=2)
 	sub_codes_est=torch.cat(sub_codes_est,dim=2)
-	final_tensor=torch.cat((sub_codes,sub_codes_est),dim=2)
+	final_tensor=torch.cat((sub_codes,sub_codes_est),dim=2).to(device)
+	
 	# print('lol')
 
 	# print(sub_codes_est.size())
 	# print(sub_codes.size())
-	# print(final_tensor.size())
+	# print("final_tensor.size()",final_tensor.size())
 
 	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](final_tensor)
 	#last_bits = fnet_dict["F_{}_{}_r".format(r,m)](torch.hstack( \
@@ -157,20 +183,20 @@ def decoding(n,r,m,code):
 	# print()
 	return msg_bits
 
-def initialize(n,r,m,hidden_size):
+def initialize(n,r,m,hidden_size,device):
 	global enc_params
 	global dec_params
 	if r==0 or r==m:
 		return
 	if not gnet_dict.__contains__("G_{}_{}".format(r,m)):
-		gnet_dict["G_{}_{}".format(r,m)] = g_Full(2, hidden_size, 1)
-		fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1)
-		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(2*n, hidden_size, 1)
+		gnet_dict["G_{}_{}".format(r,m)] = g_Full(2, hidden_size, 1, device)
+		fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1, device)
+		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(2*n, hidden_size, 1, device)
 		enc_params += list(gnet_dict["G_{}_{}".format(r,m)].parameters())
 		dec_params += list(fnet_dict["F_{}_{}_l".format(r,m)].parameters()) + \
 		              list(fnet_dict["F_{}_{}_r".format(r,m)].parameters()) 	
-		initialize(n,r-1,m-1,hidden_size)
-		initialize(n,r,m-1,hidden_size)
+		initialize(n,r-1,m-1,hidden_size,device)
+		initialize(n,r,m-1,hidden_size,device)
 	return
 
 if __name__ == "__main__":
@@ -229,7 +255,7 @@ if __name__ == "__main__":
 
 	data = torch.load(para["data_file"])
 
-	initialize(n,r,m,hidden_size)
+	initialize(n,r,m,hidden_size,device)
 
 	criterion = BCEWithLogitsLoss()
 	enc_optimizer = optim.Adam(enc_params, lr=para["lr"])
@@ -264,7 +290,7 @@ if __name__ == "__main__":
 				for i in range(num_small_batches):
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_input = msg_bits_large_batch[start:end,:].to(device)
-					print("np.shape(msg_bits)",np.shape(msg_input))
+					#print("np.shape(msg_bits)",np.shape(msg_input))
 					codewords = encoding(n,r,m,msg_input)      
 					# codewords = torch.tensor(np.zeros((para["train_small_batch_size"],code_length)))  
 					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
@@ -272,14 +298,22 @@ if __name__ == "__main__":
 					# print(transmit_codewords)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["dec_train_snr"])
-					print("corrupted_codewords")
-					print(corrupted_codewords.size())
-					
+					#print("corrupted_codewords")
+					#print(corrupted_codewords.size())
+					print('Start Decoder')
+					print(n)
+					print(r)
+					print(m)
+					print(corrupted_codewords.shape)
+					print('End Decoder')
 					decoded_bits = decoding(n,r,m,corrupted_codewords)
-					print("decoded_bits",decoded_bits.size())
+					#print("decoded_bits",decoded_bits.size())
 					# decoded_bits = torch.nan_to_num(decoded_bits,0.0)
-					print("msg_input",msg_input.size())
-					
+					#print("msg_input",msg_input.size())
+					decoded_bits=decoded_bits.to('cuda')
+					msg_input=msg_input.to('cuda')
+					decoded_bits.requires_grad=True
+					msg_input.requires_grad=True
 					loss = criterion(decoded_bits, msg_input)/num_small_batches
 					
 					# print(loss)
@@ -297,9 +331,20 @@ if __name__ == "__main__":
 					msg_input = msg_bits_large_batch[start:end].to(device)						
 					codewords = encoding(n,r,m,msg_input)      
 					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
+					# Adding this because this is only thing different from decoder. TO fix shape error
+					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"])
+					print('Start Encoder')
+					print(n)
+					print(r)
+					print(m)
+					print(corrupted_codewords.shape)
+					print('End Encoder')
 					decoded_bits = decoding(n,r,m,corrupted_codewords)
-
+					decoded_bits=decoded_bits.to('cuda')
+					msg_input=msg_input.to('cuda')
+					decoded_bits.requires_grad=True
+					msg_input.requires_grad=True
 					loss = criterion(decoded_bits, msg_input )/num_small_batches
 					
 					loss.backward()
@@ -316,7 +361,8 @@ if __name__ == "__main__":
 			logger.info("Time for one full iteration is {0:.4f} minutes".format((time.time() - start_time)/60))
 
 			losses.append(loss.item())
-			if k % 10 == 0:
+			# if k % 10 == 0:
+			if k % 1 == 0:
 				torch.save(dict(zip(list(gnet_dict.keys()), [v.state_dict() for v in gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, k+1))
 				torch.save(dict(zip(list(fnet_dict.keys()), [v.state_dict() for v in fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, k+1))
 

@@ -3,8 +3,8 @@ para:
   train_small_batch_size: 20
   test_size: 10000
   full_iterations: 100
-  enc_train_iters: 5
-  dec_train_iters: 25
+  enc_train_iters: 1
+  dec_train_iters: 1
 
   hidden_size: 32
 

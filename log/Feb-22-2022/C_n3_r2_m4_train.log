@@ -1,0 +1,32 @@
+2022-02-22 18:12:42,027 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:12:42,027 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:12:42,027 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:18:05,970 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:18:05,971 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:18:05,971 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:18:24,309 auto_trainer.py WARNING 369: Graceful Exit
+2022-02-22 18:24:22,658 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:24:22,659 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:24:22,659 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:28:54,358 auto_trainer.py WARNING 369: Graceful Exit
+2022-02-22 18:29:23,974 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:29:23,974 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:29:23,974 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:34:30,031 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:34:30,031 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:34:30,032 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:39:52,607 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:39:52,608 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:39:52,608 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:45:03,291 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:45:03,291 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:45:03,292 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:49:04,256 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:49:04,256 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:49:04,256 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:52:14,366 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+2022-02-22 18:52:14,366 auto_trainer.py INFO 241: Device : cuda
+2022-02-22 18:52:14,366 auto_trainer.py INFO 242: We are on!!!
+2022-02-22 18:54:37,001 auto_trainer.py INFO 360: [1/100] At ENC SNR -2.000000 dB DEC SNR -4.000000 dB, Loss: 0.0015366252 BER: 0.9394727045
+2022-02-22 18:54:37,002 auto_trainer.py INFO 361: Time for one full iteration is 2.3423 minutes
+2022-02-22 18:55:35,179 auto_trainer.py WARNING 386: Graceful Exit
