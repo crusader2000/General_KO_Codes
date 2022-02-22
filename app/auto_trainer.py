@@ -361,8 +361,7 @@ if __name__ == "__main__":
 			logger.info("Time for one full iteration is {0:.4f} minutes".format((time.time() - start_time)/60))
 
 			losses.append(loss.item())
-			# if k % 10 == 0:
-			if k % 1 == 0:
+			if k % 10 == 0:
 				torch.save(dict(zip(list(gnet_dict.keys()), [v.state_dict() for v in gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, k+1))
 				torch.save(dict(zip(list(fnet_dict.keys()), [v.state_dict() for v in fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, k+1))
 
