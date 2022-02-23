@@ -1,0 +1,28 @@
+==========================================
+SLURM_JOB_ID = 612134
+SLURM_NODELIST = gnode27
+SLURM_JOB_GPUS = 
+==========================================
+auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
+auto_trainer.py INFO 241: Device : cpu
+auto_trainer.py INFO 242: We are on!!!
+Traceback (most recent call last):
+  File "/home2/ansh.puvvada/miniconda3/envs/venv/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/home2/ansh.puvvada/miniconda3/envs/venv/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 294, in <module>
+    codewords = encoding(n,r,m,msg_input)      
+  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 79, in encoding
+    lefts.append(torch.unsqueeze(encoding(n,r-1,m-1,msg_bits[:,i*lcd:(i+1)*lcd]),2))
+  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 79, in encoding
+    lefts.append(torch.unsqueeze(encoding(n,r-1,m-1,msg_bits[:,i*lcd:(i+1)*lcd]),2))
+  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 65, in encoding
+    temp_tensor_gpu=temp_tensor.to(device)
+  File "/home2/ansh.puvvada/miniconda3/envs/venv/lib/python3.7/site-packages/torch/cuda/__init__.py", line 170, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+train conf_name: c_n3_r2_m4
+cpu
+code_dimension 33
+code_length 81

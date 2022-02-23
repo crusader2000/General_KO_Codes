@@ -5,7 +5,7 @@
 #SBATCH --mem-per-cpu=2G
 
 #SBATCH --time=4-00:00:00
-#SBATCH --output=rm_m4_r1.txt
+#SBATCH --output=c_n3_r2_m4.txt
 #SBATCH --mail-user=ansh.puvvada@students.iiit.ac.in
 #SBATCH --mail-type=ALL
 
