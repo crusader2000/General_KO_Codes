@@ -1,28 +1,30 @@
 ==========================================
-SLURM_JOB_ID = 612134
+SLURM_JOB_ID = 615732
 SLURM_NODELIST = gnode27
-SLURM_JOB_GPUS = 
+SLURM_JOB_GPUS = 0
 ==========================================
 auto_trainer.py INFO 240: train_conf_name : c_n3_r2_m4
-auto_trainer.py INFO 241: Device : cpu
+auto_trainer.py INFO 241: Device : cuda
 auto_trainer.py INFO 242: We are on!!!
-Traceback (most recent call last):
-  File "/home2/ansh.puvvada/miniconda3/envs/venv/lib/python3.7/runpy.py", line 193, in _run_module_as_main
-    "__main__", mod_spec)
-  File "/home2/ansh.puvvada/miniconda3/envs/venv/lib/python3.7/runpy.py", line 85, in _run_code
-    exec(code, run_globals)
-  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 294, in <module>
-    codewords = encoding(n,r,m,msg_input)      
-  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 79, in encoding
-    lefts.append(torch.unsqueeze(encoding(n,r-1,m-1,msg_bits[:,i*lcd:(i+1)*lcd]),2))
-  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 79, in encoding
-    lefts.append(torch.unsqueeze(encoding(n,r-1,m-1,msg_bits[:,i*lcd:(i+1)*lcd]),2))
-  File "/home2/ansh.puvvada/General_KO_Codes/app/auto_trainer.py", line 65, in encoding
-    temp_tensor_gpu=temp_tensor.to(device)
-  File "/home2/ansh.puvvada/miniconda3/envs/venv/lib/python3.7/site-packages/torch/cuda/__init__.py", line 170, in _lazy_init
-    torch._C._cuda_init()
-RuntimeError: No CUDA GPUs are available
-train conf_name: c_n3_r2_m4
-cpu
-code_dimension 33
-code_length 81
+auto_trainer.py INFO 360: [1/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0008022808 BER: 0.5000757409
+auto_trainer.py INFO 361: Time for one full iteration is 36.7551 minutes
+auto_trainer.py INFO 360: [2/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0008204627 BER: 0.5001211958
+auto_trainer.py INFO 361: Time for one full iteration is 37.4097 minutes
+auto_trainer.py INFO 360: [3/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0008325839 BER: 0.5001151346
+auto_trainer.py INFO 361: Time for one full iteration is 37.6156 minutes
+auto_trainer.py INFO 360: [4/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0008325839 BER: 0.4997636191
+auto_trainer.py INFO 361: Time for one full iteration is 36.0184 minutes
+auto_trainer.py INFO 360: [5/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0009053112 BER: 0.4996545281
+auto_trainer.py INFO 361: Time for one full iteration is 36.0104 minutes
+auto_trainer.py INFO 360: [6/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0008022809 BER: 0.5010999830
+auto_trainer.py INFO 361: Time for one full iteration is 35.9690 minutes
+auto_trainer.py INFO 360: [7/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0007477354 BER: 0.4981636199
+auto_trainer.py INFO 361: Time for one full iteration is 37.1186 minutes
+auto_trainer.py INFO 360: [8/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0009356142 BER: 0.4997605900
+auto_trainer.py INFO 361: Time for one full iteration is 38.0767 minutes
+auto_trainer.py INFO 360: [9/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0008810688 BER: 0.4999121054
+auto_trainer.py INFO 361: Time for one full iteration is 36.5194 minutes
+auto_trainer.py INFO 360: [10/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0007356142 BER: 0.4982666497
+auto_trainer.py INFO 361: Time for one full iteration is 36.6905 minutes
+auto_trainer.py INFO 360: [11/100] At ENC SNR -4.000000 dB DEC SNR -7.000000 dB, Loss: 0.0007053111 BER: 0.5008757403
+auto_trainer.py INFO 361: Time for one full iteration is 37.8526 minutes

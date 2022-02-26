@@ -8,7 +8,7 @@ para:
 
   hidden_size: 32
 
-  lr: 0.0001
+  lr: 0.001
   seed: 1
 
   # log_interval: 100
@@ -22,8 +22,8 @@ para:
   code_dimension: None
 
   # Use in train validate data util
-  enc_train_snr: -2
-  dec_train_snr: -4
+  enc_train_snr: -4
+  dec_train_snr: -7
 
   data_file: "data/data_3_2.pth"
 
@@ -42,9 +42,9 @@ para:
 
 test:
  # Use in test_ber
-  # snr_list: 1,2,3,4,5,6
+  snr_list: -6,-5,-4,-3,-2,-1
   Boosting_number_list: 1,2,3
-  day: Jan-16-2022
+  day: Feb-23-2022
   epoch_num: 100
   logger_name: C_{}_test
   test_model_path_encoder: "./save/{}/C_{}/enc_{}.pth"

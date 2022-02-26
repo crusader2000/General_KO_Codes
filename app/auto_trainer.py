@@ -120,7 +120,7 @@ def perform_ML(n,r,m,code):
 	est_input = torch.stack(est_input)
 	# print(est_input[:5,:])
 	# print("est_input.size()",est_input.size())
-	return est_input
+	return 2*est_input-1
 
 def decoding(n,r,m,code):
   

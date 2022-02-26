@@ -10,14 +10,14 @@
 ```
 
 
-## C3(2,3)
+## C3(2,4)
 
 - To train :
 ```
-    python -m app.train c_n3_r2_m4
+    python -m app.auto_trainer c_n3_r2_m4
 ```
 
-- To test KO:
+- To test:
 ```
-    python -m app.test c_n3_r2_m4
+    python -m app.auto_tester c_n3_r2_m4
 ```
