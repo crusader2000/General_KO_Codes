@@ -26,9 +26,13 @@ def errors_bler(y_true, y_pred):
 	bler_err_rate = sum(np.sum(tp0,axis=1)>0)*1.0/(X_test.shape[0])
 	return bler_err_rate
 
-def awgn_channel(codewords, snr):
+def awgn_channel(codewords, snr, code_length):
 	noise_sigma = snr_db2sigma(snr)
 	standard_Gaussian = torch.randn_like(codewords)
-	corrupted_codewords = codewords+ (noise_sigma/2)*standard_Gaussian
+	corrupted_codewords = codewords+ sqrt(code_length/(2*noise_sigma))*standard_Gaussian
 	return corrupted_codewords
 
+
+def awgn(codewords,snr):
+	gamma = snr_db2sigma(snr)
+	
