@@ -163,7 +163,7 @@ def test(snr, code_dimension):
 					codewords = encoding(n,r,m,msg_bits)      
 					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
-					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"])
+					corrupted_codewords = awgn_channel(transmit_codewords,snr )
 					decoded_bits = decoding(n,r,m,corrupted_codewords)
 					decoded_bits=decoded_bits.to('cuda')
 					msg_bits=msg_bits.to('cuda')
@@ -262,8 +262,6 @@ if __name__ == "__main__":
 	for snr in test_conf["snr_list"].split(","):
 			
 			ber = test(int(snr),code_dimension)
-			print(snr)
-			print(ber)
 			bers.append(ber)
 			snrs.append(int(snr))
 	
