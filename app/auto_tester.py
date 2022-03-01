@@ -39,7 +39,7 @@ def moving_average(a, n=3) :
 	ret[n:] = ret[n:] - ret[:-n]
 	return ret[n - 1:] / n
 
-data = {}
+# data = {}
 
 bers = []
 losses = []
@@ -85,23 +85,10 @@ def encoding(n,r,m,msg_bits):
 
 	return code
 
-def perform_ML(n,r,m,code):
-	all_codes = torch.tensor(2*data["n{}_m{}_r{}".format(n,m,r)]-1).to(device).float()
-	code = torch.squeeze(code)
-	est_args = torch.argmax(code@all_codes,dim=1)
-
-	est_input = []
-
-	for elem in est_args:
-		est_input.append(torch.tensor(bitfield(elem,n**r)))
-
-	est_input = torch.stack(est_input)
-	return 2*est_input-1
-
 def decoding(n,r,m,code):
   
 	if r==0 or r==m:
-		return perform_ML(n,r,m,code)
+		return code
 
 	msg_bits = torch.tensor([])
 	sub_code_len = np.power(n,m-1)
@@ -163,7 +150,7 @@ def test(snr, code_dimension):
 					codewords = encoding(n,r,m,msg_bits)      
 					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
-					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"])
+					corrupted_codewords = awgn_channel(transmit_codewords, snr)
 					decoded_bits = decoding(n,r,m,corrupted_codewords)
 					decoded_bits=decoded_bits.to('cuda')
 					msg_bits=msg_bits.to('cuda')
@@ -191,17 +178,6 @@ if __name__ == "__main__":
 	else:
 		device = torch.device("cpu")
 		print(device)
-	
-	data = {}
-
-	bers = []
-	losses = []
-
-	gnet_dict = {}
-	fnet_dict = {}
-
-	enc_params = []
-	dec_params = []
 
 	para = conf["para"]
 	seed = para["seed"]
@@ -231,7 +207,7 @@ if __name__ == "__main__":
 
 	hidden_size = para["hidden_size"]
 
-	data = torch.load(para["data_file"])
+	# data = torch.load(para["data_file"])
 
 	initialize(n,r,m,hidden_size,device)
 
@@ -242,8 +218,6 @@ if __name__ == "__main__":
 	test_save_dirpath = para["train_save_path_dir"].format(test_conf["day"], para["data_type"])
 	if not os.path.exists(test_save_dirpath):
 			os.makedirs(test_save_dirpath)
-
-	
 
 	saved_model_enc = torch.load(test_model_path_encoder)
 	saved_model_dec = torch.load(test_model_path_decoder)
