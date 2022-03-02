@@ -236,8 +236,6 @@ if __name__ == "__main__":
 	for snr in test_conf["snr_list"].split(","):
 			
 			ber = test(int(snr),code_dimension)
-			print(snr)
-			print(ber)
 			bers.append(ber)
 			snrs.append(int(snr))
 	
