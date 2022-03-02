@@ -31,8 +31,3 @@ def awgn_channel(codewords, snr, code_length):
 	standard_Gaussian = torch.randn_like(codewords)
 	corrupted_codewords = codewords+ sqrt(code_length/(2*noise_sigma))*standard_Gaussian
 	return corrupted_codewords
-
-
-def awgn(codewords,snr):
-	gamma = snr_db2sigma(snr)
-	
