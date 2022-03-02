@@ -227,6 +227,8 @@ if __name__ == "__main__":
 	print("code_dimension",code_dimension)
 	print("code_length",code_length)
 
+	rate = 1.0*(code_dimension/code_length)
+
 	hidden_size = para["hidden_size"]
 
 	# data = torch.load(para["data_file"])
@@ -267,9 +269,9 @@ if __name__ == "__main__":
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_input = msg_bits_large_batch[start:end,:].to(device)
 					codewords = encoding(n,r,m,msg_input)      
-					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
+					transmit_codewords = F.normalize(codewords, p=2, dim=1)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
-					corrupted_codewords = awgn_channel(transmit_codewords, para["dec_train_snr"],code_length)
+					corrupted_codewords = awgn_channel(transmit_codewords, para["dec_train_snr"],rate)
 					decoded_bits = decoding(n,r,m,corrupted_codewords)
 					decoded_bits=decoded_bits.to(device)
 					msg_input=msg_input.to(device)
@@ -291,10 +293,10 @@ if __name__ == "__main__":
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_input = msg_bits_large_batch[start:end].to(device)						
 					codewords = encoding(n,r,m,msg_input)      
-					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
+					transmit_codewords = F.normalize(codewords, p=2, dim=1)
 					# Adding this because this is only thing different from decoder. TO fix shape error
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
-					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"],code_length)
+					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"],rate)
 					# print('Start Encoder')
 					# print(n)
 					# print(r)
