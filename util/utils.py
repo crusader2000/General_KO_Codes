@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+from math import sqrt
 
 def snr_db2sigma(train_snr):
   	return 10**(-train_snr*1.0/20)
@@ -31,3 +32,11 @@ def awgn_channel(codewords, snr, rate):
 	standard_Gaussian = torch.randn_like(codewords)
 	corrupted_codewords = codewords+ sqrt(1/(2*snr_sigma*rate))*standard_Gaussian
 	return corrupted_codewords
+
+def get_LLR(received_codewords,snr,rate,channel = 'awgn'):
+	if channel == 'awgn':
+		snr_sigma = snr_db2sigma(snr)
+		sigma = sqrt(1/(2*snr_sigma*rate))
+		L = (2/(sigma**2))*received_codewords
+		
+	return L

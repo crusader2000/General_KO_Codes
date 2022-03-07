@@ -27,7 +27,7 @@ from datetime import datetime
 from datetime import date
 import random
 from data.generate_data import *
-
+from math import sqrt
 
 import matplotlib
 # matplotlib.use('AGG')
@@ -53,7 +53,7 @@ dec_params = []
 device = None
 
 def encoding(n,r,m,msg_bits):
-	device = torch.device("cuda")
+	# device = torch.device("cuda")
 	if r==0:
 		# print("r=0")
 		# print(msg_bits.size())
@@ -101,10 +101,17 @@ def encoding(n,r,m,msg_bits):
 
 def decoding(n,r,m,code):
   
-	if r==0 or r==m:
-		return code
+	if r==0:
+		s = torch.sum(torch.squeeze(code),dim=1) > 0
+		s = torch.unsqueeze(s.int(),1)
+		return 2*s-1
+	
+	if r==m:
+		msg = torch.squeeze(code) > 0
+		msg = msg.int().to(device)
+		return 2*msg-1
 
-	msg_bits = torch.tensor([])
+	msg_bits = torch.tensor([]).to(device)
 	sub_code_len = np.power(n,m-1)
 	sub_codes = []
 	sub_codes_est = []
@@ -119,6 +126,9 @@ def decoding(n,r,m,code):
 		# print(torch.cat([x,y],dim=2).size())
 		sub_codes_est.append(fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
 				[x,y],dim=2)))
+		# print("msg_bits.is_cuda")
+		# print(msg_bits.is_cuda)
+		# print(msg_bits.is_cuda)
 		msg_bits = torch.hstack([msg_bits,decoding(n,r-1,m-1,sub_codes_est[-1])])
 		# print("msg_bits.size()",msg_bits.size())
 
@@ -136,7 +146,7 @@ def decoding(n,r,m,code):
 	for i in range(len(sub_codes_est)):
                 sub_codes_est[i]=sub_codes_est[i].to(device)
 
-	#print('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+	#print('xxxxxxxxxxxxxxxxxx>xxxxxxxxxx')
 	#for tens in sub_codes_est:
 	#	print(tens.is_cuda)
 	#print('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
@@ -158,6 +168,14 @@ def decoding(n,r,m,code):
 	msg_bits = torch.hstack([msg_bits,decoding(n,r,m-1,last_bits)])
 	# print()
 	return msg_bits
+
+def get_LLR(received_codewords,snr,rate,channel = 'awgn'):
+	if channel == 'awgn':
+		snr_sigma = snr_db2sigma(snr)
+		sigma = sqrt(1/(2*snr_sigma*rate))
+		L = (2/(sigma**2))*received_codewords
+		
+	return L
 
 def initialize(n,r,m,hidden_size,device):
 	global enc_params
@@ -254,6 +272,23 @@ if __name__ == "__main__":
 	torch.autograd.set_detect_anomaly(True)
 
 
+	if para["retrain"]:
+		train_model_path_encoder = para["train_save_path_encoder"].format(para["retrain_day"],para["data_type"],para["retrain_epoch_num"])
+		train_model_path_decoder = para["train_save_path_decoder"].format(para["retrain_day"],para["data_type"],para["retrain_epoch_num"])
+		start_epoch = int(para["retrain_epoch_num"])
+		
+		saved_model_enc = torch.load(model_path_encoder)
+		saved_model_dec = torch.load(model_path_decoder)
+
+		for key,val in saved_model_enc.items():
+			gnet_dict[key].load_state_dict(val)
+
+		for key,val in saved_model_dec.items():
+			fnet_dict[key].load_state_dict(val)
+
+		logger.info("Retraining Model " + conf_name + " : " +str(para["retrain_day"]) +" Epoch: "+str(para["retrain_epoch_num"]))
+
+
 	# Training Algorithm
 	try:
 		for k in range(start_epoch, para["full_iterations"]):
@@ -268,15 +303,27 @@ if __name__ == "__main__":
 				for i in range(num_small_batches):
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_input = msg_bits_large_batch[start:end,:].to(device)
+					# print("train msg_bits.is_cuda")
+					# print(msg_input.is_cuda)
+
 					codewords = encoding(n,r,m,msg_input)      
-					transmit_codewords = F.normalize(codewords, p=2, dim=1)
+					transmit_codewords = F.normalize(codewords, p=2, dim=1)*sqrt(code_length)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["dec_train_snr"],rate)
-					decoded_bits = decoding(n,r,m,corrupted_codewords)
-					decoded_bits=decoded_bits.to(device)
-					msg_input=msg_input.to(device)
+					L = get_LLR(corrupted_codewords, para["dec_train_snr"],rate)
+					decoded_bits = decoding(n,r,m,L)
+					# decoded_bits=decoded_bits.to(device)
+					# msg_input=msg_input.to(device)
 					decoded_bits.requires_grad=True
 					msg_input.requires_grad=True
+					# decoded_bits = torch.squeeze(decoded_bits,dim = 2)
+
+					# print("decoded_bits.size()")
+					# print(decoded_bits)
+					# print(decoded_bits.size())
+					# print("msg_input.size()")
+					# print(msg_input)
+					# print(msg_input.size())
 					loss = criterion(decoded_bits, msg_input)/num_small_batches
 					
 					# print(loss)
@@ -293,22 +340,17 @@ if __name__ == "__main__":
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
 					msg_input = msg_bits_large_batch[start:end].to(device)						
 					codewords = encoding(n,r,m,msg_input)      
-					transmit_codewords = F.normalize(codewords, p=2, dim=1)
+					transmit_codewords = F.normalize(codewords, p=2, dim=1)*sqrt(code_length)
 					# Adding this because this is only thing different from decoder. TO fix shape error
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"],rate)
-					# print('Start Encoder')
-					# print(n)
-					# print(r)
-					# print(m)
-					# print(corrupted_codewords.shape)
-					# print('End Encoder')
-					decoded_bits = decoding(n,r,m,corrupted_codewords)
-					decoded_bits=decoded_bits.to(device)
-					msg_input=msg_input.to(device)
+					L = get_LLR(corrupted_codewords, para["enc_train_snr"],rate)
+					decoded_bits = decoding(n,r,m,L)
+					# decoded_bits=decoded_bits.to(device)
+					# msg_input=msg_input.to(device)
 					decoded_bits.requires_grad=True
-					msg_input.requires_grad=True
-					
+					# msg_input.requires_grad=True
+					decoded_bits = torch.unsqueeze(decoded_bits,dim = 2)
 
 					loss = criterion(decoded_bits, msg_input )/num_small_batches
 					

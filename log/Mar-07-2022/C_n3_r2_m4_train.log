@@ -1,0 +1,42 @@
+2022-03-07 15:06:43,285 auto_trainer.py INFO 236: train_conf_name : c_n3_r2_m4
+2022-03-07 15:06:43,285 auto_trainer.py INFO 237: Device : cuda
+2022-03-07 15:06:43,285 auto_trainer.py INFO 238: We are on!!!
+2022-03-07 15:07:45,866 auto_trainer.py INFO 238: train_conf_name : c_n3_r2_m4
+2022-03-07 15:07:45,866 auto_trainer.py INFO 239: Device : cuda
+2022-03-07 15:07:45,867 auto_trainer.py INFO 240: We are on!!!
+2022-03-07 15:08:35,256 auto_trainer.py INFO 238: train_conf_name : c_n3_r2_m4
+2022-03-07 15:08:35,256 auto_trainer.py INFO 239: Device : cuda
+2022-03-07 15:08:35,257 auto_trainer.py INFO 240: We are on!!!
+2022-03-07 15:08:45,624 auto_trainer.py INFO 238: train_conf_name : c_n3_r2_m4
+2022-03-07 15:08:45,624 auto_trainer.py INFO 239: Device : cuda
+2022-03-07 15:08:45,624 auto_trainer.py INFO 240: We are on!!!
+2022-03-07 15:09:37,731 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:09:37,731 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:09:37,731 auto_trainer.py INFO 236: We are on!!!
+2022-03-07 15:10:03,553 auto_trainer.py WARNING 376: Graceful Exit
+2022-03-07 15:10:26,177 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:10:26,177 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:10:26,177 auto_trainer.py INFO 236: We are on!!!
+2022-03-07 15:10:38,450 auto_trainer.py WARNING 378: Graceful Exit
+2022-03-07 15:10:49,907 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:10:49,907 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:10:49,907 auto_trainer.py INFO 236: We are on!!!
+2022-03-07 15:10:57,176 auto_trainer.py WARNING 380: Graceful Exit
+2022-03-07 15:11:47,577 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:11:47,577 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:11:47,577 auto_trainer.py INFO 236: We are on!!!
+2022-03-07 15:11:55,360 auto_trainer.py WARNING 380: Graceful Exit
+2022-03-07 15:12:08,749 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:12:08,749 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:12:08,749 auto_trainer.py INFO 236: We are on!!!
+2022-03-07 15:12:21,056 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:12:21,056 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:12:21,056 auto_trainer.py INFO 236: We are on!!!
+2022-03-07 15:12:42,173 auto_trainer.py WARNING 380: Graceful Exit
+2022-03-07 15:13:41,290 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:13:41,290 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:13:41,290 auto_trainer.py INFO 236: We are on!!!
+2022-03-07 15:15:08,933 auto_trainer.py WARNING 375: Graceful Exit
+2022-03-07 15:15:50,746 auto_trainer.py INFO 234: train_conf_name : c_n3_r2_m4
+2022-03-07 15:15:50,746 auto_trainer.py INFO 235: Device : cuda
+2022-03-07 15:15:50,746 auto_trainer.py INFO 236: We are on!!!
