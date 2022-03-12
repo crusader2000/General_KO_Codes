@@ -59,11 +59,9 @@ def encoding(n,r,m,msg_bits):
 		# print(msg_bits.size())
 		# print((msg_bits*np.ones((1,np.power(n,m)))).size())
 		#print('msg_bits is a tensor:  ',torch.is_tensor(msg_bits))
-		temp=np.ones((1,np.power(n,m)))
-		temp_tensor=torch.from_numpy(temp)
-		
-		temp_tensor_gpu=temp_tensor.to(device)
-		return msg_bits*temp_tensor_gpu
+		temp=torch.ones(1,np.power(n,m)).to(device)
+	
+		return msg_bits*temp
 	if r==m:
 		# print("r=m")
 		# print(msg_bits.size())
@@ -85,11 +83,11 @@ def encoding(n,r,m,msg_bits):
 	# print("rights",rights.size())
 	code = []
 	#lefts=lefts.to(device)
-	rights=rights.to(device)
+	# rights=rights.to(device)
 	for i in range(n-1):
 		# temp = torch.cat([lefts[i],rights],dim=2)
 		# print(np.shape(temp))
-		temp_tensor=torch.cat([lefts[i],rights],dim=2).to(device)
+		temp_tensor=torch.cat([lefts[i],rights],dim=2)
 		code.append(torch.squeeze(gnet_dict["G_{}_{}".format(r,m)](temp_tensor)))
 		# print(code[-1].size())
 	code.append(torch.squeeze(rights))
@@ -134,17 +132,17 @@ def decoding(n,r,m,code):
 
 	
 	sub_codes.append(code[:,(n-1)*sub_code_len:])
-	sub_codes_est.append(torch.zeros(sub_codes[-1].size()))
+	sub_codes_est.append(torch.zeros(sub_codes[-1].size()).to(device))
 	# print(sub_codes[-1].size())
 	#print(device)
 	#print('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 	#for tens in sub_codes_est:
 	#	print(tens.is_cuda)
 	#rint('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-	for i in range(len(sub_codes)):
-		sub_codes[i]=sub_codes[i].to(device)
-	for i in range(len(sub_codes_est)):
-                sub_codes_est[i]=sub_codes_est[i].to(device)
+	#for i in range(len(sub_codes)):
+	#	sub_codes[i]=sub_codes[i].to(device)
+	#for i in range(len(sub_codes_est)):
+         #       sub_codes_est[i]=sub_codes_est[i].to(device)
 
 	#print('xxxxxxxxxxxxxxxxxx>xxxxxxxxxx')
 	#for tens in sub_codes_est:
@@ -233,6 +231,8 @@ if __name__ == "__main__":
 	logger = get_logger(para["logger_name"])
 	logger.info("train_conf_name : "+conf_name)
 	logger.info("Device : "+str(device))
+	logger.info("conf file")
+	logger.info(conf)
 	logger.info("We are on!!!")
 
 	code_dimension = np.int64(para["code_dimension"])
@@ -241,6 +241,7 @@ if __name__ == "__main__":
 	n = para["n"]
 	r = para["r"]
 	m = para["m"]
+
 
 	print("code_dimension",code_dimension)
 	print("code_length",code_length)
@@ -350,9 +351,9 @@ if __name__ == "__main__":
 					# msg_input=msg_input.to(device)
 					decoded_bits.requires_grad=True
 					# msg_input.requires_grad=True
-					decoded_bits = torch.unsqueeze(decoded_bits,dim = 2)
+					# decoded_bits = torch.unsqueeze(decoded_bits,dim = 2)
 
-					loss = criterion(decoded_bits, msg_input )/num_small_batches
+					loss = criterion(decoded_bits, msg_input)/num_small_batches
 					
 					loss.backward()
 					ber += errors_ber(msg_input, decoded_bits.sign()).item()

@@ -3,7 +3,7 @@ import numpy as np
 from math import sqrt
 
 def snr_db2sigma(train_snr):
-  	return 10**(-train_snr*1.0/20)
+  	return 10**(train_snr*1.0/10)
 
 # Calculating BER
 def errors_ber(y_true, y_pred):
