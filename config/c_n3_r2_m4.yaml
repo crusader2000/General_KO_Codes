@@ -1,18 +1,18 @@
 para:
   train_batch_size: 100000
-  train_small_batch_size: 2500
+  train_small_batch_size: 25000
   test_size: 10000
-  full_iterations: 2000
-  # enc_train_iters: 5
-  # dec_train_iters: 25
-  enc_train_iters: 50
-  dec_train_iters: 500
+  full_iterations: 500
+  enc_train_iters: 5
+  dec_train_iters: 25
+  #enc_train_iters: 50
+  #dec_train_iters: 500
   # enc_train_iters: 2
   # dec_train_iters: 0
 
   hidden_size: 32
 
-  lr: 0.0001
+  lr: 0.00001
   seed: 1
 
   # log_interval: 100
@@ -26,8 +26,14 @@ para:
   code_dimension: None
 
   # Use in train validate data util
-  enc_train_snr: 6
-  dec_train_snr: 4
+  # Channel Type 1
+  # enc_train_snr: 4
+  # dec_train_snr: 2
+
+  # Channel Type 2
+  enc_train_snr: 0
+  dec_train_snr: -2
+
 
   data_file: "data/data_3_2.pth"
 
@@ -48,8 +54,8 @@ test:
  # Use in test_ber
   snr_list: 1,2,3,4,5,6
   Boosting_number_list: 1,2,3
-  day: Mar-08-2022
-  epoch_num: 100
+  day: Mar-24-2022
+  epoch_num: 500
   logger_name: C_{}_test
   test_model_path_encoder: "./save/{}/C_{}/enc_{}.pth"
   test_model_path_decoder: "./save/{}/C_{}/dec_{}.pth"

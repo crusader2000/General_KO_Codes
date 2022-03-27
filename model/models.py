@@ -21,13 +21,14 @@ class g_Full(nn.Module):
         
 
     def forward(self, y):
-        y = y.float().to(self.device)
+        y = y.float()
         x = F.selu(self.fc1(y))  
 
         x = F.selu(self.fc2(x))
 
         x = F.selu(self.fc3(x))
-        x = self.fc4(x) +  y[:, :, :self.half_input_size]*y[:,:, self.half_input_size:]
+        x = self.fc4(x) -  y[:, :, :self.half_input_size]*y[:,:, self.half_input_size:]
+        # x = self.fc4(x) 
         return x
     
 class f_Full(nn.Module):
@@ -43,7 +44,7 @@ class f_Full(nn.Module):
         self.fc4 = nn.Linear(self.hidden_size, self.output_size, bias=True).to(device)
 
     def forward(self, y):
-        y = y.float().to(self.device)
+        y = y.float()
         x = F.selu(self.fc1(y))
         x = F.selu(self.fc2(x))
 

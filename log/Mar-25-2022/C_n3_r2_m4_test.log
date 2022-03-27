@@ -1,0 +1,44 @@
+2022-03-25 10:24:03,976 auto_tester.py INFO 204: test_conf_name : c_n3_r2_m4
+2022-03-25 10:24:03,977 auto_tester.py INFO 205: Device : cuda
+2022-03-25 10:24:15,106 auto_tester.py INFO 245: Testing c_n3_r2_m4 trained till epoch_num 500
+2022-03-25 10:24:15,106 auto_tester.py INFO 246: Model trained on Mar-24-2022
+2022-03-25 10:24:15,107 auto_tester.py INFO 247: Less go!
+2022-03-25 10:25:44,173 auto_tester.py INFO 207: test_conf_name : c_n3_r2_m4
+2022-03-25 10:25:44,173 auto_tester.py INFO 208: Device : cuda
+2022-03-25 10:25:46,877 auto_tester.py INFO 248: Testing c_n3_r2_m4 trained till epoch_num 500
+2022-03-25 10:25:46,877 auto_tester.py INFO 249: Model trained on Mar-24-2022
+2022-03-25 10:25:46,877 auto_tester.py INFO 250: Less go!
+2022-03-25 10:26:00,912 auto_tester.py INFO 207: test_conf_name : c_n3_r2_m4
+2022-03-25 10:26:00,913 auto_tester.py INFO 208: Device : cuda
+2022-03-25 10:26:03,569 auto_tester.py INFO 248: Testing c_n3_r2_m4 trained till epoch_num 500
+2022-03-25 10:26:03,569 auto_tester.py INFO 249: Model trained on Mar-24-2022
+2022-03-25 10:26:03,569 auto_tester.py INFO 250: Less go!
+2022-03-25 10:26:32,891 auto_tester.py INFO 208: test_conf_name : c_n3_r2_m4
+2022-03-25 10:26:32,891 auto_tester.py INFO 209: Device : cuda
+2022-03-25 10:26:35,566 auto_tester.py INFO 249: Testing c_n3_r2_m4 trained till epoch_num 500
+2022-03-25 10:26:35,566 auto_tester.py INFO 250: Model trained on Mar-24-2022
+2022-03-25 10:26:35,566 auto_tester.py INFO 251: Less go!
+2022-03-25 10:27:25,999 auto_tester.py INFO 208: test_conf_name : c_n3_r2_m4
+2022-03-25 10:27:25,999 auto_tester.py INFO 209: Device : cuda
+2022-03-25 10:27:28,619 auto_tester.py INFO 249: Testing c_n3_r2_m4 trained till epoch_num 500
+2022-03-25 10:27:28,619 auto_tester.py INFO 250: Model trained on Mar-24-2022
+2022-03-25 10:27:28,619 auto_tester.py INFO 251: Less go!
+2022-03-25 10:27:32,475 auto_tester.py WARNING 175: [Testing Block] SNR=1 : BER=0.5000939
+2022-03-25 10:27:32,475 auto_tester.py INFO 176: Time for one full iteration is 0.0641 minutes
+2022-03-25 10:27:41,668 auto_tester.py INFO 205: test_conf_name : c_n3_r2_m4
+2022-03-25 10:27:41,669 auto_tester.py INFO 206: Device : cuda
+2022-03-25 10:27:44,334 auto_tester.py INFO 246: Testing c_n3_r2_m4 trained till epoch_num 500
+2022-03-25 10:27:44,334 auto_tester.py INFO 247: Model trained on Mar-24-2022
+2022-03-25 10:27:44,334 auto_tester.py INFO 248: Less go!
+2022-03-25 10:27:47,587 auto_tester.py WARNING 172: [Testing Block] SNR=1 : BER=0.5000939
+2022-03-25 10:27:47,588 auto_tester.py INFO 173: Time for one full iteration is 0.0541 minutes
+2022-03-25 10:27:50,577 auto_tester.py WARNING 172: [Testing Block] SNR=2 : BER=0.4996364
+2022-03-25 10:27:50,578 auto_tester.py INFO 173: Time for one full iteration is 0.0497 minutes
+2022-03-25 10:27:53,512 auto_tester.py WARNING 172: [Testing Block] SNR=3 : BER=0.5003212
+2022-03-25 10:27:53,512 auto_tester.py INFO 173: Time for one full iteration is 0.0488 minutes
+2022-03-25 10:27:56,484 auto_tester.py WARNING 172: [Testing Block] SNR=4 : BER=0.4996636
+2022-03-25 10:27:56,484 auto_tester.py INFO 173: Time for one full iteration is 0.0494 minutes
+2022-03-25 10:27:59,469 auto_tester.py WARNING 172: [Testing Block] SNR=5 : BER=0.5005788
+2022-03-25 10:27:59,469 auto_tester.py INFO 173: Time for one full iteration is 0.0497 minutes
+2022-03-25 10:28:02,417 auto_tester.py WARNING 172: [Testing Block] SNR=6 : BER=0.4997939
+2022-03-25 10:28:02,417 auto_tester.py INFO 173: Time for one full iteration is 0.0490 minutes
