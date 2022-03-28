@@ -27,7 +27,8 @@ class g_Full(nn.Module):
         x = F.selu(self.fc2(x))
 
         x = F.selu(self.fc3(x))
-        x = self.fc4(x) -  y[:, :, :self.half_input_size]*y[:,:, self.half_input_size:]
+        # x = self.fc4(x) -  y[:, :, :self.half_input_size]*y[:,:, self.half_input_size:]
+        x = self.fc4(x) +  y[:, :, :self.half_input_size]*y[:,:, self.half_input_size:]
         # x = self.fc4(x) 
         return x
     

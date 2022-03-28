@@ -53,6 +53,14 @@ dec_params = []
 
 device = None
 
+
+def log_sum_exp(LLR_vector):
+	# print(LLR_vector.size())
+	sum_vector = LLR_vector.sum(dim=1, keepdim=True)
+	sum_concat = torch.cat([sum_vector, torch.zeros_like(sum_vector)], dim=1)
+	# print(torch.logsumexp(sum_concat, dim=1).size())
+	return torch.logsumexp(sum_concat, dim=1)- torch.logsumexp(LLR_vector, dim=1) 
+
 def encoding(n,r,m,msg_bits):
 	if r==0:
 		temp=torch.ones(1,n**m).to(device)
@@ -80,16 +88,18 @@ def encoding(n,r,m,msg_bits):
 	return code
 
 def decoding(n,r,m,code):
-  
+	# print("decoding")
 	if r==0:
-		s = torch.sum(torch.squeeze(code),dim=1) > 0
-		s = torch.unsqueeze(s.int(),1)
-		return 2*s-1
+		# s = torch.sum(torch.squeeze(code),dim=1) > 0
+		# s = torch.unsqueeze(s.int(),1)
+		# return 2*s-1
+		return torch.tanh(torch.sum(code,dim=1)/2)
 	
 	if r==m:
-		msg = torch.squeeze(code) > 0
-		msg = msg.int()
-		return 2*msg-1
+		# msg = torch.squeeze(code) > 0
+		# msg = msg.int()
+		# return 2*msg-1
+		return torch.tanh(torch.squeeze(code)/2)
 
 	msg_bits = torch.tensor([]).to(device)
 	sub_code_len = np.power(n,m-1)
@@ -97,31 +107,47 @@ def decoding(n,r,m,code):
 	sub_codes_est = []
 	codewords = []
 	
-	y = code[:,(n-1)*sub_code_len:]
+	y_v = code[:,(n-1)*sub_code_len:]
 	for i in range(n-1):
-		sub_codes.append(code[:,i*sub_code_len:(i+1)*sub_code_len])
-		x = code[:,i*sub_code_len:(i+1)*sub_code_len]
-		sub_codes_est.append(fnet_dict["F_{}_{}_l".format(r,m)](torch.cat( \
-				[x,y],dim=2)))
-		m_i = decoding(n,r-1,m-1,sub_codes_est[-1])
+		
+		y_ui = code[:,i*sub_code_len:(i+1)*sub_code_len]
+		sub_codes.append(y_ui)
+		
+		temp = torch.cat([y_v,y_ui],dim=2)
+		# print("temp.size()")
+		# print(y_v.size())
+		# print(y_ui.size())
+		# print(temp.size())
+		L_ui = fnet_dict["F_{}_{}_l".format(r,m)](temp) + log_sum_exp(temp.permute(0, 2, 1)).unsqueeze(2)
+		
+		m_i = decoding(n,r-1,m-1,L_ui)
 		msg_bits = torch.hstack([msg_bits,m_i])
+
 		c_i = torch.unsqueeze(encoding(n,r-1,m-1,m_i),dim=2)
 		codewords.append(c_i)
 
 	
-	sub_codes.append(code[:,(n-1)*sub_code_len:])
+	sub_codes.append(y_v)
 	#sub_codes_est.append(torch.zeros(sub_codes[-1].size()).to(device))
 	#codewords.append(torch.zeros(sub_codes[-1].size()).to(device))
 	
+	# print(sub_codes[0].size())
+	# print(sub_codes_est[0].size())
+	# print(codewords[0].size())
+
+	
 	sub_codes	=	torch.cat(sub_codes,dim=2)
-	sub_codes_est	=	torch.cat(sub_codes_est,dim=2)
+	# sub_codes_est	=	torch.cat(sub_codes_est,dim=2)
 	codewords	=	torch.cat(codewords,dim=2)
 
-	final_tensor	=	torch.cat((sub_codes,sub_codes_est,codewords),dim=2)
-	
-	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](final_tensor)
-
+	# final_tensor	=	torch.cat((sub_codes,sub_codes_est,codewords),dim=2)
+	final_tensor	=	torch.cat((sub_codes,codewords),dim=2)
+	# print("final_tensor.size()")
+	# print(final_tensor.size())
+	# print(c_i.size())
+	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + y_v + c_i*y_ui
 	msg_bits = torch.hstack([msg_bits,decoding(n,r,m-1,last_bits)])
+	
 	return msg_bits
 
 def initialize(n,r,m,hidden_size,device):
@@ -133,15 +159,20 @@ def initialize(n,r,m,hidden_size,device):
 		gnet_dict["G_{}_{}".format(r,m)] = g_Full(2, hidden_size, 1, device)
 		fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1, device)
 		# fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(2*n, hidden_size, 1, device)
-		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+2*(n-1), hidden_size, 1, device)
+		# fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+2*(n-1), hidden_size, 1, device)
+		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+(n-1), hidden_size, 1, device)
 		#fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(3*n, hidden_size, 1, device)
+
+		gnet_dict["G_{}_{}".format(r,m)].apply(weights_init)
+		fnet_dict["F_{}_{}_l".format(r,m)].apply(weights_init)
+		fnet_dict["F_{}_{}_r".format(r,m)].apply(weights_init)
+
 		enc_params += list(gnet_dict["G_{}_{}".format(r,m)].parameters())
 		dec_params += list(fnet_dict["F_{}_{}_l".format(r,m)].parameters()) + \
 		              list(fnet_dict["F_{}_{}_r".format(r,m)].parameters()) 	
 		initialize(n,r-1,m-1,hidden_size,device)
 		initialize(n,r,m-1,hidden_size,device)
 	return
-
 
 def test(snr, rate, code_dimension):
 	global device
@@ -164,8 +195,8 @@ def test(snr, rate, code_dimension):
 					L = get_LLR(corrupted_codewords, snr,rate)
 					decoded_bits = decoding(n,r,m,L)
 
-					decoded_bits=decoded_bits.to('cuda')
-					msg_bits=msg_bits.to('cuda')
+					# decoded_bits=decoded_bits.to('cuda')
+					# msg_bits=msg_bits.to('cuda')
 					ber += errors_ber(msg_bits, decoded_bits.sign()).item()
 			
 			ber /= num_test_batches
