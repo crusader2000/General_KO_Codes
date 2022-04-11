@@ -16,3 +16,6 @@ conda activate venv
 
 python -m app.auto_trainer c_n2_r1_m6
 
+
+python -m app.auto_tester c_n2_r1_m6
+

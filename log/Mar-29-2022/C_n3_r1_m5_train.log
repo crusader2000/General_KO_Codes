@@ -1,0 +1,34 @@
+2022-03-29 18:52:59,299 auto_trainer.py INFO 217: train_conf_name : c_n3_r1_m5
+2022-03-29 18:52:59,299 auto_trainer.py INFO 218: Device : cuda
+2022-03-29 18:52:59,299 auto_trainer.py INFO 219: conf file
+2022-03-29 18:52:59,299 auto_trainer.py INFO 220: {'para': {'train_batch_size': 100000, 'train_small_batch_size': 25000, 'test_size': 10000, 'full_iterations': 500, 'enc_train_iters': 5, 'dec_train_iters': 25, 'hidden_size': 32, 'lr': 1e-05, 'seed': 1, 'n': 3, 'r': 1, 'm': 5, 'code_length': 243, 'code_dimension': 11, 'enc_train_snr': 0, 'dec_train_snr': -2, 'data_type': 'n3_r1_m5', 'logger_name': 'C_n3_r1_m5_train', 'CUDA_VISIBLE_DEVICES': '1', 'train_save_path_dir': './save/{}/C_{}', 'train_save_path_encoder': './save/{}/C_{}/enc_{}.pth', 'train_save_path_decoder': './save/{}/C_{}/dec_{}.pth', 'retrain': False, 'retrain_day': 'Jan-05-2022', 'retrain_epoch_num': 21}, 'test': {'snr_list': '-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0', 'Boosting_number_list': '1,2,3', 'day': 'Mar-29-2022', 'epoch_num': 91, 'logger_name': 'C_n3_r1_m5_test', 'test_model_path_encoder': './save/{}/C_{}/enc_{}.pth', 'test_model_path_decoder': './save/{}/C_{}/dec_{}.pth'}}
+2022-03-29 18:52:59,299 auto_trainer.py INFO 221: We are on!!!
+2022-03-29 18:53:16,710 auto_trainer.py INFO 217: train_conf_name : c_n3_r1_m5
+2022-03-29 18:53:16,710 auto_trainer.py INFO 218: Device : cuda
+2022-03-29 18:53:16,710 auto_trainer.py INFO 219: conf file
+2022-03-29 18:53:16,710 auto_trainer.py INFO 220: {'para': {'train_batch_size': 100000, 'train_small_batch_size': 2500, 'test_size': 10000, 'full_iterations': 500, 'enc_train_iters': 5, 'dec_train_iters': 25, 'hidden_size': 32, 'lr': 1e-05, 'seed': 1, 'n': 3, 'r': 1, 'm': 5, 'code_length': 243, 'code_dimension': 11, 'enc_train_snr': 0, 'dec_train_snr': -2, 'data_type': 'n3_r1_m5', 'logger_name': 'C_n3_r1_m5_train', 'CUDA_VISIBLE_DEVICES': '1', 'train_save_path_dir': './save/{}/C_{}', 'train_save_path_encoder': './save/{}/C_{}/enc_{}.pth', 'train_save_path_decoder': './save/{}/C_{}/dec_{}.pth', 'retrain': False, 'retrain_day': 'Jan-05-2022', 'retrain_epoch_num': 21}, 'test': {'snr_list': '-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0', 'Boosting_number_list': '1,2,3', 'day': 'Mar-29-2022', 'epoch_num': 91, 'logger_name': 'C_n3_r1_m5_test', 'test_model_path_encoder': './save/{}/C_{}/enc_{}.pth', 'test_model_path_decoder': './save/{}/C_{}/dec_{}.pth'}}
+2022-03-29 18:53:16,711 auto_trainer.py INFO 221: We are on!!!
+2022-03-29 18:56:27,660 auto_trainer.py INFO 331: [1/500] At ENC SNR 0.000000 dB DEC SNR -2.000000 dB, Loss: 0.3634071052 BER: 0.3783636391
+2022-03-29 18:56:27,661 auto_trainer.py INFO 332: Time for one full iteration is 3.1445 minutes
+2022-03-29 18:59:36,336 auto_trainer.py INFO 331: [2/500] At ENC SNR 0.000000 dB DEC SNR -2.000000 dB, Loss: 0.3482434452 BER: 0.3763999939
+2022-03-29 18:59:36,336 auto_trainer.py INFO 332: Time for one full iteration is 3.1393 minutes
+2022-03-29 18:59:40,798 auto_trainer.py WARNING 356: Graceful Exit
+2022-03-29 18:59:44,625 auto_trainer.py INFO 217: train_conf_name : c_n3_r1_m5
+2022-03-29 18:59:44,625 auto_trainer.py INFO 218: Device : cuda
+2022-03-29 18:59:44,625 auto_trainer.py INFO 219: conf file
+2022-03-29 18:59:44,625 auto_trainer.py INFO 220: {'para': {'train_batch_size': 100000, 'train_small_batch_size': 2500, 'test_size': 10000, 'full_iterations': 500, 'enc_train_iters': 5, 'dec_train_iters': 25, 'hidden_size': 32, 'lr': 1e-05, 'seed': 1, 'n': 3, 'r': 1, 'm': 5, 'code_length': 243, 'code_dimension': 11, 'enc_train_snr': 0, 'dec_train_snr': -2, 'data_type': 'n3_r1_m5', 'logger_name': 'C_n3_r1_m5_train', 'CUDA_VISIBLE_DEVICES': '1', 'train_save_path_dir': './save/{}/C_{}', 'train_save_path_encoder': './save/{}/C_{}/enc_{}.pth', 'train_save_path_decoder': './save/{}/C_{}/dec_{}.pth', 'retrain': False, 'retrain_day': 'Jan-05-2022', 'retrain_epoch_num': 21}, 'test': {'snr_list': '-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0', 'Boosting_number_list': '1,2,3', 'day': 'Mar-29-2022', 'epoch_num': 91, 'logger_name': 'C_n3_r1_m5_test', 'test_model_path_encoder': './save/{}/C_{}/enc_{}.pth', 'test_model_path_decoder': './save/{}/C_{}/dec_{}.pth'}}
+2022-03-29 18:59:44,626 auto_trainer.py INFO 221: We are on!!!
+2022-03-29 19:00:03,558 auto_trainer.py INFO 217: train_conf_name : c_n3_r1_m5
+2022-03-29 19:00:03,558 auto_trainer.py INFO 218: Device : cuda
+2022-03-29 19:00:03,558 auto_trainer.py INFO 219: conf file
+2022-03-29 19:00:03,558 auto_trainer.py INFO 220: {'para': {'train_batch_size': 100000, 'train_small_batch_size': 2500, 'test_size': 10000, 'full_iterations': 500, 'enc_train_iters': 5, 'dec_train_iters': 25, 'hidden_size': 32, 'lr': 1e-05, 'seed': 1, 'n': 3, 'r': 1, 'm': 5, 'code_length': 243, 'code_dimension': 11, 'enc_train_snr': 0, 'dec_train_snr': -2, 'data_type': 'n3_r1_m5', 'logger_name': 'C_n3_r1_m5_train', 'CUDA_VISIBLE_DEVICES': '1', 'train_save_path_dir': './save/{}/C_{}', 'train_save_path_encoder': './save/{}/C_{}/enc_{}.pth', 'train_save_path_decoder': './save/{}/C_{}/dec_{}.pth', 'retrain': False, 'retrain_day': 'Jan-05-2022', 'retrain_epoch_num': 21}, 'test': {'snr_list': '-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0', 'Boosting_number_list': '1,2,3', 'day': 'Mar-29-2022', 'epoch_num': 91, 'logger_name': 'C_n3_r1_m5_test', 'test_model_path_encoder': './save/{}/C_{}/enc_{}.pth', 'test_model_path_decoder': './save/{}/C_{}/dec_{}.pth'}}
+2022-03-29 19:00:03,558 auto_trainer.py INFO 221: We are on!!!
+2022-03-29 19:03:06,424 auto_trainer.py INFO 331: [1/500] At ENC SNR 0.000000 dB DEC SNR -2.000000 dB, Loss: 0.1791888922 BER: 0.2550908923
+2022-03-29 19:03:06,424 auto_trainer.py INFO 332: Time for one full iteration is 3.0096 minutes
+2022-03-29 19:06:06,931 auto_trainer.py INFO 331: [2/500] At ENC SNR 0.000000 dB DEC SNR -2.000000 dB, Loss: 0.1678798050 BER: 0.2555272579
+2022-03-29 19:06:06,931 auto_trainer.py INFO 332: Time for one full iteration is 3.0053 minutes
+2022-03-29 19:09:07,133 auto_trainer.py INFO 331: [3/500] At ENC SNR 0.000000 dB DEC SNR -2.000000 dB, Loss: 0.1796616316 BER: 0.2556727231
+2022-03-29 19:09:07,133 auto_trainer.py INFO 332: Time for one full iteration is 3.0034 minutes
+2022-03-29 19:12:07,656 auto_trainer.py INFO 331: [4/500] At ENC SNR 0.000000 dB DEC SNR -2.000000 dB, Loss: 0.1862572581 BER: 0.2609090805
+2022-03-29 19:12:07,656 auto_trainer.py INFO 332: Time for one full iteration is 3.0087 minutes
+2022-03-29 19:12:19,551 auto_trainer.py WARNING 356: Graceful Exit

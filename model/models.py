@@ -53,3 +53,22 @@ class f_Full(nn.Module):
         x = self.fc4(x)
         return x
     
+
+class f_Half(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size, device):
+        super(f_Half, self).__init__()
+        self.input_size  = input_size
+        self.hidden_size = hidden_size
+        self.output_size = output_size
+        self.device = device 
+        self.fc1 = nn.Linear(self.input_size, self.hidden_size, bias=True).to(device)
+        self.fc2 = nn.Linear(self.hidden_size, self.hidden_size, bias=True).to(device)
+        self.fc3 = nn.Linear(self.hidden_size, self.output_size, bias=True).to(device)
+
+    def forward(self, y):
+        y = y.float()
+        x = F.selu(self.fc1(y))
+        x = F.selu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+    

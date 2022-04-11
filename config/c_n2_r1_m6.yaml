@@ -1,8 +1,8 @@
 para:
   train_batch_size: 100000
   train_small_batch_size: 25000
-  test_size: 10000
-  full_iterations: 500
+  test_size: 1000000
+  full_iterations: 100
   enc_train_iters: 5
   dec_train_iters: 25
   # enc_train_iters: 50
@@ -10,7 +10,7 @@ para:
   # enc_train_iters: 2
   # dec_train_iters: 0
 
-  hidden_size: 32
+  hidden_size: 64
 
   lr: 0.00001
   seed: 1
@@ -35,7 +35,7 @@ para:
   dec_train_snr: -2
 
 
-  data_file: "data/data_3_2.pth"
+  # data_file: "data/data_3_2.pth"
 
   data_type: "n2_r1_m6"
   logger_name: C_{}_train
@@ -53,10 +53,11 @@ para:
 test:
  # Use in test_ber
   #snr_list: 1,2,3,4,5,6
-  snr_list: -6,-5,-4,-3,-2,-1,0,1
+  snr_list: -10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0
+  #snr_list: -5,-4,-3,-2,-1,0,1
   Boosting_number_list: 1,2,3
-  day: Mar-28-2022
-  epoch_num: 181
+  day: Apr-08-2022
+  epoch_num: 100
   logger_name: C_{}_test
   test_model_path_encoder: "./save/{}/C_{}/enc_{}.pth"
   test_model_path_decoder: "./save/{}/C_{}/dec_{}.pth"

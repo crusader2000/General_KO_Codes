@@ -16,10 +16,10 @@ from util.conf_util import *
 from util.log_util import *
 from util.utils import *
 from model.models import *
+from app.operations import * 
+import app.sharedstuff as sharedstuff
 
 import sys
-import pickle
-import glob
 import os
 import logging
 import time
@@ -44,125 +44,9 @@ def moving_average(a, n=3) :
 bers = []
 losses = []
 
-gnet_dict = {}
-fnet_dict = {}
-
-enc_params = []
-dec_params = []
-
-device = None
-
-
-def log_sum_exp(LLR_vector):
-	# print(LLR_vector.size())
-	sum_vector = LLR_vector.sum(dim=1, keepdim=True)
-	sum_concat = torch.cat([sum_vector, torch.zeros_like(sum_vector)], dim=1)
-	# print(torch.logsumexp(sum_concat, dim=1).size())
-	return torch.logsumexp(sum_concat, dim=1)- torch.logsumexp(LLR_vector, dim=1) 
-
-def encoding(n,r,m,msg_bits):
-	if r==0:
-		temp=torch.ones(1,n**m).to(device)
-		return msg_bits*temp
-	if r==m:
-		return msg_bits
-	
-	lefts = []
-	lcd = get_dimen(n,r-1,m-1)
-	
-	for i in range(n-1):
-		lefts.append(torch.unsqueeze(encoding(n,r-1,m-1,msg_bits[:,i*lcd:(i+1)*lcd]),2))
-
-
-	rights = torch.unsqueeze(encoding(n,r,m-1,msg_bits[:,(n-1)*lcd:]),2)
-
-	code = []
-	for i in range(n-1):
-		temp_tensor=torch.cat([lefts[i],rights],dim=2)
-		code.append(torch.squeeze(gnet_dict["G_{}_{}".format(r,m)](temp_tensor)))
-
-	code.append(torch.squeeze(rights))
-	code = torch.hstack(code)
-
-	return code
-
-def decoding(n,r,m,code):
-	if r==0:
-		return torch.tanh(torch.sum(code,dim=1)/2)
-	
-	if r==m:
-		return torch.tanh(torch.squeeze(code)/2)
-
-	msg_bits = torch.tensor([]).to(device)
-	sub_code_len = np.power(n,m-1)
-	sub_codes = []
-	sub_codes_est = []
-	codewords = []
-	
-	y_v = code[:,(n-1)*sub_code_len:,:]
-	
-	for i in range(n-1):
-		y_ui = code[:,i*sub_code_len:(i+1)*sub_code_len,:]
-		sub_codes.append(y_ui)
-		
-		temp = torch.cat([y_v,y_ui],dim=2)
-		L_ui = fnet_dict["F_{}_{}_l".format(r,m)](temp) + log_sum_exp(temp.permute(0, 2, 1)).unsqueeze(2)
-		
-		m_i = decoding(n,r-1,m-1,L_ui)
-		msg_bits = torch.hstack([msg_bits,m_i])
-
-		c_i = torch.unsqueeze(encoding(n,r-1,m-1,m_i),dim=2)
-		codewords.append(c_i)
-
-	
-	sub_codes.append(y_v)
-	#sub_codes_est.append(torch.zeros(sub_codes[-1].size()).to(device))
-	#codewords.append(torch.zeros(sub_codes[-1].size()).to(device))
-	
-	# print(sub_codes[0].size())
-	# print(sub_codes_est[0].size())
-	# print(codewords[0].size())
-
-	
-	sub_codes	=	torch.cat(sub_codes,dim=2)
-	# sub_codes_est	=	torch.cat(sub_codes_est,dim=2)
-	codewords	=	torch.cat(codewords,dim=2)
-
-	# final_tensor	=	torch.cat((sub_codes,sub_codes_est,codewords),dim=2)
-	final_tensor	=	torch.cat((sub_codes,codewords),dim=2)
-	# print("final_tensor.size()")
-	# print(final_tensor.size())
-	# print(c_i.size())
-	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + y_v + c_i*y_ui
-	msg_bits = torch.hstack([msg_bits,decoding(n,r,m-1,last_bits)])
-	
-	return msg_bits
-
-def initialize(n,r,m,hidden_size,device):
-	global enc_params
-	global dec_params
-	if r==0 or r==m:
-		return
-	if not gnet_dict.__contains__("G_{}_{}".format(r,m)):
-		gnet_dict["G_{}_{}".format(r,m)] = g_Full(2, hidden_size, 1, device)
-		fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1, device)
-		# fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(2*n, hidden_size, 1, device)
-		# fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+2*(n-1), hidden_size, 1, device)
-		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+(n-1), hidden_size, 1, device)
-		#fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(3*n, hidden_size, 1, device)
-
-		gnet_dict["G_{}_{}".format(r,m)].apply(weights_init)
-		fnet_dict["F_{}_{}_l".format(r,m)].apply(weights_init)
-		fnet_dict["F_{}_{}_r".format(r,m)].apply(weights_init)
-
-		enc_params += list(gnet_dict["G_{}_{}".format(r,m)].parameters())
-		dec_params += list(fnet_dict["F_{}_{}_l".format(r,m)].parameters()) + \
-		              list(fnet_dict["F_{}_{}_r".format(r,m)].parameters()) 	
-		initialize(n,r-1,m-1,hidden_size,device)
-		initialize(n,r,m-1,hidden_size,device)
-	return
-
 if __name__ == "__main__":
+	sharedstuff.init() 
+	
 	if len(sys.argv) == 2:
 		conf_name = sys.argv[1]
 		print("train conf_name:", conf_name)
@@ -172,23 +56,23 @@ if __name__ == "__main__":
 		conf = get_default_conf()
 
 	if torch.cuda.is_available():
-		device = torch.device("cuda")
+		sharedstuff.device = torch.device("cuda")
 		os.environ["CUDA_VISIBLE_DEVICES"] = conf["para"]["CUDA_VISIBLE_DEVICES"]
-		print(device,os.environ["CUDA_VISIBLE_DEVICES"])
+		print(sharedstuff.device,os.environ["CUDA_VISIBLE_DEVICES"])
 	else:
-		device = torch.device("cpu")
-		print(device)
+		sharedstuff.device = torch.device("cpu")
+		print(sharedstuff.device)
 	
 	data = {}
 
 	bers = []
 	losses = []
 
-	gnet_dict = {}
-	fnet_dict = {}
+	sharedstuff.gnet_dict = {}
+	sharedstuff.fnet_dict = {}
 
-	enc_params = []
-	dec_params = []
+	sharedstuff.enc_params = []
+	sharedstuff.dec_params = []
 
 	para = conf["para"]
 	seed = para["seed"]
@@ -201,7 +85,7 @@ if __name__ == "__main__":
 
 	logger = get_logger(para["logger_name"])
 	logger.info("train_conf_name : "+conf_name)
-	logger.info("Device : "+str(device))
+	logger.info("Device : "+str(sharedstuff.device))
 	logger.info("conf file")
 	logger.info(conf)
 	logger.info("We are on!!!")
@@ -221,12 +105,12 @@ if __name__ == "__main__":
 
 	hidden_size = para["hidden_size"]
 
-	initialize(n,r,m,hidden_size,device)
+	initialize(n,r,m,hidden_size)
 
 	criterion = BCEWithLogitsLoss()
 		
-	enc_optimizer = optim.Adam(enc_params, lr=para["lr"])
-	dec_optimizer = optim.Adam(dec_params, lr=para["lr"])
+	enc_optimizer = optim.Adam(sharedstuff.enc_params, lr=para["lr"])
+	dec_optimizer = optim.Adam(sharedstuff.dec_params, lr=para["lr"])
 
 	bers = []
 	losses = []
@@ -249,10 +133,10 @@ if __name__ == "__main__":
 		saved_model_dec = torch.load(model_path_decoder)
 
 		for key,val in saved_model_enc.items():
-			gnet_dict[key].load_state_dict(val)
+			sharedstuff.gnet_dict[key].load_state_dict(val)
 
 		for key,val in saved_model_dec.items():
-			fnet_dict[key].load_state_dict(val)
+			sharedstuff.fnet_dict[key].load_state_dict(val)
 
 		logger.info("Retraining Model " + conf_name + " : " +str(para["retrain_day"]) +" Epoch: "+str(para["retrain_epoch_num"]))
 
@@ -262,7 +146,7 @@ if __name__ == "__main__":
 		for k in range(start_epoch, para["full_iterations"]):
 			start_time = time.time()
 			msg_bits_large_batch = 2*torch.randint(0,2,(para["train_batch_size"], code_dimension)).to(torch.float32) -1
-			msg_bits_large_batch = msg_bits_large_batch.to(device)
+			msg_bits_large_batch = msg_bits_large_batch.to(sharedstuff.device)
 
 			num_small_batches = int(para["train_batch_size"]/para["train_small_batch_size"])
 
@@ -277,13 +161,15 @@ if __name__ == "__main__":
 					transmit_codewords = F.normalize(codewords, p=2, dim=1)*sqrt(code_length)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["dec_train_snr"],rate)
-					L = get_LLR(corrupted_codewords, para["dec_train_snr"],rate)
-					decoded_bits = decoding(n,r,m,L)
+					# L = get_LLR(corrupted_codewords, para["enc_train_snr"],rate)
+					# decoded_bits = decoding(n,r,m,L)
+					decoded_bits = decoding(n,r,m,corrupted_codewords)
+
 					# print(msg_input[:10,:])
 					# print(decoded_bits[:10,:])
 					# decoded_bits.requires_grad=True
 
-					loss = criterion(decoded_bits.sign(), msg_input)					
+					loss = criterion(decoded_bits, 0.5*msg_input+0.5)/num_small_batches					
 					loss.backward()
 				dec_optimizer.step()
 
@@ -295,19 +181,20 @@ if __name__ == "__main__":
 				enc_optimizer.zero_grad()        
 				for i in range(num_small_batches):
 					start, end = i*para["train_small_batch_size"], (i+1)*para["train_small_batch_size"]
-					msg_input = msg_bits_large_batch[start:end].to(device)						
+					msg_input = msg_bits_large_batch[start:end].to(sharedstuff.device)						
 					codewords = encoding(n,r,m,msg_input)      
 					transmit_codewords = F.normalize(codewords, p=2, dim=1)*sqrt(code_length)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
 					corrupted_codewords = awgn_channel(transmit_codewords, para["enc_train_snr"],rate)
-					L = get_LLR(corrupted_codewords, para["enc_train_snr"],rate)
-					decoded_bits = decoding(n,r,m,L)
-					# decoded_bits.requires_grad=True
+					# L = get_LLR(corrupted_codewords, para["enc_train_snr"],rate)
+					# decoded_bits = decoding(n,r,m,L)
+					decoded_bits = decoding(n,r,m,corrupted_codewords)
 
-					loss = criterion(decoded_bits.sign(), msg_input)
+					loss = criterion(decoded_bits, 0.5*msg_input+0.5)/num_small_batches					
 					loss.backward()
 					
-					ber = errors_ber(msg_input, decoded_bits.sign()).item()
+				ber = errors_ber(msg_input, decoded_bits.sign()).item()
+				
 				enc_optimizer.step()
 				print("Encoder",iter_num)
 				#ber /= num_small_batches	
@@ -319,8 +206,8 @@ if __name__ == "__main__":
 
 			losses.append(loss.item())
 			if k % 10 == 0:
-				torch.save(dict(zip(list(gnet_dict.keys()), [v.state_dict() for v in gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, k+1))
-				torch.save(dict(zip(list(fnet_dict.keys()), [v.state_dict() for v in fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, k+1))
+				torch.save(dict(zip(list(sharedstuff.gnet_dict.keys()), [v.state_dict() for v in sharedstuff.gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, k+1))
+				torch.save(dict(zip(list(sharedstuff.fnet_dict.keys()), [v.state_dict() for v in sharedstuff.fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, k+1))
 
 				plt.figure()
 				plt.plot(bers)
@@ -347,7 +234,7 @@ if __name__ == "__main__":
 	plt.figure()
 	plt.plot(bers)
 	plt.plot(moving_average(bers, n=5))
-	plt.legend(("bers","moving_average"))
+	plt.legend(("bers","moving_average_bers"))
 	plt.xlabel("Iterations")
 
 	plt.savefig(train_save_dirpath +'/training_ber.png')
@@ -356,10 +243,10 @@ if __name__ == "__main__":
 	plt.figure()
 	plt.plot(losses)
 	plt.plot(moving_average(losses, n=5))
-	plt.legend(("bers","moving_average"))
+	plt.legend(("losses","moving_average_losses"))
 	plt.xlabel("Iterations")
 	plt.savefig(train_save_dirpath +'/training_losses.png')
 	plt.close()
-	torch.save(dict(zip(list(gnet_dict.keys()), [v.state_dict() for v in gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, para["full_iterations"]))
+	torch.save(dict(zip(list(sharedstuff.gnet_dict.keys()), [v.state_dict() for v in sharedstuff.gnet_dict.values()])),para["train_save_path_encoder"].format(today, data_type, para["full_iterations"]))
 
-	torch.save(dict(zip(list(fnet_dict.keys()), [v.state_dict() for v in fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, para["full_iterations"]))
+	torch.save(dict(zip(list(sharedstuff.fnet_dict.keys()), [v.state_dict() for v in sharedstuff.fnet_dict.values()])),para["train_save_path_decoder"].format(today, data_type, para["full_iterations"]))

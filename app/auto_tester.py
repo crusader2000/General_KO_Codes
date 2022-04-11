@@ -15,7 +15,9 @@ from IPython import display
 from util.conf_util import *
 from util.log_util import *
 from util.utils import *
+from app.operations import * 
 from model.models import *
+import app.sharedstuff as sharedstuff
 
 import sys
 import pickle
@@ -40,145 +42,20 @@ def moving_average(a, n=3) :
 	ret[n:] = ret[n:] - ret[:-n]
 	return ret[n - 1:] / n
 
+def format_e(n):
+    a = '%E' % n
+    return a.split('E')[0].rstrip('0').rstrip('.') + 'E' + a.split('E')[1]
+
+
 # data = {}
 
 bers = []
 losses = []
-
-gnet_dict = {}
-fnet_dict = {}
-
-enc_params = []
-dec_params = []
-
-device = None
-
-
-def log_sum_exp(LLR_vector):
-	# print(LLR_vector.size())
-	sum_vector = LLR_vector.sum(dim=1, keepdim=True)
-	sum_concat = torch.cat([sum_vector, torch.zeros_like(sum_vector)], dim=1)
-	# print(torch.logsumexp(sum_concat, dim=1).size())
-	return torch.logsumexp(sum_concat, dim=1)- torch.logsumexp(LLR_vector, dim=1) 
-
-def encoding(n,r,m,msg_bits):
-	if r==0:
-		temp=torch.ones(1,n**m).to(device)
-		return msg_bits*temp
-	if r==m:
-		return msg_bits
 	
-	lefts = []
-	lcd = get_dimen(n,r-1,m-1)
-	
-	for i in range(n-1):
-		lefts.append(torch.unsqueeze(encoding(n,r-1,m-1,msg_bits[:,i*lcd:(i+1)*lcd]),2))
-
-
-	rights = torch.unsqueeze(encoding(n,r,m-1,msg_bits[:,(n-1)*lcd:]),2)
-
-	code = []
-	for i in range(n-1):
-		temp_tensor=torch.cat([lefts[i],rights],dim=2)
-		code.append(torch.squeeze(gnet_dict["G_{}_{}".format(r,m)](temp_tensor)))
-
-	code.append(torch.squeeze(rights))
-	code = torch.hstack(code)
-
-	return code
-
-def decoding(n,r,m,code):
-	# print("decoding")
-	if r==0:
-		# s = torch.sum(torch.squeeze(code),dim=1) > 0
-		# s = torch.unsqueeze(s.int(),1)
-		# return 2*s-1
-		return torch.tanh(torch.sum(code,dim=1)/2)
-	
-	if r==m:
-		# msg = torch.squeeze(code) > 0
-		# msg = msg.int()
-		# return 2*msg-1
-		return torch.tanh(torch.squeeze(code)/2)
-
-	msg_bits = torch.tensor([]).to(device)
-	sub_code_len = np.power(n,m-1)
-	sub_codes = []
-	sub_codes_est = []
-	codewords = []
-	
-	y_v = code[:,(n-1)*sub_code_len:]
-	for i in range(n-1):
-		
-		y_ui = code[:,i*sub_code_len:(i+1)*sub_code_len]
-		sub_codes.append(y_ui)
-		
-		temp = torch.cat([y_v,y_ui],dim=2)
-		# print("temp.size()")
-		# print(y_v.size())
-		# print(y_ui.size())
-		# print(temp.size())
-		L_ui = fnet_dict["F_{}_{}_l".format(r,m)](temp) + log_sum_exp(temp.permute(0, 2, 1)).unsqueeze(2)
-		
-		m_i = decoding(n,r-1,m-1,L_ui)
-		msg_bits = torch.hstack([msg_bits,m_i])
-
-		c_i = torch.unsqueeze(encoding(n,r-1,m-1,m_i),dim=2)
-		codewords.append(c_i)
-
-	
-	sub_codes.append(y_v)
-	#sub_codes_est.append(torch.zeros(sub_codes[-1].size()).to(device))
-	#codewords.append(torch.zeros(sub_codes[-1].size()).to(device))
-	
-	# print(sub_codes[0].size())
-	# print(sub_codes_est[0].size())
-	# print(codewords[0].size())
-
-	
-	sub_codes	=	torch.cat(sub_codes,dim=2)
-	# sub_codes_est	=	torch.cat(sub_codes_est,dim=2)
-	codewords	=	torch.cat(codewords,dim=2)
-
-	# final_tensor	=	torch.cat((sub_codes,sub_codes_est,codewords),dim=2)
-	final_tensor	=	torch.cat((sub_codes,codewords),dim=2)
-	# print("final_tensor.size()")
-	# print(final_tensor.size())
-	# print(c_i.size())
-	last_bits = fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + y_v + c_i*y_ui
-	msg_bits = torch.hstack([msg_bits,decoding(n,r,m-1,last_bits)])
-	
-	return msg_bits
-
-def initialize(n,r,m,hidden_size,device):
-	global enc_params
-	global dec_params
-	if r==0 or r==m:
-		return
-	if not gnet_dict.__contains__("G_{}_{}".format(r,m)):
-		gnet_dict["G_{}_{}".format(r,m)] = g_Full(2, hidden_size, 1, device)
-		fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1, device)
-		# fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(2*n, hidden_size, 1, device)
-		# fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+2*(n-1), hidden_size, 1, device)
-		fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+(n-1), hidden_size, 1, device)
-		#fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(3*n, hidden_size, 1, device)
-
-		gnet_dict["G_{}_{}".format(r,m)].apply(weights_init)
-		fnet_dict["F_{}_{}_l".format(r,m)].apply(weights_init)
-		fnet_dict["F_{}_{}_r".format(r,m)].apply(weights_init)
-
-		enc_params += list(gnet_dict["G_{}_{}".format(r,m)].parameters())
-		dec_params += list(fnet_dict["F_{}_{}_l".format(r,m)].parameters()) + \
-		              list(fnet_dict["F_{}_{}_r".format(r,m)].parameters()) 	
-		initialize(n,r-1,m-1,hidden_size,device)
-		initialize(n,r,m-1,hidden_size,device)
-	return
-
 def test(snr, rate, code_dimension):
-	global device
 	BER_total = []
 	Test_msg_bits = 2*torch.randint(0,2,(test_size, code_dimension)).to(torch.float) -1
-	Test_msg_bits = Test_msg_bits.to(device)
+	Test_msg_bits = Test_msg_bits.to(sharedstuff.device)
 	Test_Data_Generator = DataLoader(Test_msg_bits, batch_size=100 , shuffle=False)
 
 	num_test_batches = len(Test_Data_Generator)
@@ -187,7 +64,7 @@ def test(snr, rate, code_dimension):
 
 	with torch.no_grad():
 			for msg_bits in Test_Data_Generator:
-					# msg_bits.to(device)
+					# msg_bits.to(sharedstuff.device)
 					codewords = encoding(n,r,m,msg_bits)      
 					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
 					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
@@ -206,6 +83,9 @@ def test(snr, rate, code_dimension):
 	return ber
 
 if __name__ == "__main__":
+
+	sharedstuff.init() 
+
 	if len(sys.argv) == 2:
 		conf_name = sys.argv[1]
 		print("train conf_name:", conf_name)
@@ -215,12 +95,12 @@ if __name__ == "__main__":
 		conf = get_default_conf()
 
 	if torch.cuda.is_available():
-		device = torch.device("cuda")
+		sharedstuff.device = torch.device("cuda")
 		os.environ["CUDA_VISIBLE_DEVICES"] = conf["para"]["CUDA_VISIBLE_DEVICES"]
-		print(device,os.environ["CUDA_VISIBLE_DEVICES"])
+		print(sharedstuff.device,os.environ["CUDA_VISIBLE_DEVICES"])
 	else:
-		device = torch.device("cpu")
-		print(device)
+		sharedstuff.device = torch.device("cpu")
+		print(sharedstuff.device)
 
 	para = conf["para"]
 	seed = para["seed"]
@@ -234,7 +114,7 @@ if __name__ == "__main__":
 
 	logger = get_logger(test_conf["logger_name"])
 	logger.info("test_conf_name : "+conf_name)
-	logger.info("Device : "+str(device))
+	logger.info("Device : "+str(sharedstuff.device))
 
 	data_type = para["data_type"]
 
@@ -253,7 +133,7 @@ if __name__ == "__main__":
 
 	# data = torch.load(para["data_file"])
 
-	initialize(n,r,m,hidden_size,device)
+	initialize(n,r,m,hidden_size)
 
 	test_size = para["test_size"]
 	test_model_path_encoder = test_conf["test_model_path_encoder"].format(test_conf["day"],para["data_type"],test_conf["epoch_num"])
@@ -267,10 +147,10 @@ if __name__ == "__main__":
 	saved_model_dec = torch.load(test_model_path_decoder)
 
 	for key,val in saved_model_enc.items():
-		gnet_dict[key].load_state_dict(val)
+		sharedstuff.gnet_dict[key].load_state_dict(val)
 
 	for key,val in saved_model_dec.items():
-		fnet_dict[key].load_state_dict(val)
+		sharedstuff.fnet_dict[key].load_state_dict(val)
 
 	bers = []
 	snrs = []
@@ -282,9 +162,14 @@ if __name__ == "__main__":
 			ber = test(int(snr), rate, code_dimension)
 			bers.append(ber)
 			snrs.append(int(snr))
-	
-	plt.plot(snrs, bers, label=" ",linewidth=2, color='blue')
-
+	plt.semilogy(snrs, bers, marker='o', linewidth=1.5)
+	plt.grid()
+	#plt.plot(snrs, bers, label=" ",linewidth=2, color='blue')
+       	#ax = plt.gca()
+	#ax.set_yscale([1e-6, 1])        
+	for a,b in zip(snrs,bers):
+		plt.text(a,b,str(format_e(b)))
+        
 	plt.xlabel("SNRs")
 	plt.ylabel("BERs (Testing)")
 	plt.title("Testing BERs")
