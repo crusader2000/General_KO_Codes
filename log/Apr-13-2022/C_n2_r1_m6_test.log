@@ -1,0 +1,27 @@
+2022-04-13 11:23:30,541 auto_tester.py INFO 116: test_conf_name : c_n2_r1_m6
+2022-04-13 11:23:30,541 auto_tester.py INFO 117: Device : cuda
+2022-04-13 11:23:40,972 auto_tester.py INFO 161: Testing c_n2_r1_m6 trained till epoch_num 100
+2022-04-13 11:23:40,973 auto_tester.py INFO 162: Model trained on Apr-08-2022
+2022-04-13 11:23:40,973 auto_tester.py INFO 163: Less go!
+2022-04-13 11:23:42,315 auto_tester.py WARNING 80: [Testing Block] SNR=-10 : BER=0.3280429
+2022-04-13 11:23:42,315 auto_tester.py INFO 81: Time for one full iteration is 0.0223 minutes
+2022-04-13 11:23:43,203 auto_tester.py WARNING 80: [Testing Block] SNR=-9 : BER=0.2881571
+2022-04-13 11:23:43,203 auto_tester.py INFO 81: Time for one full iteration is 0.0148 minutes
+2022-04-13 11:23:44,089 auto_tester.py WARNING 80: [Testing Block] SNR=-8 : BER=0.2309714
+2022-04-13 11:23:44,089 auto_tester.py INFO 81: Time for one full iteration is 0.0148 minutes
+2022-04-13 11:23:44,976 auto_tester.py WARNING 80: [Testing Block] SNR=-7 : BER=0.1709000
+2022-04-13 11:23:44,976 auto_tester.py INFO 81: Time for one full iteration is 0.0148 minutes
+2022-04-13 11:23:45,861 auto_tester.py WARNING 80: [Testing Block] SNR=-6 : BER=0.1089429
+2022-04-13 11:23:45,862 auto_tester.py INFO 81: Time for one full iteration is 0.0147 minutes
+2022-04-13 11:23:46,747 auto_tester.py WARNING 80: [Testing Block] SNR=-5 : BER=0.0672286
+2022-04-13 11:23:46,747 auto_tester.py INFO 81: Time for one full iteration is 0.0147 minutes
+2022-04-13 11:23:47,633 auto_tester.py WARNING 80: [Testing Block] SNR=-4 : BER=0.0300571
+2022-04-13 11:23:47,634 auto_tester.py INFO 81: Time for one full iteration is 0.0148 minutes
+2022-04-13 11:23:48,519 auto_tester.py WARNING 80: [Testing Block] SNR=-3 : BER=0.0109429
+2022-04-13 11:23:48,519 auto_tester.py INFO 81: Time for one full iteration is 0.0147 minutes
+2022-04-13 11:23:49,405 auto_tester.py WARNING 80: [Testing Block] SNR=-2 : BER=0.0030571
+2022-04-13 11:23:49,406 auto_tester.py INFO 81: Time for one full iteration is 0.0148 minutes
+2022-04-13 11:23:50,291 auto_tester.py WARNING 80: [Testing Block] SNR=-1 : BER=0.0004714
+2022-04-13 11:23:50,291 auto_tester.py INFO 81: Time for one full iteration is 0.0147 minutes
+2022-04-13 11:23:51,176 auto_tester.py WARNING 80: [Testing Block] SNR=0 : BER=0.0000429
+2022-04-13 11:23:51,176 auto_tester.py INFO 81: Time for one full iteration is 0.0147 minutes

@@ -18,6 +18,7 @@ from util.utils import *
 from app.operations import * 
 from model.models import *
 import app.sharedstuff as sharedstuff
+from app.burman import *
 
 import sys
 import pickle
@@ -44,7 +45,7 @@ def moving_average(a, n=3) :
 
 def format_e(n):
     a = '%E' % n
-    return a.split('E')[0].rstrip('0').rstrip('.') + 'E' + a.split('E')[1]
+    return a.split('E')[0].rstrip('0').rstrip('.')[:4] + 'E' + a.split('E')[1]
 
 
 # data = {}
@@ -59,28 +60,36 @@ def test(snr, rate, code_dimension):
 	Test_Data_Generator = DataLoader(Test_msg_bits, batch_size=100 , shuffle=False)
 
 	num_test_batches = len(Test_Data_Generator)
-	ber = 0
+	ber_burman = 0
+	ber_nn = 0
 	start_time = time.time()
 
 	with torch.no_grad():
 			for msg_bits in Test_Data_Generator:
 					# msg_bits.to(sharedstuff.device)
-					codewords = encoding(n,r,m,msg_bits)      
-					transmit_codewords = F.normalize(codewords, p=2, dim=1)*np.sqrt(code_length)
-					transmit_codewords = torch.unsqueeze(transmit_codewords,2)
-					corrupted_codewords = awgn_channel(transmit_codewords, snr, rate)
-					L = get_LLR(corrupted_codewords, snr,rate)
-					decoded_bits = decoding(n,r,m,L)
+					codewords_nn = encoding(n,r,m,msg_bits)
+					codeword_burman = 2*encode_burman(n,r,m,(msg_bits+1)/2)-1
+					corrupted_codewords_burman = torch.unsqueeze(awgn_channel(codeword_burman, snr, rate),2)
+					L = get_LLR(corrupted_codewords_burman, snr,rate)
+					decoded_bits_burman = decode_burman(n,r,m,(L>0).to(torch.int64))
 
-					# decoded_bits=decoded_bits.to('cuda')
-					# msg_bits=msg_bits.to('cuda')
-					ber += errors_ber(msg_bits, decoded_bits.sign()).item()
+					ber_burman += errors_ber((msg_bits+1)/2, decoded_bits_burman).item()
 			
-			ber /= num_test_batches
-			logger.warning(f"[Testing Block] SNR={snr} : BER={ber:.7f}")
+					transmit_codewords_nn = F.normalize(codewords_nn, p=2, dim=1)*np.sqrt(code_length)
+					transmit_codewords_nn = torch.unsqueeze(transmit_codewords_nn,2)
+					corrupted_codewords_nn = awgn_channel(transmit_codewords_nn, snr, rate)
+					L = get_LLR(corrupted_codewords_nn, snr,rate)
+					decoded_bits_nn = decoding(n,r,m,L)
+
+					ber_nn += errors_ber(msg_bits, decoded_bits_nn.sign()).item()
+			
+			ber_burman /= num_test_batches
+			ber_nn /= num_test_batches
+			logger.warning(f"[Testing Block] Burman SNR={snr} : BER={ber_burman:.7f}")
+			logger.warning(f"[Testing Block] GKO SNR={snr} : BER={ber_nn:.7f}")
 			logger.info("Time for one full iteration is {0:.4f} minutes".format((time.time() - start_time)/60))
 
-	return ber
+	return ber_burman,ber_nn
 
 if __name__ == "__main__":
 
@@ -152,26 +161,38 @@ if __name__ == "__main__":
 	for key,val in saved_model_dec.items():
 		sharedstuff.fnet_dict[key].load_state_dict(val)
 
-	bers = []
+	# KO(1,6) Channel Model 2
+	# bers_dumer = [0.313688568174839,0.264614283293486,0.214914283305407,0.159894283115864,0.106405713111162,0.062264284864068,0.030767142493278,0.012194285602309,0.003567142811371,0.000727142849937,0.0000514285708777607]
+
+	# KO(1,6) Channel Model 1
+	# bers_dumer = [0.294888568520546,0.245595710426569,0.192464283555746,0.138125712648034,0.088437141776085,0.048258571103215,0.021572857033461,0.007621428444982,0.001862857118249,0.000275714282179,0.0000428571423981339]
+
+	bers_burman = []
+	bers_nn = []
 	snrs = []
 	logger.info("Testing {} trained till epoch_num {}".format(conf_name,test_conf["epoch_num"]))
 	logger.info("Model trained on {}".format(test_conf["day"]))
 	logger.info("Less go!")
 	for snr in test_conf["snr_list"].split(","):
 			
-			ber = test(int(snr), rate, code_dimension)
-			bers.append(ber)
+			ber_burman,ber_nn = test(int(snr), rate, code_dimension)
+			bers_burman.append(ber_burman)
+			bers_nn.append(ber_nn)
 			snrs.append(int(snr))
-	plt.semilogy(snrs, bers, marker='o', linewidth=1.5)
+	
+	plt.figure(figsize = (12,12))
+	plt.semilogy(snrs, bers_burman, label="Burman", marker='^', linewidth=1.5)
+	for a,b in zip(snrs,bers_burman):
+  		plt.text(a,b,str(format_e(b)))
+			
+	plt.semilogy(snrs, bers_nn, label="GKO", marker='o', linewidth=1.5)
 	plt.grid()
-	#plt.plot(snrs, bers, label=" ",linewidth=2, color='blue')
-       	#ax = plt.gca()
-	#ax.set_yscale([1e-6, 1])        
-	for a,b in zip(snrs,bers):
+	for a,b in zip(snrs,bers_nn):
 		plt.text(a,b,str(format_e(b)))
         
 	plt.xlabel("SNRs")
 	plt.ylabel("BERs (Testing)")
 	plt.title("Testing BERs")
+	plt.legend(prop={'size': 15})
 	plt.savefig(test_save_dirpath+ "/ber_testing_epoch_"+str(test_conf["epoch_num"])+".png")
 	plt.close()

@@ -1,8 +1,8 @@
 para:
   train_batch_size: 100000
   train_small_batch_size: 25000
-  test_size: 50000
-  full_iterations: 100
+  test_size: 5000
+  full_iterations: 500
   enc_train_iters: 5
   dec_train_iters: 25
   # enc_train_iters: 50
@@ -10,7 +10,7 @@ para:
   # enc_train_iters: 2
   # dec_train_iters: 0
 
-  hidden_size: 64
+  hidden_size: 32
 
   lr: 0.00001
   seed: 1
@@ -20,7 +20,7 @@ para:
   
   n: 2
   r: 1
-  m: 6
+  m: 3
 
   code_length: None
   code_dimension: None
@@ -37,7 +37,7 @@ para:
 
   # data_file: "data/data_3_2.pth"
 
-  data_type: "n2_r1_m6"
+  data_type: "n2_r1_m3"
   logger_name: C_{}_train
   CUDA_VISIBLE_DEVICES: "1"
   train_save_path_dir: "./save/{}/C_{}"

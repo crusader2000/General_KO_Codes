@@ -7,6 +7,10 @@ import app.sharedstuff as sharedstuff
 from util.conf_util import *
 from util.log_util import *
 from util.utils import *
+<<<<<<< HEAD
+import random
+=======
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
 
 def log_sum_exp(LLR_vector):
 	# print(LLR_vector.size())
@@ -74,7 +78,16 @@ def decoding(n,r,m,code):
 		L_vs.append(y_v + c_i*y_ui)
 
 	
+<<<<<<< HEAD
+<<<<<<< HEAD
+	# sub_codes.insert(0,y_v)
+	sub_codes.append(y_v)
+=======
 	sub_codes.insert(0,y_v)
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
+=======
+	sub_codes.insert(0,y_v)
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
 	#sub_codes_est.append(torch.zeros(sub_codes[-1].size()).to(sharedstuff.device))
 	#codewords.append(torch.zeros(sub_codes[-1].size()).to(sharedstuff.device))
 	
@@ -86,6 +99,13 @@ def decoding(n,r,m,code):
 	sub_codes	=	torch.cat(sub_codes,dim=2)
 	# sub_codes_est	=	torch.cat(sub_codes_est,dim=2)
 	codewords	=	torch.cat(codewords,dim=2)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	L_vs	=	torch.cat(L_vs,dim=2)
+=======
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
+=======
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
 
 	# final_tensor	=	torch.cat((sub_codes,sub_codes_est,codewords),dim=2)
 	final_tensor	=	torch.cat((sub_codes,codewords),dim=2)
@@ -96,7 +116,26 @@ def decoding(n,r,m,code):
 		last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + y_v + c_i*y_ui
 	else:
 		# last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + sharedstuff.fnet_dict["F_{}_{}_c".format(r,m)](torch.cat(L_vs,dim=2))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		# randidx = random.randint(0,n-2)
+		# temp = torch.cat((y_v,torch.unsqueeze(sub_codes[:,:,randidx],2),torch.unsqueeze(codewords[:,:,randidx],2)),2)
+		# last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](temp) + 10*(y_v + torch.unsqueeze(codewords[:,:,randidx]*sub_codes[:,:,randidx],2))
+
+
+		
+		# last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](torch.cat((y_v,y_ui,c_i),2)) 
+		last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) 
+		for i in range(n-1):
+			last_bits +=  10*(y_v + torch.unsqueeze(codewords[:,:,i]*sub_codes[:,:,i],2))
+
+		# last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + y_v + c_i*y_ui
+=======
 		last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + y_v + c_i*y_ui
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
+=======
+		last_bits = sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)](final_tensor) + y_v + c_i*y_ui
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
 
 	msg_bits = torch.hstack([msg_bits,decoding(n,r,m-1,last_bits)])
 	
@@ -110,7 +149,16 @@ def initialize(n,r,m,hidden_size):
 		sharedstuff.fnet_dict["F_{}_{}_l".format(r,m)] = f_Full(2, hidden_size, 1, sharedstuff.device)
 		# sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(2*n, hidden_size, 1, sharedstuff.device)
 		# sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+2*(n-1), hidden_size, 1, sharedstuff.device)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+n-1, hidden_size, 1, sharedstuff.device)
+		# sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(3, hidden_size, 1, sharedstuff.device)
+=======
 		sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+(n-1), hidden_size, 1, sharedstuff.device)
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
+=======
+		sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(n+(n-1), hidden_size, 1, sharedstuff.device)
+>>>>>>> 7f42aa9aa81c06f55a4a0d6a7abc55f4f7767a5d
 		#sharedstuff.fnet_dict["F_{}_{}_r".format(r,m)] = f_Full(3*n, hidden_size, 1, sharedstuff.device)
 
 		# sharedstuff.fnet_dict["F_{}_{}_c".format(r,m)] = f_Half(n-1, 16, 1, sharedstuff.device)
