@@ -1,0 +1,24 @@
+2022-04-28 21:14:41,027 auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+2022-04-28 21:14:41,027 auto_tester.py INFO 127: Device : cuda
+2022-04-28 22:06:38,136 auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+2022-04-28 22:06:38,136 auto_tester.py INFO 127: Device : cuda
+2022-04-28 22:06:51,117 auto_tester.py INFO 174: Testing c_n3_r2_m4 trained till epoch_num 100
+2022-04-28 22:06:51,118 auto_tester.py INFO 175: Model trained on Apr-28-2022
+2022-04-28 22:06:51,118 auto_tester.py INFO 176: Less go!
+2022-04-28 22:18:05,227 auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+2022-04-28 22:18:05,227 auto_tester.py INFO 127: Device : cuda
+2022-04-28 22:18:18,259 auto_tester.py INFO 174: Testing c_n3_r2_m4 trained till epoch_num 100
+2022-04-28 22:18:18,260 auto_tester.py INFO 175: Model trained on Apr-28-2022
+2022-04-28 22:18:18,260 auto_tester.py INFO 176: Less go!
+2022-04-28 22:33:30,283 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-10 : BER=0.4556969745
+2022-04-28 22:33:30,284 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-10 : BER=0.4546400043
+2022-04-28 22:33:30,284 auto_tester.py INFO 91: Time for one full iteration is 15.1998 minutes
+2022-04-28 22:49:17,551 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-9 : BER=0.4478672748
+2022-04-28 22:49:17,552 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-9 : BER=0.4474684876
+2022-04-28 22:49:17,552 auto_tester.py INFO 91: Time for one full iteration is 15.7873 minutes
+2022-04-28 23:04:43,117 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-8 : BER=0.4394866685
+2022-04-28 23:04:43,118 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-8 : BER=0.4378278810
+2022-04-28 23:04:43,118 auto_tester.py INFO 91: Time for one full iteration is 15.4256 minutes
+2022-04-28 23:19:59,217 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-7 : BER=0.4298309129
+2022-04-28 23:19:59,219 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-7 : BER=0.4258060643
+2022-04-28 23:19:59,219 auto_tester.py INFO 91: Time for one full iteration is 15.2679 minutes

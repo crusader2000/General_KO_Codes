@@ -1,0 +1,23 @@
+==========================================
+SLURM_JOB_ID = 662859
+SLURM_NODELIST = gnode54
+SLURM_JOB_GPUS = 0,1,2,3
+==========================================
+auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+auto_tester.py INFO 127: Device : cuda
+auto_tester.py INFO 174: Testing c_n3_r2_m4 trained till epoch_num 100
+auto_tester.py INFO 175: Model trained on Apr-28-2022
+auto_tester.py INFO 176: Less go!
+auto_tester.py WARNING 89: [Testing Block] Burman SNR=-10 : BER=0.4556969745
+auto_tester.py WARNING 90: [Testing Block] GKO SNR=-10 : BER=0.4546400043
+auto_tester.py INFO 91: Time for one full iteration is 15.1998 minutes
+auto_tester.py WARNING 89: [Testing Block] Burman SNR=-9 : BER=0.4478672748
+auto_tester.py WARNING 90: [Testing Block] GKO SNR=-9 : BER=0.4474684876
+auto_tester.py INFO 91: Time for one full iteration is 15.7873 minutes
+auto_tester.py WARNING 89: [Testing Block] Burman SNR=-8 : BER=0.4394866685
+auto_tester.py WARNING 90: [Testing Block] GKO SNR=-8 : BER=0.4378278810
+auto_tester.py INFO 91: Time for one full iteration is 15.4256 minutes
+auto_tester.py WARNING 89: [Testing Block] Burman SNR=-7 : BER=0.4298309129
+auto_tester.py WARNING 90: [Testing Block] GKO SNR=-7 : BER=0.4258060643
+auto_tester.py INFO 91: Time for one full iteration is 15.2679 minutes
+slurmstepd: error: *** JOB 662859 ON gnode54 CANCELLED AT 2022-04-28T23:20:26 ***

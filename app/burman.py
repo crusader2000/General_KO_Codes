@@ -15,6 +15,33 @@ def log_sum_exp(LLR_vector):
 	# print(torch.logsumexp(sum_concat, dim=1).size())
 	return torch.logsumexp(sum_concat, dim=1)- torch.logsumexp(LLR_vector, dim=1) 
 
+def dec2bin(x, bits):
+    mask = 2 ** torch.arange(bits - 1, -1, -1).to(sharedstuff.device)
+    return x.unsqueeze(-1).bitwise_and(mask).ne(0).float()
+
+def perform_ML(n,r,m,code):
+	code = (code > 0).to(torch.int64)
+	k = get_dimen(n,r,m)
+	num_messages = code.size()[0]
+	final_msg_bits = []
+
+	for idx in range(num_messages):
+		max = 10000000
+		result = None
+		
+		for i in range(2**k):
+			curr_codeword = sharedstuff.codebook[i]
+			diff = torch.sum(torch.abs(code[idx,:,:].T-curr_codeword))
+
+			if diff < max:
+				result = sharedstuff.codebook_msg_bits[i]
+				max = diff
+
+		final_msg_bits.append(result)
+
+	final_msg_bits = torch.cat(final_msg_bits,dim=0)
+	return final_msg_bits				
+
 def encode_burman(n,r,m,msg_bits):
 	# print("msg_bits")
 	# print(msg_bits[:5,:])
@@ -43,64 +70,173 @@ def encode_burman(n,r,m,msg_bits):
 	# print(code[:5,:])
 	return code
 
-def decode_burman(n,r,m,code):
-	# print("code")
-	# print(code[:1,:,:])
-	if r==0:
-		return (torch.sum(code,dim=1) > (pow(n,m)/2)).to(torch.int64)
+# def decode_burman(n,r,m,code):
+# 	if r==1:
+# 		return perform_ML(n,r,m,code)
 	
-	if r==m:
-		return torch.squeeze(code,2)
-	# print("code.size()")
-	# print(code.size())
-	msg_bits = torch.tensor([]).to(sharedstuff.device)
-	sub_code_len = np.power(n,m-1)
+# 	if r==0:
+# 		return (torch.sum(code,dim=1) > 0).to(torch.int64)
 	
-	y_n_1 = code[:,(n-1)*sub_code_len:,:]
-	y_i_dash = []
-	for i in range(n-1):
-		y_i = code[:,i*sub_code_len:(i+1)*sub_code_len,:]
-		y_i_tilda = (y_n_1 + y_i)%2
-		m_i = decode_burman(n,r-1,m-1,y_i_tilda)
-		msg_bits = torch.hstack([msg_bits,m_i])
+# 	if r==m:
+# 		return (torch.squeeze(code,2) > 0).to(torch.int64)
+	
+# 	msg_bits = torch.tensor([]).to(sharedstuff.device)
+# 	sub_code_len = np.power(n,m-1)
+	
+# 	y_n_1 = code[:,(n-1)*sub_code_len:,:]
+# 	for i in range(n-1):
+# 		y_i = code[:,i*sub_code_len:(i+1)*sub_code_len,:]
 
-		# print("m_i.size()")
-		# print(m_i.size())
-		c_i = torch.unsqueeze(encode_burman(n,r-1,m-1,m_i),dim=2)
-		# print("c_i.size()")
-		# print(c_i.size())
-		# print("y_i.size()")
-		# print(y_i.size())
+# 		temp = torch.cat([y_n_1,y_i],dim=2)
+# 		y_i_tilda = torch.unsqueeze(log_sum_exp(temp.permute(0, 2, 1)),2)
 		
-		y_i_dash.append((y_i+c_i)%2)
+# 		m_i = decode_burman(n,r-1,m-1,y_i_tilda)
+# 		msg_bits = torch.hstack([msg_bits,m_i])
 
-	y_i_dash.append(y_n_1)
+# 		c_i = torch.unsqueeze(encode_burman(n,r-1,m-1,m_i),dim=2)
+# 		# print(c_i.size())
+# 		# print(y_i.size())
+# 		# print(y_n_1.size())
+# 		y_i_dash = y_n_1+torch.pow(-1,c_i)*y_i
 
-	num_messages = code.size()[0]
-	final_msg_bits = []
-	for idx in range(num_messages):
-		for i in range(n):
-			m_i = decode_burman(n,r,m-1,torch.unsqueeze(y_i_dash[i][idx,:],0))
-			u = encode_burman(n,r,m-1,m_i)
-			sum = 0
-			# print(n,r,m-1)
-			# print(u.T.size())
-			for j in range(n):
-				# print(y_i_dash[j][idx,:].size())
-				sum += torch.sum(torch.abs(u.T-y_i_dash[j][idx,:]))
-			if sum < (pow(n,(m-r))/2):
-				break
-		final_msg_bits.append(m_i)
+# 	m_i = decode_burman(n,r,m-1,y_i_dash)
 	
-	final_msg_bits = torch.cat(final_msg_bits,dim=0)
-	# if num_messages > 1:
-	# 	print("msg_bits.size()")
-	# 	print(msg_bits.size())
-	# 	print("final_msg_bits.size()")
-	# 	print(final_msg_bits.size())
-	msg_bits = torch.hstack([msg_bits,final_msg_bits])
+# 	msg_bits = torch.hstack([msg_bits,m_i]) 
+# 	return msg_bits
+
+### USING MEDIAN F2
+# def decode_burman(n,r,m,code):
+# 	if r==0:
+# 		return (torch.sum(code,dim=1) > (pow(n,m)/2)).to(torch.int64)
 	
-	# print("msg_bits")
-	# print(msg_bits[:1,:])
+# 	if r==m:
+# 		return torch.squeeze(code,2)
+# 	msg_bits = torch.tensor([]).to(sharedstuff.device)
+# 	sub_code_len = np.power(n,m-1)
 	
-	return msg_bits
+# 	y_n_1 = code[:,(n-1)*sub_code_len:,:]
+# 	y_i_dash = []
+# 	for i in range(n-1):
+# 		y_i = code[:,i*sub_code_len:(i+1)*sub_code_len,:]
+# 		y_i_tilda = (y_n_1 + y_i)%2
+# 		m_i = decode_burman(n,r-1,m-1,y_i_tilda)
+# 		msg_bits = torch.hstack([msg_bits,m_i])
+
+# 		c_i = torch.unsqueeze(encode_burman(n,r-1,m-1,m_i),dim=2)
+		
+# 		y_i_dash.append((y_i+c_i)%2)
+
+# 	y_i_dash.append(y_n_1)
+
+# 	num_messages = code.size()[0]
+# 	final_msg_bits = []
+
+# 	for idx in range(num_messages):
+# 		m_i = None 
+# 		cs = []
+# 		for i in range(n):
+# 			cs.append(torch.unsqueeze(y_i_dash[i][idx,:],dim=0))
+# 		cs = torch.cat(cs,dim=0)
+# 		m_i = decode_burman(n,r,m-1,torch.unsqueeze(torch.median(cs,dim=0)[0],dim=0))
+# 		final_msg_bits.append(m_i)
+
+	
+# 	final_msg_bits = torch.cat(final_msg_bits,dim=0)
+# 	msg_bits = torch.hstack([msg_bits,final_msg_bits])
+		
+# 	return msg_bits
+
+### USING MEDIAN R
+# def decode_burman(n,r,m,code):
+# 	if r==0:
+# 		return (torch.sum(code,dim=1) > 0).to(torch.int64)
+	
+# 	if r==m:
+# 		return torch.squeeze(code,2)
+# 	msg_bits = torch.tensor([]).to(sharedstuff.device)
+# 	sub_code_len = np.power(n,m-1)
+	
+# 	y_n_1 = code[:,(n-1)*sub_code_len:,:]
+# 	y_i_dash = []
+# 	for i in range(n-1):
+# 		y_i = code[:,i*sub_code_len:(i+1)*sub_code_len,:]
+# 		y_i_tilda = (y_n_1 + y_i)%2
+# 		m_i = decode_burman(n,r-1,m-1,y_i_tilda)
+# 		msg_bits = torch.hstack([msg_bits,m_i])
+
+# 		c_i = torch.unsqueeze(encode_burman(n,r-1,m-1,m_i),dim=2)
+		
+# 		y_i_dash.append(y_n_1+torch.pow(-1,c_i)*y_i)
+
+# 	y_i_dash.append(y_n_1)
+
+# 	num_messages = code.size()[0]
+# 	final_msg_bits = []
+
+# 	for idx in range(num_messages):
+# 		m_i = None 
+# 		cs = []
+# 		for i in range(n):
+# 			cs.append(torch.unsqueeze(y_i_dash[i][idx,:],dim=0))
+# 		cs = torch.cat(cs,dim=0)
+# 		# print(torch.quantile(cs,q=0.5,dim=0).size())
+# 		m_i = perform_ML(n,r,m-1,torch.unsqueeze(torch.quantile(cs,q=0.5,dim=0),dim=0))
+# 		final_msg_bits.append(m_i)
+
+	
+# 	final_msg_bits = torch.cat(final_msg_bits,dim=0)
+# 	msg_bits = torch.hstack([msg_bits,final_msg_bits])
+		
+# 	return msg_bits
+
+
+#### AS GIVEN IN THE PAPER
+# def decode_burman(n,r,m,code):
+# 	if r==0:
+# 		return (torch.sum(code,dim=1) > (pow(n,m)/2)).to(torch.int64)
+	
+# 	if r==m:
+# 		return torch.squeeze(code,2)
+	
+# 	msg_bits = torch.tensor([]).to(sharedstuff.device)
+# 	sub_code_len = np.power(n,m-1)
+	
+# 	y_n_1 = code[:,(n-1)*sub_code_len:,:]
+# 	y_i_dash = []
+# 	for i in range(n-1):
+# 		y_i = code[:,i*sub_code_len:(i+1)*sub_code_len,:]
+# 		y_i_tilda = (y_n_1 + y_i)%2
+# 		m_i = decode_burman(n,r-1,m-1,y_i_tilda)
+# 		msg_bits = torch.hstack([msg_bits,m_i])
+
+# 		c_i = torch.unsqueeze(encode_burman(n,r-1,m-1,m_i),dim=2)
+		
+# 		y_i_dash.append((y_i+c_i)%2)
+
+# 	y_i_dash.append(y_n_1)
+
+# 	num_messages = code.size()[0]
+# 	final_msg_bits = []
+
+# 	for idx in range(num_messages):
+# 		m_i = None 
+# 		for i in range(n):
+# 			m_i = decode_burman(n,r,m-1,torch.unsqueeze(y_i_dash[i][idx,:,:],0))
+# 			u = encode_burman(n,r,m-1,m_i)
+# 			sum = 0
+# 			for j in range(n):
+# 				sum += torch.sum(torch.abs(u.T-y_i_dash[j][idx,:]))
+# 			if sum < (pow(n,(m-r))/2):
+# 				break
+# 		final_msg_bits.append(m_i)
+
+	
+# 	final_msg_bits = torch.cat(final_msg_bits,dim=0)
+# 	msg_bits = torch.hstack([msg_bits,final_msg_bits])
+		
+# 	return msg_bits
+
+
+### ML RULE
+def decode_burman(n,r,m,code):
+	return perform_ML(n,r,m,code)

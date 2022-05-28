@@ -99,6 +99,13 @@ def errors_bler(y_true, y_pred):
 		
 # 	return L
 
+# def test_awgn_channel(a,b, snr,rate):
+#     snr_sigma = snr_db2sigma(snr)
+#     standard_Gaussian = torch.randn_like(a)
+#     corrupted_a = a+sqrt(1/(2*snr_sigma*rate)) * standard_Gaussian
+#     corrupted_b = b+sqrt(1/(2*snr_sigma*rate)) * standard_Gaussian
+#     return corrupted_a,corrupted_b
+
 # Channel Type 2
 def snr_db2sigma(train_snr):
     return 10**(-train_snr*1.0/20)
@@ -116,3 +123,10 @@ def get_LLR(received_codewords,snr,rate,channel = 'awgn'):
 		L = (2/(sigma**2))*received_codewords
 		
 	return L
+
+def test_awgn_channel(a,b, snr,rate):
+    noise_sigma = snr_db2sigma(snr)
+    standard_Gaussian = torch.randn_like(a)
+    corrupted_a = a+noise_sigma * standard_Gaussian
+    corrupted_b = b+noise_sigma * standard_Gaussian
+    return corrupted_a,corrupted_b

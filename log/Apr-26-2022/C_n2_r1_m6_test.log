@@ -1,0 +1,38 @@
+2022-04-26 17:03:54,594 auto_tester.py INFO 126: test_conf_name : c_n2_r1_m6
+2022-04-26 17:03:54,594 auto_tester.py INFO 127: Device : cuda
+2022-04-26 17:03:56,818 auto_tester.py INFO 174: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-04-26 17:03:56,819 auto_tester.py INFO 175: Model trained on Apr-26-2022
+2022-04-26 17:03:56,819 auto_tester.py INFO 176: Less go!
+2022-04-26 17:21:57,851 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-10 : BER=0.4047485666
+2022-04-26 17:21:57,852 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-10 : BER=0.3307199963
+2022-04-26 17:21:57,852 auto_tester.py INFO 91: Time for one full iteration is 18.0168 minutes
+2022-04-26 17:36:20,388 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-9 : BER=0.3821857106
+2022-04-26 17:36:20,388 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-9 : BER=0.2858885680
+2022-04-26 17:36:20,389 auto_tester.py INFO 91: Time for one full iteration is 14.3753 minutes
+2022-04-26 17:50:27,978 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-8 : BER=0.3536199958
+2022-04-26 17:50:27,978 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-8 : BER=0.2292085694
+2022-04-26 17:50:27,978 auto_tester.py INFO 91: Time for one full iteration is 14.1262 minutes
+2022-04-26 18:04:12,427 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-7 : BER=0.3207257115
+2022-04-26 18:04:12,428 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-7 : BER=0.1689257126
+2022-04-26 18:04:12,428 auto_tester.py INFO 91: Time for one full iteration is 13.7405 minutes
+2022-04-26 18:17:21,241 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-6 : BER=0.2800999973
+2022-04-26 18:17:21,241 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-6 : BER=0.1114599987
+2022-04-26 18:17:21,241 auto_tester.py INFO 91: Time for one full iteration is 13.1466 minutes
+2022-04-26 18:29:36,352 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-5 : BER=0.2325599979
+2022-04-26 18:29:36,352 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-5 : BER=0.0631599992
+2022-04-26 18:29:36,352 auto_tester.py INFO 91: Time for one full iteration is 12.2516 minutes
+2022-04-26 18:40:35,901 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-4 : BER=0.1737599982
+2022-04-26 18:40:35,902 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-4 : BER=0.0302999996
+2022-04-26 18:40:35,902 auto_tester.py INFO 91: Time for one full iteration is 10.9922 minutes
+2022-04-26 18:49:53,701 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-3 : BER=0.1153171414
+2022-04-26 18:49:53,702 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-3 : BER=0.0112314285
+2022-04-26 18:49:53,702 auto_tester.py INFO 91: Time for one full iteration is 9.2964 minutes
+2022-04-26 18:57:22,240 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-2 : BER=0.0636314277
+2022-04-26 18:57:22,240 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-2 : BER=0.0031142857
+2022-04-26 18:57:22,240 auto_tester.py INFO 91: Time for one full iteration is 7.4755 minutes
+2022-04-26 19:03:11,174 auto_tester.py WARNING 89: [Testing Block] Burman SNR=-1 : BER=0.0277399997
+2022-04-26 19:03:11,175 auto_tester.py WARNING 90: [Testing Block] GKO SNR=-1 : BER=0.0006200000
+2022-04-26 19:03:11,175 auto_tester.py INFO 91: Time for one full iteration is 5.8153 minutes
+2022-04-26 19:07:39,305 auto_tester.py WARNING 89: [Testing Block] Burman SNR=0 : BER=0.0081599999
+2022-04-26 19:07:39,305 auto_tester.py WARNING 90: [Testing Block] GKO SNR=0 : BER=0.0000914286
+2022-04-26 19:07:39,305 auto_tester.py INFO 91: Time for one full iteration is 4.4686 minutes

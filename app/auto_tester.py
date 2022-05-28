@@ -29,7 +29,7 @@ import time
 from datetime import datetime
 from datetime import date
 import random
-from data.generate_data import *
+# from data.generate_data import *
 
 from math import sqrt
 
@@ -38,15 +38,13 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 
-def moving_average(a, n=3) :
-	ret = np.cumsum(a, dtype=float)
-	ret[n:] = ret[n:] - ret[:-n]
-	return ret[n - 1:] / n
-
-def format_e(n):
-    a = '%E' % n
+def format_e(num):
+    a = '%E' % num
     return a.split('E')[0].rstrip('0').rstrip('.')[:4] + 'E' + a.split('E')[1]
 
+def dec2bin(x, bits):
+    mask = 2 ** torch.arange(bits - 1, -1, -1).to(sharedstuff.device)
+    return x.unsqueeze(-1).bitwise_and(mask).ne(0).float()
 
 # data = {}
 
@@ -57,7 +55,7 @@ def test(snr, rate, code_dimension):
 	BER_total = []
 	Test_msg_bits = 2*torch.randint(0,2,(test_size, code_dimension)).to(torch.float) -1
 	Test_msg_bits = Test_msg_bits.to(sharedstuff.device)
-	Test_Data_Generator = DataLoader(Test_msg_bits, batch_size=100 , shuffle=False)
+	Test_Data_Generator = DataLoader(Test_msg_bits, batch_size=100, shuffle=False)
 
 	num_test_batches = len(Test_Data_Generator)
 	ber_burman = 0
@@ -65,29 +63,35 @@ def test(snr, rate, code_dimension):
 	start_time = time.time()
 
 	with torch.no_grad():
-			for msg_bits in Test_Data_Generator:
-					# msg_bits.to(sharedstuff.device)
-					codewords_nn = encoding(n,r,m,msg_bits)
-					codeword_burman = 2*encode_burman(n,r,m,(msg_bits+1)/2)-1
-					corrupted_codewords_burman = torch.unsqueeze(awgn_channel(codeword_burman, snr, rate),2)
-					L = get_LLR(corrupted_codewords_burman, snr,rate)
-					decoded_bits_burman = decode_burman(n,r,m,(L>0).to(torch.int64))
+		# print(n,r,m)
+		for msg_bits in Test_Data_Generator:
+			# msg_bits.to(sharedstuff.device)
+			codeword_burman = encode_burman(n,r,m,(torch.clone(msg_bits)+1)/2)
+			codewords_nn = encoding(n,r,m,torch.clone(msg_bits))
 
-					ber_burman += errors_ber((msg_bits+1)/2, decoded_bits_burman).item()
+			transmit_codewords_nn = F.normalize(codewords_nn, p=2, dim=1)*np.sqrt(code_length)
+			transmit_codewords_burman = 2*codeword_burman - 1
 			
-					transmit_codewords_nn = F.normalize(codewords_nn, p=2, dim=1)*np.sqrt(code_length)
-					transmit_codewords_nn = torch.unsqueeze(transmit_codewords_nn,2)
-					corrupted_codewords_nn = awgn_channel(transmit_codewords_nn, snr, rate)
-					L = get_LLR(corrupted_codewords_nn, snr,rate)
-					decoded_bits_nn = decoding(n,r,m,L)
 
-					ber_nn += errors_ber(msg_bits, decoded_bits_nn.sign()).item()
+			corrupted_codewords_burman,corrupted_codewords_nn = test_awgn_channel(transmit_codewords_burman,transmit_codewords_nn,snr,rate)
+
+			corrupted_codewords_burman = torch.unsqueeze(corrupted_codewords_burman,2)
+			corrupted_codewords_nn = torch.unsqueeze(corrupted_codewords_nn,2)
 			
-			ber_burman /= num_test_batches
-			ber_nn /= num_test_batches
-			logger.warning(f"[Testing Block] Burman SNR={snr} : BER={ber_burman:.7f}")
-			logger.warning(f"[Testing Block] GKO SNR={snr} : BER={ber_nn:.7f}")
-			logger.info("Time for one full iteration is {0:.4f} minutes".format((time.time() - start_time)/60))
+			L_burman = get_LLR(corrupted_codewords_burman, snr,rate)
+			# decoded_bits_burman = decode_burman(n,r,m,L_burman)
+			decoded_bits_burman = decode_burman(n,r,m,(L_burman>0).to(torch.int64))
+
+			L_nn = get_LLR(corrupted_codewords_nn, snr,rate)
+			decoded_bits_nn = decoding(n,r,m,L_nn)
+			ber_burman += errors_ber((msg_bits+1)/2, decoded_bits_burman).item()
+			ber_nn += errors_ber(msg_bits, decoded_bits_nn.sign()).item()
+	
+		ber_burman /= num_test_batches
+		ber_nn /= num_test_batches
+		logger.warning(f"[Testing Block] Burman SNR={snr} : BER={ber_burman:.10f}")
+		logger.warning(f"[Testing Block] GKO SNR={snr} : BER={ber_nn:.10f}")
+		logger.info("Time for one full iteration is {0:.4f} minutes".format((time.time() - start_time)/60))
 
 	return ber_burman,ber_nn
 
@@ -139,6 +143,12 @@ if __name__ == "__main__":
 
 	rate = 1.0*(code_dimension/code_length)
 	hidden_size = para["hidden_size"]
+
+	for i in range(2**code_dimension):
+		msg_bits = dec2bin(torch.tensor([i]).to(sharedstuff.device),code_dimension)
+		curr_codeword = encode_burman(n,r,m,msg_bits)
+		sharedstuff.codebook_msg_bits.append(msg_bits)
+		sharedstuff.codebook.append(curr_codeword)
 
 	# data = torch.load(para["data_file"])
 
