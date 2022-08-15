@@ -1,13 +1,89 @@
 ==========================================
-SLURM_JOB_ID = 649662
-SLURM_NODELIST = gnode19
-SLURM_JOB_GPUS = 3
+SLURM_JOB_ID = 658971
+SLURM_NODELIST = gnode45
+SLURM_JOB_GPUS = 0,1,2,3
 ==========================================
-auto_trainer.py INFO 87: train_conf_name : c_n3_r1_m4
+auto_trainer.py INFO 87: train_conf_name : c_n2_r1_m6
 auto_trainer.py INFO 88: Device : cuda
 auto_trainer.py INFO 89: conf file
-auto_trainer.py INFO 90: {'para': {'train_batch_size': 100000, 'train_small_batch_size': 2500, 'test_size': 100000, 'full_iterations': 100, 'enc_train_iters': 5, 'dec_train_iters': 25, 'hidden_size': 32, 'lr': 1e-05, 'seed': 1, 'n': 3, 'r': 1, 'm': 4, 'code_length': 81, 'code_dimension': 9, 'enc_train_snr': 0, 'dec_train_snr': -2, 'data_type': 'n3_r1_m4', 'logger_name': 'C_n3_r1_m4_train', 'CUDA_VISIBLE_DEVICES': '1', 'train_save_path_dir': './save/{}/C_{}', 'train_save_path_encoder': './save/{}/C_{}/enc_{}.pth', 'train_save_path_decoder': './save/{}/C_{}/dec_{}.pth', 'retrain': False, 'retrain_day': 'Jan-05-2022', 'retrain_epoch_num': 21}, 'test': {'snr_list': '-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0', 'Boosting_number_list': '1,2,3', 'day': 'Apr-11-2022', 'epoch_num': 1, 'logger_name': 'C_n3_r1_m4_test', 'test_model_path_encoder': './save/{}/C_{}/enc_{}.pth', 'test_model_path_decoder': './save/{}/C_{}/dec_{}.pth'}}
+auto_trainer.py INFO 90: {'para': {'train_batch_size': 100000, 'train_small_batch_size': 25000, 'test_size': 50000, 'full_iterations': 1, 'enc_train_iters': 5, 'dec_train_iters': 25, 'hidden_size': 64, 'lr': 1e-05, 'seed': 1, 'n': 2, 'r': 1, 'm': 6, 'code_length': 64, 'code_dimension': 7, 'enc_train_snr': 4, 'dec_train_snr': 2, 'data_type': 'n2_r1_m6', 'logger_name': 'C_n2_r1_m6_train', 'CUDA_VISIBLE_DEVICES': '1', 'train_save_path_dir': './save/{}/C_{}', 'train_save_path_encoder': './save/{}/C_{}/enc_{}.pth', 'train_save_path_decoder': './save/{}/C_{}/dec_{}.pth', 'retrain': False, 'retrain_day': 'Jan-05-2022', 'retrain_epoch_num': 21}, 'test': {'snr_list': '-3,-2,-1,0,1,2,3,4,5,6,7', 'Boosting_number_list': '1,2,3', 'day': 'Apr-23-2022', 'epoch_num': 1, 'logger_name': 'C_n2_r1_m6_test', 'test_model_path_encoder': './save/{}/C_{}/enc_{}.pth', 'test_model_path_decoder': './save/{}/C_{}/dec_{}.pth'}}
 auto_trainer.py INFO 91: We are on!!!
-auto_trainer.py INFO 204: [1/100] At ENC SNR 0.000000 dB DEC SNR -2.000000 dB, Loss: 0.0078490498 BER: 0.0003555556
-auto_trainer.py INFO 205: Time for one full iteration is 2.1853 minutes
-slurmstepd: error: *** JOB 649662 ON gnode19 CANCELLED AT 2022-04-11T17:47:26 ***
+auto_trainer.py INFO 203: [1/1] At ENC SNR 4.000000 dB DEC SNR 2.000000 dB, Loss: 0.0783158839 BER: 0.0000000000
+auto_trainer.py INFO 205: Time for one full iteration is 0.4345 minutes
+auto_trainer.py WARNING 232: Finished
+train conf_name: c_n2_r1_m6
+cuda 1
+code_dimension 7
+code_length 64
+Decoder 0
+Decoder 1
+Decoder 2
+Decoder 3
+Decoder 4
+Decoder 5
+Decoder 6
+Decoder 7
+Decoder 8
+Decoder 9
+Decoder 10
+Decoder 11
+Decoder 12
+Decoder 13
+Decoder 14
+Decoder 15
+Decoder 16
+Decoder 17
+Decoder 18
+Decoder 19
+Decoder 20
+Decoder 21
+Decoder 22
+Decoder 23
+Decoder 24
+Encoder 0
+Encoder 1
+Encoder 2
+Encoder 3
+Encoder 4
+auto_tester.py INFO 125: test_conf_name : c_n2_r1_m6
+auto_tester.py INFO 126: Device : cuda
+auto_tester.py INFO 173: Testing c_n2_r1_m6 trained till epoch_num 1
+auto_tester.py INFO 174: Model trained on Apr-23-2022
+auto_tester.py INFO 175: Less go!
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=-3 : BER=0.1156257
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=-3 : BER=0.0120429
+auto_tester.py INFO 90: Time for one full iteration is 8.8540 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=-2 : BER=0.0634514
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=-2 : BER=0.0031457
+auto_tester.py INFO 90: Time for one full iteration is 7.1250 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=-1 : BER=0.0268543
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=-1 : BER=0.0006000
+auto_tester.py INFO 90: Time for one full iteration is 5.4851 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=0 : BER=0.0081457
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=0 : BER=0.0000400
+auto_tester.py INFO 90: Time for one full iteration is 4.2409 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=1 : BER=0.0012857
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=1 : BER=0.0000000
+auto_tester.py INFO 90: Time for one full iteration is 3.4458 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=2 : BER=0.0001429
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=2 : BER=0.0000000
+auto_tester.py INFO 90: Time for one full iteration is 2.9844 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=3 : BER=0.0000057
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=3 : BER=0.0000000
+auto_tester.py INFO 90: Time for one full iteration is 2.7049 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=4 : BER=0.0000000
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=4 : BER=0.0000000
+auto_tester.py INFO 90: Time for one full iteration is 2.5444 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=5 : BER=0.0000000
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=5 : BER=0.0000000
+auto_tester.py INFO 90: Time for one full iteration is 2.4462 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=6 : BER=0.0000000
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=6 : BER=0.0000000
+auto_tester.py INFO 90: Time for one full iteration is 2.3873 minutes
+auto_tester.py WARNING 88: [Testing Block] Burman SNR=7 : BER=0.0000000
+auto_tester.py WARNING 89: [Testing Block] GKO SNR=7 : BER=0.0000000
+auto_tester.py INFO 90: Time for one full iteration is 2.3519 minutes
+train conf_name: c_n2_r1_m6
+cuda 1
+code_dimension 7
+code_length 64

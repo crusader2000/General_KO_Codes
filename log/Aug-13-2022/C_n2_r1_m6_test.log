@@ -1,0 +1,135 @@
+2022-08-13 21:59:21,052 auto_tester.py INFO 304: test_conf_name : c_n2_r1_m6
+2022-08-13 21:59:21,053 auto_tester.py INFO 305: Device : cuda
+2022-08-13 21:59:33,493 auto_tester.py INFO 365: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 21:59:33,494 auto_tester.py INFO 366: Model trained on Apr-28-2022
+2022-08-13 21:59:33,494 auto_tester.py INFO 367: Automorphisms available : 1
+2022-08-13 21:59:33,494 auto_tester.py INFO 368: Less go!
+2022-08-13 21:59:56,904 auto_tester.py INFO 304: test_conf_name : c_n2_r1_m6
+2022-08-13 21:59:56,904 auto_tester.py INFO 305: Device : cuda
+2022-08-13 21:59:59,007 auto_tester.py INFO 365: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 21:59:59,007 auto_tester.py INFO 366: Model trained on Apr-28-2022
+2022-08-13 21:59:59,007 auto_tester.py INFO 367: Automorphisms available : 1
+2022-08-13 21:59:59,007 auto_tester.py INFO 368: Less go!
+2022-08-13 22:01:23,117 auto_tester.py INFO 304: test_conf_name : c_n2_r1_m6
+2022-08-13 22:01:23,117 auto_tester.py INFO 305: Device : cuda
+2022-08-13 22:01:25,249 auto_tester.py INFO 365: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 22:01:25,249 auto_tester.py INFO 366: Model trained on Apr-28-2022
+2022-08-13 22:01:25,249 auto_tester.py INFO 367: Automorphisms available : 1
+2022-08-13 22:01:25,250 auto_tester.py INFO 368: Less go!
+2022-08-13 22:01:39,108 auto_tester.py INFO 304: test_conf_name : c_n2_r1_m6
+2022-08-13 22:01:39,108 auto_tester.py INFO 305: Device : cuda
+2022-08-13 22:01:41,217 auto_tester.py INFO 365: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 22:01:41,217 auto_tester.py INFO 366: Model trained on Apr-28-2022
+2022-08-13 22:01:41,217 auto_tester.py INFO 367: Automorphisms available : 1
+2022-08-13 22:01:41,217 auto_tester.py INFO 368: Less go!
+2022-08-13 22:01:58,082 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-10 : BER=0.5109062314
+2022-08-13 22:01:58,083 auto_tester.py INFO 249: Time for one full iteration is 0.2811 minutes
+2022-08-13 22:02:14,823 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-9 : BER=0.5119999766
+2022-08-13 22:02:14,824 auto_tester.py INFO 249: Time for one full iteration is 0.2790 minutes
+2022-08-13 22:02:31,541 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-8 : BER=0.5140156150
+2022-08-13 22:02:31,541 auto_tester.py INFO 249: Time for one full iteration is 0.2786 minutes
+2022-08-13 22:02:48,252 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-7 : BER=0.5089843571
+2022-08-13 22:02:48,252 auto_tester.py INFO 249: Time for one full iteration is 0.2785 minutes
+2022-08-13 22:03:04,973 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-6 : BER=0.5092968613
+2022-08-13 22:03:04,973 auto_tester.py INFO 249: Time for one full iteration is 0.2787 minutes
+2022-08-13 22:04:19,449 auto_tester.py INFO 304: test_conf_name : c_n2_r1_m6
+2022-08-13 22:04:19,450 auto_tester.py INFO 305: Device : cuda
+2022-08-13 22:04:21,475 auto_tester.py INFO 365: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 22:04:21,475 auto_tester.py INFO 366: Model trained on Apr-28-2022
+2022-08-13 22:04:21,475 auto_tester.py INFO 367: Automorphisms available : 1
+2022-08-13 22:04:21,475 auto_tester.py INFO 368: Less go!
+2022-08-13 22:04:35,816 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-10 : BER=0.4929531127
+2022-08-13 22:04:35,816 auto_tester.py INFO 249: Time for one full iteration is 0.2390 minutes
+2022-08-13 22:04:49,867 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-9 : BER=0.4972187370
+2022-08-13 22:04:49,867 auto_tester.py INFO 249: Time for one full iteration is 0.2342 minutes
+2022-08-13 22:05:03,904 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-8 : BER=0.4913906127
+2022-08-13 22:05:03,904 auto_tester.py INFO 249: Time for one full iteration is 0.2339 minutes
+2022-08-13 22:05:18,024 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-7 : BER=0.4933437347
+2022-08-13 22:05:18,025 auto_tester.py INFO 249: Time for one full iteration is 0.2353 minutes
+2022-08-13 22:05:32,071 auto_tester.py WARNING 247: [Testing Block] Burman SNR=-6 : BER=0.4896562368
+2022-08-13 22:05:32,073 auto_tester.py INFO 249: Time for one full iteration is 0.2341 minutes
+2022-08-13 22:29:28,964 auto_tester.py INFO 301: test_conf_name : c_n2_r1_m6
+2022-08-13 22:29:28,964 auto_tester.py INFO 302: Device : cuda
+2022-08-13 22:29:31,004 auto_tester.py INFO 362: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 22:29:31,004 auto_tester.py INFO 363: Model trained on Apr-28-2022
+2022-08-13 22:29:31,004 auto_tester.py INFO 364: Automorphisms available : 1
+2022-08-13 22:29:31,004 auto_tester.py INFO 365: Less go!
+2022-08-13 22:30:03,079 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-10 : BER=0.6328125000
+2022-08-13 22:30:03,079 auto_tester.py INFO 246: Time for one full iteration is 0.5346 minutes
+2022-08-13 22:30:35,081 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-9 : BER=0.6417187452
+2022-08-13 22:30:35,081 auto_tester.py INFO 246: Time for one full iteration is 0.5334 minutes
+2022-08-13 22:31:07,128 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-8 : BER=0.6537500024
+2022-08-13 22:31:07,129 auto_tester.py INFO 246: Time for one full iteration is 0.5341 minutes
+2022-08-13 22:31:39,127 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-7 : BER=0.6817187071
+2022-08-13 22:31:39,128 auto_tester.py INFO 246: Time for one full iteration is 0.5333 minutes
+2022-08-13 22:32:10,682 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-6 : BER=0.7307812572
+2022-08-13 22:32:10,683 auto_tester.py INFO 246: Time for one full iteration is 0.5259 minutes
+2022-08-13 22:32:38,072 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-5 : BER=0.8540624976
+2022-08-13 22:32:38,073 auto_tester.py INFO 246: Time for one full iteration is 0.4565 minutes
+2022-08-13 22:33:01,567 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-4 : BER=0.8912499547
+2022-08-13 22:33:01,567 auto_tester.py INFO 246: Time for one full iteration is 0.3916 minutes
+2022-08-13 22:33:20,474 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-3 : BER=0.9068749547
+2022-08-13 22:33:20,475 auto_tester.py INFO 246: Time for one full iteration is 0.3151 minutes
+2022-08-13 22:33:39,605 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-2 : BER=0.8917187452
+2022-08-13 22:33:39,605 auto_tester.py INFO 246: Time for one full iteration is 0.3188 minutes
+2022-08-13 22:33:56,600 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-1 : BER=0.9143750072
+2022-08-13 22:33:56,601 auto_tester.py INFO 246: Time for one full iteration is 0.2833 minutes
+2022-08-13 22:34:13,024 auto_tester.py WARNING 244: [Testing Block] Burman SNR=0 : BER=0.8918749690
+2022-08-13 22:34:13,024 auto_tester.py INFO 246: Time for one full iteration is 0.2737 minutes
+2022-08-13 22:35:42,595 auto_tester.py INFO 301: test_conf_name : c_n2_r1_m6
+2022-08-13 22:35:42,595 auto_tester.py INFO 302: Device : cuda
+2022-08-13 22:35:44,634 auto_tester.py INFO 362: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 22:35:44,634 auto_tester.py INFO 363: Model trained on Apr-28-2022
+2022-08-13 22:35:44,634 auto_tester.py INFO 364: Automorphisms available : 1
+2022-08-13 22:35:44,634 auto_tester.py INFO 365: Less go!
+2022-08-13 22:40:51,485 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-10 : BER=0.6235781133
+2022-08-13 22:40:51,485 auto_tester.py INFO 246: Time for one full iteration is 5.1142 minutes
+2022-08-13 22:45:59,000 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-9 : BER=0.6403281093
+2022-08-13 22:45:59,001 auto_tester.py INFO 246: Time for one full iteration is 5.1252 minutes
+2022-08-13 22:48:51,892 auto_tester.py INFO 301: test_conf_name : c_n2_r1_m6
+2022-08-13 22:48:51,892 auto_tester.py INFO 302: Device : cuda
+2022-08-13 22:48:53,936 auto_tester.py INFO 362: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 22:48:53,936 auto_tester.py INFO 363: Model trained on Apr-28-2022
+2022-08-13 22:48:53,936 auto_tester.py INFO 364: Automorphisms available : 1
+2022-08-13 22:48:53,936 auto_tester.py INFO 365: Less go!
+2022-08-13 22:53:54,031 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-10 : BER=0.3764218658
+2022-08-13 22:53:54,031 auto_tester.py INFO 246: Time for one full iteration is 5.0016 minutes
+2022-08-13 23:01:54,736 auto_tester.py INFO 301: test_conf_name : c_n2_r1_m6
+2022-08-13 23:01:54,736 auto_tester.py INFO 302: Device : cuda
+2022-08-13 23:01:56,800 auto_tester.py INFO 362: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-13 23:01:56,800 auto_tester.py INFO 363: Model trained on Apr-28-2022
+2022-08-13 23:01:56,800 auto_tester.py INFO 364: Automorphisms available : 1
+2022-08-13 23:01:56,800 auto_tester.py INFO 365: Less go!
+2022-08-13 23:07:07,619 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-10 : BER=0.3764218658
+2022-08-13 23:07:07,620 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-10 : BER=0.3319999993
+2022-08-13 23:07:07,620 auto_tester.py INFO 246: Time for one full iteration is 5.1803 minutes
+2022-08-13 23:12:19,230 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-9 : BER=0.3596718609
+2022-08-13 23:12:19,231 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-9 : BER=0.2859999970
+2022-08-13 23:12:19,231 auto_tester.py INFO 246: Time for one full iteration is 5.1935 minutes
+2022-08-13 23:17:32,757 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-8 : BER=0.3455312461
+2022-08-13 23:17:32,758 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-8 : BER=0.2298571408
+2022-08-13 23:17:32,758 auto_tester.py INFO 246: Time for one full iteration is 5.2254 minutes
+2022-08-13 23:22:43,698 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-7 : BER=0.3169687390
+2022-08-13 23:22:43,698 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-7 : BER=0.1759999976
+2022-08-13 23:22:43,698 auto_tester.py INFO 246: Time for one full iteration is 5.1823 minutes
+2022-08-13 23:27:51,940 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-6 : BER=0.2589218691
+2022-08-13 23:27:51,941 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-6 : BER=0.1189999983
+2022-08-13 23:27:51,941 auto_tester.py INFO 246: Time for one full iteration is 5.1374 minutes
+2022-08-13 23:32:19,365 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-5 : BER=0.1508437470
+2022-08-13 23:32:19,366 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-5 : BER=0.0652857129
+2022-08-13 23:32:19,366 auto_tester.py INFO 246: Time for one full iteration is 4.4571 minutes
+2022-08-13 23:36:03,042 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-4 : BER=0.1117343731
+2022-08-13 23:36:03,042 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-4 : BER=0.0297142855
+2022-08-13 23:36:03,042 auto_tester.py INFO 246: Time for one full iteration is 3.7279 minutes
+2022-08-13 23:39:19,604 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-3 : BER=0.1039843723
+2022-08-13 23:39:19,605 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-3 : BER=0.0102857142
+2022-08-13 23:39:19,605 auto_tester.py INFO 246: Time for one full iteration is 3.2760 minutes
+2022-08-13 23:42:25,013 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-2 : BER=0.1056562476
+2022-08-13 23:42:25,014 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-2 : BER=0.0011428571
+2022-08-13 23:42:25,014 auto_tester.py INFO 246: Time for one full iteration is 3.0901 minutes
+2022-08-13 23:45:06,950 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-1 : BER=0.0919843733
+2022-08-13 23:45:06,951 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-1 : BER=0.0012857143
+2022-08-13 23:45:06,951 auto_tester.py INFO 246: Time for one full iteration is 2.6989 minutes
+2022-08-13 23:47:37,211 auto_tester.py WARNING 244: [Testing Block] Burman SNR=0 : BER=0.0900624994
+2022-08-13 23:47:37,212 auto_tester.py WARNING 245: [Testing Block] GKO SNR=0 : BER=0.0000000000
+2022-08-13 23:47:37,212 auto_tester.py INFO 246: Time for one full iteration is 2.5043 minutes

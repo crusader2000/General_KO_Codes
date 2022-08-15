@@ -1,0 +1,64 @@
+para:
+  train_batch_size: 100000
+  train_small_batch_size: 2500
+  # test_size: 1000
+  test_size: 100000
+  full_iterations: 100
+  enc_train_iters: 5
+  dec_train_iters: 25
+  # enc_train_iters: 50
+  # dec_train_iters: 500
+  # enc_train_iters: 2
+  # dec_train_iters: 0
+
+  hidden_size: 32
+
+  lr: 0.00001
+  seed: 1
+
+  # log_interval: 100
+  # epoch_size : 200
+  
+  n: 3
+  r: 2
+  m: 4
+
+  code_length: None
+  code_dimension: None
+
+  # Use in train validate data util
+  # Channel Type 1
+  # enc_train_snr: 4
+  # dec_train_snr: 2
+
+  # Channel Type 2
+  enc_train_snr: 0
+  dec_train_snr: -2
+
+
+  # data_file: "data/data_3_2.pth"
+
+  data_type: "n3_r2_m4"
+  logger_name: C_{}_train
+  CUDA_VISIBLE_DEVICES: "1"
+  train_save_path_dir: "./save/{}/C_{}"
+  train_save_path_encoder: "./save/{}/C_{}/enc_{}.pth"
+  train_save_path_decoder: "./save/{}/C_{}/dec_{}.pth"
+  # test_model_path: ./save/C_{}/C_{}_1.pth
+
+  # Retraining parameters
+  retrain: False
+  retrain_day: Jan-05-2022
+  retrain_epoch_num: 21
+
+test:
+ # Use in test_ber
+  #snr_list: 1,2,3,4,5,6
+  snr_list: -10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0
+  # snr_list: -3,-2,-1,0,1,2,3,4,5,6,7
+  Boosting_number_list: 1,2,3
+  day: Apr-28-2022
+  epoch_num: 100
+  logger_name: C_{}_test
+  test_model_path_encoder: "./save/{}/C_{}/enc_{}.pth"
+  test_model_path_decoder: "./save/{}/C_{}/dec_{}.pth"

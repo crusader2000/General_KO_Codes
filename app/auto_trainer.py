@@ -39,6 +39,18 @@ def moving_average(a, n=3) :
 	ret[n:] = ret[n:] - ret[:-n]
 	return ret[n - 1:] / n
 
+# def automorphism(n ,codeword, num_samples) :
+# 	# codeword is a individual tensor
+# 	temp_list = np.array(torch.split(codeword,n))
+# 	perm_list = temp_list[:-1]
+# 	last_ele = temp_list[-1]
+# 	automorphism_list = []
+# 	for i in range(0,num_samples):
+# 		np.random.shuffle(perm_list)
+# 		temp_tensor = torch.cat(tuple(perm_list))
+# 		temp_tensor = torch.cat(temp_tensor , last_ele)
+# 		automorphism_list.append(temp_tensor)
+# 	return automorphism_list
 # data = {}
 
 bers = []

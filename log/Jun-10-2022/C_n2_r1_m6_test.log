@@ -1,0 +1,13 @@
+2022-06-10 11:30:58,286 auto_tester.py INFO 129: test_conf_name : c_n2_r1_m6
+2022-06-10 11:30:58,286 auto_tester.py INFO 130: Device : cuda
+2022-06-10 11:31:39,277 auto_tester.py INFO 183: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-06-10 11:31:39,278 auto_tester.py INFO 184: Model trained on Apr-28-2022
+2022-06-10 11:31:39,278 auto_tester.py INFO 185: Less go!
+2022-06-10 20:23:21,737 auto_tester.py INFO 149: test_conf_name : c_n2_r1_m6
+2022-06-10 20:23:21,738 auto_tester.py INFO 150: Device : cuda
+2022-06-10 20:23:24,204 auto_tester.py INFO 199: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-06-10 20:23:24,205 auto_tester.py INFO 200: Model trained on Apr-28-2022
+2022-06-10 20:23:24,205 auto_tester.py INFO 201: Less go!
+2022-06-10 20:28:37,708 auto_tester.py WARNING 92: [Testing Block] Burman SNR=-6 : BER=0.2773857112
+2022-06-10 20:28:37,708 auto_tester.py WARNING 93: [Testing Block] GKO SNR=-6 : BER=0.1102142845
+2022-06-10 20:28:37,708 auto_tester.py INFO 94: Time for one full iteration is 5.2249 minutes

@@ -7,6 +7,9 @@ def init():
 
   global device
 
+  global codebook
+  global codebook_msg_bits
+
   gnet_dict = {}
   fnet_dict = {}
 
@@ -14,3 +17,10 @@ def init():
   dec_params = []
 
   device = None
+
+  codebook = {}
+  codebook_msg_bits = {}
+
+  am_list = []
+
+  belief_prop = None

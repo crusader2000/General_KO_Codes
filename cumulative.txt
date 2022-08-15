@@ -1,0 +1,14 @@
+==========================================
+SLURM_JOB_ID = 737915
+SLURM_NODELIST = gnode025
+SLURM_JOB_GPUS = 0,1,2,3
+==========================================
+auto_tester.py INFO 301: test_conf_name : c_n3_r1_m4
+auto_tester.py INFO 302: Device : cuda
+auto_tester.py INFO 362: Testing c_n3_r1_m4 trained till epoch_num 1
+auto_tester.py INFO 363: Model trained on Apr-29-2022
+auto_tester.py INFO 364: Automorphisms available : 8
+auto_tester.py INFO 365: Less go!
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=-10 : BER=0.3754197478
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=-10 : BER=0.3555555612
+auto_tester.py INFO 246: Time for one full iteration is 52.6034 minutes

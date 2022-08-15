@@ -1,0 +1,6 @@
+2022-08-15 07:45:01,633 auto_tester.py INFO 301: test_conf_name : c_n2_r1_m6
+2022-08-15 07:45:01,633 auto_tester.py INFO 302: Device : cuda
+2022-08-15 07:45:14,048 auto_tester.py INFO 362: Testing c_n2_r1_m6 trained till epoch_num 1
+2022-08-15 07:45:14,048 auto_tester.py INFO 363: Model trained on Apr-28-2022
+2022-08-15 07:45:14,048 auto_tester.py INFO 364: Automorphisms available : 1
+2022-08-15 07:45:14,048 auto_tester.py INFO 365: Less go!

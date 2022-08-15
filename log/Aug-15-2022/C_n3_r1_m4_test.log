@@ -1,0 +1,27 @@
+2022-08-15 07:45:51,213 auto_tester.py INFO 301: test_conf_name : c_n3_r1_m4
+2022-08-15 07:45:51,213 auto_tester.py INFO 302: Device : cuda
+2022-08-15 07:45:53,538 auto_tester.py INFO 362: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-08-15 07:45:53,538 auto_tester.py INFO 363: Model trained on Apr-29-2022
+2022-08-15 07:45:53,538 auto_tester.py INFO 364: Automorphisms available : 8
+2022-08-15 07:45:53,538 auto_tester.py INFO 365: Less go!
+2022-08-15 08:43:05,417 auto_tester.py INFO 301: test_conf_name : c_n3_r1_m4
+2022-08-15 08:43:05,417 auto_tester.py INFO 302: Device : cuda
+2022-08-15 08:43:07,675 auto_tester.py INFO 362: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-08-15 08:43:07,675 auto_tester.py INFO 363: Model trained on Apr-29-2022
+2022-08-15 08:43:07,675 auto_tester.py INFO 364: Automorphisms available : 8
+2022-08-15 08:43:07,675 auto_tester.py INFO 365: Less go!
+2022-08-15 08:47:48,479 auto_tester.py INFO 301: test_conf_name : c_n3_r1_m4
+2022-08-15 08:47:48,479 auto_tester.py INFO 302: Device : cuda
+2022-08-15 08:47:50,714 auto_tester.py INFO 362: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-08-15 08:47:50,715 auto_tester.py INFO 363: Model trained on Apr-29-2022
+2022-08-15 08:47:50,715 auto_tester.py INFO 364: Automorphisms available : 8
+2022-08-15 08:47:50,715 auto_tester.py INFO 365: Less go!
+2022-08-15 08:56:16,673 auto_tester.py INFO 301: test_conf_name : c_n3_r1_m4
+2022-08-15 08:56:16,673 auto_tester.py INFO 302: Device : cuda
+2022-08-15 08:56:18,883 auto_tester.py INFO 362: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-08-15 08:56:18,883 auto_tester.py INFO 363: Model trained on Apr-29-2022
+2022-08-15 08:56:18,883 auto_tester.py INFO 364: Automorphisms available : 8
+2022-08-15 08:56:18,883 auto_tester.py INFO 365: Less go!
+2022-08-15 09:48:55,086 auto_tester.py WARNING 244: [Testing Block] Burman SNR=-10 : BER=0.3754197478
+2022-08-15 09:48:55,087 auto_tester.py WARNING 245: [Testing Block] GKO SNR=-10 : BER=0.3555555612
+2022-08-15 09:48:55,087 auto_tester.py INFO 246: Time for one full iteration is 52.6034 minutes

@@ -1,0 +1,20 @@
+2022-05-07 19:04:29,118 auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+2022-05-07 19:04:29,118 auto_tester.py INFO 127: Device : cuda
+2022-05-07 19:04:41,594 auto_tester.py INFO 174: Testing c_n3_r2_m4 trained till epoch_num 100
+2022-05-07 19:04:41,594 auto_tester.py INFO 175: Model trained on Apr-28-2022
+2022-05-07 19:04:41,594 auto_tester.py INFO 176: Less go!
+2022-05-07 19:06:30,370 auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+2022-05-07 19:06:30,370 auto_tester.py INFO 127: Device : cuda
+2022-05-07 19:06:32,506 auto_tester.py INFO 174: Testing c_n3_r2_m4 trained till epoch_num 100
+2022-05-07 19:06:32,506 auto_tester.py INFO 175: Model trained on Apr-28-2022
+2022-05-07 19:06:32,506 auto_tester.py INFO 176: Less go!
+2022-05-07 19:06:44,331 auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+2022-05-07 19:06:44,331 auto_tester.py INFO 127: Device : cuda
+2022-05-07 19:06:46,514 auto_tester.py INFO 174: Testing c_n3_r2_m4 trained till epoch_num 100
+2022-05-07 19:06:46,514 auto_tester.py INFO 175: Model trained on Apr-28-2022
+2022-05-07 19:06:46,514 auto_tester.py INFO 176: Less go!
+2022-05-07 19:06:59,371 auto_tester.py INFO 126: test_conf_name : c_n3_r2_m4
+2022-05-07 19:06:59,371 auto_tester.py INFO 127: Device : cuda
+2022-05-07 19:07:01,513 auto_tester.py INFO 174: Testing c_n3_r2_m4 trained till epoch_num 100
+2022-05-07 19:07:01,514 auto_tester.py INFO 175: Model trained on Apr-28-2022
+2022-05-07 19:07:01,514 auto_tester.py INFO 176: Less go!

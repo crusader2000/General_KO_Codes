@@ -1,0 +1,235 @@
+2022-06-18 20:42:48,248 auto_tester.py INFO 195: test_conf_name : c_n3_r1_m4
+2022-06-18 20:42:48,248 auto_tester.py INFO 196: Device : cuda
+2022-06-18 20:43:39,213 auto_tester.py INFO 195: test_conf_name : c_n3_r1_m4
+2022-06-18 20:43:39,214 auto_tester.py INFO 196: Device : cuda
+2022-06-18 20:44:23,958 auto_tester.py INFO 195: test_conf_name : c_n3_r1_m4
+2022-06-18 20:44:23,959 auto_tester.py INFO 196: Device : cuda
+2022-06-18 20:45:13,912 auto_tester.py INFO 195: test_conf_name : c_n3_r1_m4
+2022-06-18 20:45:13,913 auto_tester.py INFO 196: Device : cuda
+2022-06-18 20:45:36,893 auto_tester.py INFO 197: test_conf_name : c_n3_r1_m4
+2022-06-18 20:45:36,893 auto_tester.py INFO 198: Device : cuda
+2022-06-18 20:46:43,625 auto_tester.py INFO 197: test_conf_name : c_n3_r1_m4
+2022-06-18 20:46:43,625 auto_tester.py INFO 198: Device : cuda
+2022-06-18 20:47:19,484 auto_tester.py INFO 197: test_conf_name : c_n3_r1_m4
+2022-06-18 20:47:19,485 auto_tester.py INFO 198: Device : cuda
+2022-06-18 20:48:21,029 auto_tester.py INFO 197: test_conf_name : c_n3_r1_m4
+2022-06-18 20:48:21,029 auto_tester.py INFO 198: Device : cuda
+2022-06-18 20:49:10,670 auto_tester.py INFO 198: test_conf_name : c_n3_r1_m4
+2022-06-18 20:49:10,670 auto_tester.py INFO 199: Device : cuda
+2022-06-18 20:49:59,142 auto_tester.py INFO 200: test_conf_name : c_n3_r1_m4
+2022-06-18 20:49:59,143 auto_tester.py INFO 201: Device : cuda
+2022-06-18 20:50:30,433 auto_tester.py INFO 200: test_conf_name : c_n3_r1_m4
+2022-06-18 20:50:30,433 auto_tester.py INFO 201: Device : cuda
+2022-06-18 20:50:33,119 auto_tester.py INFO 252: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 20:50:33,119 auto_tester.py INFO 253: Model trained on Apr-29-2022
+2022-06-18 20:50:33,119 auto_tester.py INFO 254: Automorphisms available : 2
+2022-06-18 20:50:33,119 auto_tester.py INFO 255: Less go!
+2022-06-18 20:51:11,057 auto_tester.py INFO 196: test_conf_name : c_n3_r1_m4
+2022-06-18 20:51:11,058 auto_tester.py INFO 197: Device : cuda
+2022-06-18 20:51:13,749 auto_tester.py INFO 248: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 20:51:13,749 auto_tester.py INFO 249: Model trained on Apr-29-2022
+2022-06-18 20:51:13,749 auto_tester.py INFO 250: Automorphisms available : 2
+2022-06-18 20:51:13,749 auto_tester.py INFO 251: Less go!
+2022-06-18 20:52:01,916 auto_tester.py INFO 196: test_conf_name : c_n3_r1_m4
+2022-06-18 20:52:01,917 auto_tester.py INFO 197: Device : cuda
+2022-06-18 20:52:04,607 auto_tester.py INFO 248: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 20:52:04,607 auto_tester.py INFO 249: Model trained on Apr-29-2022
+2022-06-18 20:52:04,607 auto_tester.py INFO 250: Automorphisms available : 2
+2022-06-18 20:52:04,607 auto_tester.py INFO 251: Less go!
+2022-06-18 20:53:24,809 auto_tester.py INFO 196: test_conf_name : c_n3_r1_m4
+2022-06-18 20:53:24,810 auto_tester.py INFO 197: Device : cuda
+2022-06-18 20:53:27,465 auto_tester.py INFO 248: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 20:53:27,465 auto_tester.py INFO 249: Model trained on Apr-29-2022
+2022-06-18 20:53:27,466 auto_tester.py INFO 250: Automorphisms available : 2
+2022-06-18 20:53:27,466 auto_tester.py INFO 251: Less go!
+2022-06-18 20:54:41,545 auto_tester.py INFO 197: test_conf_name : c_n3_r1_m4
+2022-06-18 20:54:41,545 auto_tester.py INFO 198: Device : cuda
+2022-06-18 20:54:44,195 auto_tester.py INFO 249: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 20:54:44,195 auto_tester.py INFO 250: Model trained on Apr-29-2022
+2022-06-18 20:54:44,196 auto_tester.py INFO 251: Automorphisms available : 2
+2022-06-18 20:54:44,196 auto_tester.py INFO 252: Less go!
+2022-06-18 20:59:04,074 auto_tester.py INFO 203: test_conf_name : c_n3_r1_m4
+2022-06-18 20:59:04,074 auto_tester.py INFO 204: Device : cuda
+2022-06-18 20:59:30,428 auto_tester.py INFO 203: test_conf_name : c_n3_r1_m4
+2022-06-18 20:59:30,428 auto_tester.py INFO 204: Device : cuda
+2022-06-18 20:59:33,104 auto_tester.py INFO 255: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 20:59:33,104 auto_tester.py INFO 256: Model trained on Apr-29-2022
+2022-06-18 20:59:33,104 auto_tester.py INFO 257: Automorphisms available : 2
+2022-06-18 20:59:33,104 auto_tester.py INFO 258: Less go!
+2022-06-18 21:00:25,918 auto_tester.py INFO 203: test_conf_name : c_n3_r1_m4
+2022-06-18 21:00:25,918 auto_tester.py INFO 204: Device : cuda
+2022-06-18 21:00:28,622 auto_tester.py INFO 255: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:00:28,622 auto_tester.py INFO 256: Model trained on Apr-29-2022
+2022-06-18 21:00:28,622 auto_tester.py INFO 257: Automorphisms available : 2
+2022-06-18 21:00:28,622 auto_tester.py INFO 258: Less go!
+2022-06-18 21:02:08,752 auto_tester.py INFO 204: test_conf_name : c_n3_r1_m4
+2022-06-18 21:02:08,753 auto_tester.py INFO 205: Device : cuda
+2022-06-18 21:02:11,402 auto_tester.py INFO 256: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:02:11,402 auto_tester.py INFO 257: Model trained on Apr-29-2022
+2022-06-18 21:02:11,403 auto_tester.py INFO 258: Automorphisms available : 2
+2022-06-18 21:02:11,403 auto_tester.py INFO 259: Less go!
+2022-06-18 21:03:12,536 auto_tester.py INFO 204: test_conf_name : c_n3_r1_m4
+2022-06-18 21:03:12,537 auto_tester.py INFO 205: Device : cuda
+2022-06-18 21:03:15,211 auto_tester.py INFO 256: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:03:15,211 auto_tester.py INFO 257: Model trained on Apr-29-2022
+2022-06-18 21:03:15,211 auto_tester.py INFO 258: Automorphisms available : 2
+2022-06-18 21:03:15,212 auto_tester.py INFO 259: Less go!
+2022-06-18 21:03:55,523 auto_tester.py INFO 205: test_conf_name : c_n3_r1_m4
+2022-06-18 21:03:55,523 auto_tester.py INFO 206: Device : cuda
+2022-06-18 21:03:58,217 auto_tester.py INFO 257: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:03:58,217 auto_tester.py INFO 258: Model trained on Apr-29-2022
+2022-06-18 21:03:58,217 auto_tester.py INFO 259: Automorphisms available : 2
+2022-06-18 21:03:58,217 auto_tester.py INFO 260: Less go!
+2022-06-18 21:04:50,051 auto_tester.py INFO 205: test_conf_name : c_n3_r1_m4
+2022-06-18 21:04:50,052 auto_tester.py INFO 206: Device : cuda
+2022-06-18 21:04:52,728 auto_tester.py INFO 257: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:04:52,728 auto_tester.py INFO 258: Model trained on Apr-29-2022
+2022-06-18 21:04:52,729 auto_tester.py INFO 259: Automorphisms available : 252
+2022-06-18 21:04:52,729 auto_tester.py INFO 260: Less go!
+2022-06-18 21:05:42,066 auto_tester.py INFO 203: test_conf_name : c_n3_r1_m4
+2022-06-18 21:05:42,066 auto_tester.py INFO 204: Device : cuda
+2022-06-18 21:05:44,734 auto_tester.py INFO 255: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:05:44,734 auto_tester.py INFO 256: Model trained on Apr-29-2022
+2022-06-18 21:05:44,735 auto_tester.py INFO 257: Automorphisms available : 252
+2022-06-18 21:05:44,735 auto_tester.py INFO 258: Less go!
+2022-06-18 21:07:21,066 auto_tester.py INFO 203: test_conf_name : c_n3_r1_m4
+2022-06-18 21:07:21,066 auto_tester.py INFO 204: Device : cuda
+2022-06-18 21:07:23,705 auto_tester.py INFO 255: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:07:23,705 auto_tester.py INFO 256: Model trained on Apr-29-2022
+2022-06-18 21:07:23,705 auto_tester.py INFO 257: Automorphisms available : 2
+2022-06-18 21:07:23,705 auto_tester.py INFO 258: Less go!
+2022-06-18 21:08:06,883 auto_tester.py INFO 205: test_conf_name : c_n3_r1_m4
+2022-06-18 21:08:06,883 auto_tester.py INFO 206: Device : cuda
+2022-06-18 21:08:09,554 auto_tester.py INFO 257: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:08:09,554 auto_tester.py INFO 258: Model trained on Apr-29-2022
+2022-06-18 21:08:09,554 auto_tester.py INFO 259: Automorphisms available : 2
+2022-06-18 21:08:09,554 auto_tester.py INFO 260: Less go!
+2022-06-18 21:09:33,547 auto_tester.py INFO 206: test_conf_name : c_n3_r1_m4
+2022-06-18 21:09:33,547 auto_tester.py INFO 207: Device : cuda
+2022-06-18 21:09:36,179 auto_tester.py INFO 258: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:09:36,180 auto_tester.py INFO 259: Model trained on Apr-29-2022
+2022-06-18 21:09:36,180 auto_tester.py INFO 260: Automorphisms available : 2
+2022-06-18 21:09:36,180 auto_tester.py INFO 261: Less go!
+2022-06-18 21:09:44,461 auto_tester.py INFO 206: test_conf_name : c_n3_r1_m4
+2022-06-18 21:09:44,462 auto_tester.py INFO 207: Device : cuda
+2022-06-18 21:09:47,129 auto_tester.py INFO 258: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:09:47,129 auto_tester.py INFO 259: Model trained on Apr-29-2022
+2022-06-18 21:09:47,129 auto_tester.py INFO 260: Automorphisms available : 2
+2022-06-18 21:09:47,129 auto_tester.py INFO 261: Less go!
+2022-06-18 21:11:41,780 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:11:41,780 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:11:44,419 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:11:44,419 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:11:44,419 auto_tester.py INFO 264: Automorphisms available : 2
+2022-06-18 21:11:44,419 auto_tester.py INFO 265: Less go!
+2022-06-18 21:13:25,268 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:13:25,268 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:13:27,886 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:13:27,886 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:13:27,886 auto_tester.py INFO 264: Automorphisms available : 2
+2022-06-18 21:13:27,886 auto_tester.py INFO 265: Less go!
+2022-06-18 21:13:59,727 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:13:59,728 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:14:02,395 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:14:02,395 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:14:02,396 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:14:02,396 auto_tester.py INFO 265: Less go!
+2022-06-18 21:14:50,447 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:14:50,447 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:14:53,141 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:14:53,141 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:14:53,141 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:14:53,141 auto_tester.py INFO 265: Less go!
+2022-06-18 21:29:50,526 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:29:50,526 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:29:53,158 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:29:53,158 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:29:53,158 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:29:53,158 auto_tester.py INFO 265: Less go!
+2022-06-18 21:30:14,040 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:30:14,041 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:30:16,709 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:30:16,709 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:30:16,709 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:30:16,709 auto_tester.py INFO 265: Less go!
+2022-06-18 21:31:10,801 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:31:10,801 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:31:13,494 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:31:13,494 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:31:13,494 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:31:13,494 auto_tester.py INFO 265: Less go!
+2022-06-18 21:31:53,740 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:31:53,740 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:31:56,408 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:31:56,408 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:31:56,408 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:31:56,408 auto_tester.py INFO 265: Less go!
+2022-06-18 21:34:57,076 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:34:57,076 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:34:59,719 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:34:59,719 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:34:59,720 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:34:59,720 auto_tester.py INFO 265: Less go!
+2022-06-18 21:38:26,151 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-10 : BER=0.4463333458
+2022-06-18 21:38:26,151 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-10 : BER=0.3555555612
+2022-06-18 21:38:26,151 auto_tester.py INFO 155: Time for one full iteration is 3.4405 minutes
+2022-06-18 21:41:52,627 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-9 : BER=0.4646666795
+2022-06-18 21:41:52,627 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-9 : BER=0.2952222228
+2022-06-18 21:41:52,627 auto_tester.py INFO 155: Time for one full iteration is 3.4413 minutes
+2022-06-18 21:45:10,514 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 21:45:10,514 auto_tester.py INFO 211: Device : cuda
+2022-06-18 21:45:13,200 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 21:45:13,201 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 21:45:13,201 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 21:45:13,201 auto_tester.py INFO 265: Less go!
+2022-06-18 21:49:21,080 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-10 : BER=0.4463333458
+2022-06-18 21:49:21,081 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-10 : BER=0.3555555612
+2022-06-18 21:49:21,081 auto_tester.py INFO 155: Time for one full iteration is 4.1313 minutes
+2022-06-18 21:53:29,441 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-9 : BER=0.4646666795
+2022-06-18 21:53:29,442 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-9 : BER=0.2952222228
+2022-06-18 21:53:29,442 auto_tester.py INFO 155: Time for one full iteration is 4.1393 minutes
+2022-06-18 21:57:36,812 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-8 : BER=0.3996666789
+2022-06-18 21:57:36,812 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-8 : BER=0.2590000018
+2022-06-18 21:57:36,813 auto_tester.py INFO 155: Time for one full iteration is 4.1228 minutes
+2022-06-18 22:01:42,856 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-7 : BER=0.3820000082
+2022-06-18 22:01:42,857 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-7 : BER=0.2090000048
+2022-06-18 22:01:42,857 auto_tester.py INFO 155: Time for one full iteration is 4.1007 minutes
+2022-06-18 22:40:11,230 auto_tester.py INFO 210: test_conf_name : c_n3_r1_m4
+2022-06-18 22:40:11,231 auto_tester.py INFO 211: Device : cuda
+2022-06-18 22:40:13,449 auto_tester.py INFO 262: Testing c_n3_r1_m4 trained till epoch_num 1
+2022-06-18 22:40:13,449 auto_tester.py INFO 263: Model trained on Apr-29-2022
+2022-06-18 22:40:13,449 auto_tester.py INFO 264: Automorphisms available : 8
+2022-06-18 22:40:13,449 auto_tester.py INFO 265: Less go!
+2022-06-18 22:44:15,506 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-10 : BER=0.4463333458
+2022-06-18 22:44:15,507 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-10 : BER=0.3555555612
+2022-06-18 22:44:15,507 auto_tester.py INFO 155: Time for one full iteration is 4.0343 minutes
+2022-06-18 22:48:17,695 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-9 : BER=0.4646666795
+2022-06-18 22:48:17,695 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-9 : BER=0.2952222228
+2022-06-18 22:48:17,695 auto_tester.py INFO 155: Time for one full iteration is 4.0365 minutes
+2022-06-18 22:52:19,186 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-8 : BER=0.3996666789
+2022-06-18 22:52:19,187 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-8 : BER=0.2590000018
+2022-06-18 22:52:19,187 auto_tester.py INFO 155: Time for one full iteration is 4.0249 minutes
+2022-06-18 22:56:19,339 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-7 : BER=0.3820000082
+2022-06-18 22:56:19,340 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-7 : BER=0.2090000048
+2022-06-18 22:56:19,340 auto_tester.py INFO 155: Time for one full iteration is 4.0025 minutes
+2022-06-18 23:00:18,623 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-6 : BER=0.3478888959
+2022-06-18 23:00:18,624 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-6 : BER=0.1597777814
+2022-06-18 23:00:18,624 auto_tester.py INFO 155: Time for one full iteration is 3.9881 minutes
+2022-06-18 23:04:15,091 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-5 : BER=0.2753333420
+2022-06-18 23:04:15,092 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-5 : BER=0.0886666685
+2022-06-18 23:04:15,092 auto_tester.py INFO 155: Time for one full iteration is 3.9411 minutes
+2022-06-18 23:08:07,542 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-4 : BER=0.2430000067
+2022-06-18 23:08:07,543 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-4 : BER=0.0481111117
+2022-06-18 23:08:07,543 auto_tester.py INFO 155: Time for one full iteration is 3.8742 minutes
+2022-06-18 23:11:52,896 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-3 : BER=0.1951111168
+2022-06-18 23:11:52,897 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-3 : BER=0.0260000003
+2022-06-18 23:11:52,897 auto_tester.py INFO 155: Time for one full iteration is 3.7559 minutes
+2022-06-18 23:15:23,590 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-2 : BER=0.1431111120
+2022-06-18 23:15:23,591 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-2 : BER=0.0057777780
+2022-06-18 23:15:23,591 auto_tester.py INFO 155: Time for one full iteration is 3.5115 minutes
+2022-06-18 23:18:37,384 auto_tester.py WARNING 153: [Testing Block] Burman SNR=-1 : BER=0.0960000023
+2022-06-18 23:18:37,385 auto_tester.py WARNING 154: [Testing Block] GKO SNR=-1 : BER=0.0004444445
+2022-06-18 23:18:37,385 auto_tester.py INFO 155: Time for one full iteration is 3.2299 minutes
+2022-06-18 23:21:22,275 auto_tester.py WARNING 153: [Testing Block] Burman SNR=0 : BER=0.0580000013
+2022-06-18 23:21:22,275 auto_tester.py WARNING 154: [Testing Block] GKO SNR=0 : BER=0.0001111111
+2022-06-18 23:21:22,275 auto_tester.py INFO 155: Time for one full iteration is 2.7482 minutes
