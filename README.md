@@ -51,3 +51,6 @@ For testing C(n=3,r=2,m=4)
 ```
     python -m app.auto_tester c_n3_r2_m4
 ```
+
+
+We are using Belief Propagation from https://github.com/YairMZ/belief_propagation.

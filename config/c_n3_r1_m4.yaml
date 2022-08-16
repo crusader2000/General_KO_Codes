@@ -54,7 +54,8 @@ para:
 test:
  # Use in test_ber
   #snr_list: 1,2,3,4,5,6
-  snr_list: -10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0
+  snr_list: -6,-5,-4,-3,-2,-1,0
+  #snr_list: -10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0
   # snr_list: -3,-2,-1,0,1,2,3,4,5,6,7
   Boosting_number_list: 1,2,3
   day: Apr-29-2022

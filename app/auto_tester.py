@@ -31,10 +31,7 @@ import time
 from datetime import datetime
 from datetime import date
 import random
-<<<<<<< HEAD
 import itertools
-=======
->>>>>>> 0606be07b0190fc38a00a60ef5924b3441f60067
 # from data.generate_data import *
 
 from math import sqrt
@@ -51,7 +48,6 @@ def format_e(num):
 def dec2bin(x, bits):
     mask = 2 ** torch.arange(bits - 1, -1, -1).to(sharedstuff.device)
     return x.unsqueeze(-1).bitwise_and(mask).ne(0).float()
-<<<<<<< HEAD
 
 def automorphism(n,r,m,indices) :
 	# codeword is a individual tensor
@@ -110,8 +106,6 @@ def automorphism(n,r,m,indices) :
 	# 	automorphism(n,r)
 	
 	# return automorphism_list
-=======
->>>>>>> 0606be07b0190fc38a00a60ef5924b3441f60067
 
 # data = {}
 
@@ -204,8 +198,8 @@ def test(snr, rate, code_dimension):
 	start_time = time.time()
 
 	# decode_burman = decode_burman_beliefprop 
-	# decode_burman = decode_burman_beliefprop2
-	decode_burman = decode_burman_automorphism
+	decode_burman = decode_burman_beliefprop2
+	# decode_burman = decode_burman_automorphism
 
 	model = awgn_llr(snr)
 	tg = TannerGraph.from_biadjacency_matrix(G, channel_model=model)
@@ -322,7 +316,6 @@ if __name__ == "__main__":
 	rate = 1.0*(code_dimension/code_length)
 	hidden_size = para["hidden_size"]
 
-<<<<<<< HEAD
 	initialize_codebook(n,r,m)
 
 	G = generate_G(n,r,m)
@@ -336,14 +329,6 @@ if __name__ == "__main__":
 
 	sharedstuff.am_list = automorphism(n,r,m,list(range(code_length)))
 	# print(sharedstuff.am_list)
-=======
-	for i in range(2**code_dimension):
-		msg_bits = dec2bin(torch.tensor([i]).to(sharedstuff.device),code_dimension)
-		curr_codeword = encode_burman(n,r,m,msg_bits)
-		sharedstuff.codebook_msg_bits.append(msg_bits)
-		sharedstuff.codebook.append(curr_codeword)
-
->>>>>>> 0606be07b0190fc38a00a60ef5924b3441f60067
 	# data = torch.load(para["data_file"])
 
 	initialize(n,r,m,hidden_size)

@@ -1,6 +1,6 @@
 ==========================================
-SLURM_JOB_ID = 737915
-SLURM_NODELIST = gnode025
+SLURM_JOB_ID = 738111
+SLURM_NODELIST = gnode044
 SLURM_JOB_GPUS = 0,1,2,3
 ==========================================
 auto_tester.py INFO 301: test_conf_name : c_n3_r1_m4
@@ -9,6 +9,52 @@ auto_tester.py INFO 362: Testing c_n3_r1_m4 trained till epoch_num 1
 auto_tester.py INFO 363: Model trained on Apr-29-2022
 auto_tester.py INFO 364: Automorphisms available : 8
 auto_tester.py INFO 365: Less go!
-auto_tester.py WARNING 244: [Testing Block] Burman SNR=-10 : BER=0.3754197478
-auto_tester.py WARNING 245: [Testing Block] GKO SNR=-10 : BER=0.3555555612
-auto_tester.py INFO 246: Time for one full iteration is 52.6034 minutes
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=-6 : BER=0.2791604936
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=-6 : BER=0.1530000038
+auto_tester.py INFO 246: Time for one full iteration is 51.8220 minutes
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=-5 : BER=0.2193456799
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=-5 : BER=0.0856666695
+auto_tester.py INFO 246: Time for one full iteration is 47.4716 minutes
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=-4 : BER=0.1879135787
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=-4 : BER=0.0427777778
+auto_tester.py INFO 246: Time for one full iteration is 40.9367 minutes
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=-3 : BER=0.1035925917
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=-3 : BER=0.0208888895
+auto_tester.py INFO 246: Time for one full iteration is 36.8780 minutes
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=-2 : BER=0.0799012348
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=-2 : BER=0.0066666668
+auto_tester.py INFO 246: Time for one full iteration is 34.7100 minutes
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=-1 : BER=0.0717160497
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=-1 : BER=0.0010000000
+auto_tester.py INFO 246: Time for one full iteration is 32.1045 minutes
+auto_tester.py WARNING 244: [Testing Block] Burman SNR=0 : BER=0.0624567900
+auto_tester.py WARNING 245: [Testing Block] GKO SNR=0 : BER=0.0006666667
+auto_tester.py INFO 246: Time for one full iteration is 28.7377 minutes
+Traceback (most recent call last):
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/lalitha.v/General_KO_Codes/app/auto_tester.py", line 373, in <module>
+    plt.figure(figsize = (12,12))
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/site-packages/matplotlib/pyplot.py", line 787, in figure
+    manager = new_figure_manager(
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/site-packages/matplotlib/pyplot.py", line 306, in new_figure_manager
+    return _backend_mod.new_figure_manager(*args, **kwargs)
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/site-packages/matplotlib/backend_bases.py", line 3474, in new_figure_manager
+    return cls.new_figure_manager_given_figure(num, fig)
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/site-packages/matplotlib/backend_bases.py", line 3479, in new_figure_manager_given_figure
+    canvas = cls.FigureCanvas(figure)
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/site-packages/matplotlib/backends/backend_qtagg.py", line 21, in __init__
+    super().__init__(figure=figure)
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/site-packages/matplotlib/backends/backend_qt.py", line 220, in __init__
+    _create_qApp()
+  File "/home/lalitha.v/miniconda3/envs/venv/lib/python3.8/site-packages/matplotlib/backends/backend_qt.py", line 112, in _create_qApp
+    raise RuntimeError('Invalid DISPLAY variable')
+RuntimeError: Invalid DISPLAY variable
+train conf_name: c_n3_r1_m4
+cuda 1
+code_dimension 9
+code_length 81
+G.size()
+torch.Size([72, 81])
